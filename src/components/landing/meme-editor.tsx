@@ -23,15 +23,21 @@ export default function MemeEditor({
         stageWidth={editor.stageWidth}
         stageHeight={editor.stageHeight}
         textLayers={editor.textLayers}
+        imageLayers={editor.imageLayers}
         onTextDrag={editor.handleTextDrag}
+        onImageDrag={editor.handleImageDrag}
+        onImageResize={editor.handleImageResize}
       />
 
       <MemeControls
         textLayers={editor.textLayers}
+        imageLayers={editor.imageLayers}
         updateTextLayer={editor.updateTextLayer}
         updateTextLayerSize={editor.updateTextLayerSize}
         addTextLayer={editor.addTextLayer}
+        addImageLayer={editor.addImageLayer}
         removeTextLayer={editor.removeTextLayer}
+        removeImageLayer={editor.removeImageLayer}
         downloadMeme={editor.handleDownload}
         resetMeme={editor.handleReset}
       />

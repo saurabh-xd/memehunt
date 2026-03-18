@@ -17,6 +17,14 @@ export type MemeTextLayer = {
   position: Position
 }
 
+export type MemeImageLayer = {
+  id: string
+  src: string
+  position: Position
+  width: number
+  height: number
+}
+
 export type Rect = {
   x: number
   y: number
