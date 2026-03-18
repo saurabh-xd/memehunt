@@ -38,12 +38,18 @@ export function useMemeGenerator() {
 
   }
 
+  function clearTemplate() {
+    setTemplate(null)
+    setError("")
+  }
+
   return {
     situation,
     setSituation,
     template,
     isLoading,
     error,
-    generate
+    generate,
+    clearTemplate
   }
 }

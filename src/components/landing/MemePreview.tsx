@@ -70,12 +70,12 @@ export default function MemePreview({
             {textLayers.map((layer) => (
               <Text
                 key={layer.id}
-                text={layer.text.toUpperCase()}
+                text={layer.text}
                 x={layer.position.x}
                 y={layer.position.y}
                 fontSize={layer.fontSize}
                 {...sharedTextProps}
-                strokeWidth={Math.max(0.45, layer.fontSize * 0.018)}
+                strokeWidth={Math.max(0.35, layer.fontSize * 0.013)}
                 opacity={activeTextId === layer.id ? 0.88 : 1}
                 scaleX={activeTextId === layer.id ? 1.02 : 1}
                 scaleY={activeTextId === layer.id ? 1.02 : 1}

@@ -8,7 +8,15 @@ import MemeEditor from "@/components/landing/meme-editor";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
-  const { situation, setSituation, template, isLoading, error, generate } =
+  const {
+    situation,
+    setSituation,
+    template,
+    isLoading,
+    error,
+    generate,
+    clearTemplate,
+  } =
     useMemeGenerator(); //for api call
   const uploadId = useId();
   const [customTemplateImage, setCustomTemplateImage] = useState<string | null>(
@@ -51,6 +59,16 @@ export default function Home() {
     setCustomTemplateName(null);
   }
 
+  function clearActiveTemplate() {
+    clearCustomTemplate();
+    clearTemplate();
+  }
+
+  async function handleGenerate(e?: React.FormEvent) {
+    clearCustomTemplate();
+    await generate(e);
+  }
+
   const activeTemplateImage = customTemplateImage ?? template?.image ?? null;
   const activeTemplateName = customTemplateName ?? template?.name ?? "Selected meme";
 
@@ -59,7 +77,7 @@ export default function Home() {
       <Header />
 
       <MemeSearch
-        generate={generate}
+        generate={handleGenerate}
         isLoading={isLoading}
         situation={situation}
         setSituation={setSituation}
@@ -95,16 +113,14 @@ export default function Home() {
               <p className="text-sm font-medium text-foreground">{activeTemplateName}</p>
               <p className="text-xs text-muted-foreground">Edit your loaded meme</p>
             </div>
-            {customTemplateImage && (
-              <Button
-                type="button"
-                variant="outline"
-                className="rounded-xl"
-                onClick={clearCustomTemplate}
-              >
-                Remove Custom Image
-              </Button>
-            )}
+            <Button
+              type="button"
+              variant="outline"
+              className="rounded-xl"
+              onClick={clearActiveTemplate}
+            >
+              Remove Template
+            </Button>
           </div>
           <div className="pt-5">
             <MemeEditor templateImage={activeTemplateImage} />
