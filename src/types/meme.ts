@@ -3,6 +3,11 @@ export type MemeResult = {
   name: string
   image: string
   description: string
+  aliases: string[]
+  keywords: string[]
+  emotions: string[]
+  scenarios: string[]
+  selectionEnabled?: boolean
 }
 
 export type Position = {

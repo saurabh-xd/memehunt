@@ -1,54 +1,64 @@
-import { google } from "@/lib/ai"
 import { generateObject } from "ai"
 import { z } from "zod"
+import { google } from "@/lib/ai"
+import { MemeResult } from "@/types/meme"
+
+const memeSelectionSchema = z.object({
+  template: z.string(),
+  confidence: z.number().min(0).max(1),
+  reason: z.string()
+})
+
+export type MemeSelection = z.infer<typeof memeSelectionSchema>
+
+function formatCandidate(meme: MemeResult) {
+  return [
+    `id: ${meme.id}`,
+    `name: ${meme.name}`,
+    `description: ${meme.description}`,
+    `aliases: ${meme.aliases.join(", ")}`,
+    `keywords: ${meme.keywords.join(", ")}`,
+    `emotions: ${meme.emotions.join(", ")}`,
+    `scenarios: ${meme.scenarios.join(", ")}`
+  ].join("\n")
+}
 
 export async function chooseMeme(
   situation: string,
-  memeList: string
+  candidates: MemeResult[]
 ) {
+  const candidateList = candidates
+    .map(formatCandidate)
+    .join("\n\n")
 
   const result = await generateObject({
     model: google("gemini-2.5-flash"),
+    schema: memeSelectionSchema,
+    temperature: 0.2,
+    prompt: `
+You are an expert meme template selector.
 
-    schema: z.object({
-      template: z.string()
-    }),
+Your task is to choose the best meme template for the user's situation from the provided shortlist.
 
-   prompt: `
-You are an expert internet meme expert.
-
-Your job is to select the most appropriate meme template.
-
-The user may either:
-1) Describe a situation
-2) Ask directly for a type of meme (example: "confused meme", "crying meme")
+Selection rules:
+1. Pick exactly one template from the provided IDs.
+2. Prefer semantic fit over shallow keyword overlap.
+3. If the user explicitly names a meme style, prioritize that if it exists in the shortlist.
+4. Use the description, aliases, keywords, emotions, and scenarios together.
+5. Keep confidence high only when the fit is clearly strong.
 
 User request:
 ${situation}
 
-Below is a list of meme templates and their meanings.
+Candidate memes:
+${candidateList}
 
-Memes:
-${memeList}
-
-Instructions:
-
-1. Understand what the user wants.
-   - If the user describes a situation, determine the emotion or scenario.
-   - If the user directly asks for a type of meme (confused, crying, angry, success, etc),
-     find the meme template that best represents that emotion.
-
-2. Compare the user request with the meanings of the memes.
-
-3. Choose the meme whose meaning best matches the request.
-
-4. ONLY choose from the provided meme IDs.
-
-5. Do NOT invent new meme names.
-
-Return ONLY the template ID.
+Return JSON with:
+- template: selected meme id
+- confidence: number from 0 to 1
+- reason: short explanation
 `
   })
 
-  return result.object.template
+  return result.object
 }

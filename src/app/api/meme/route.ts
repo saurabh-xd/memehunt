@@ -1,26 +1,28 @@
 import { findBestMeme } from "@/services/meme.service"
 
 export async function POST(req: Request) {
+  try {
+    const body = await req.json()
+    const situation = typeof body?.situation === "string"
+      ? body.situation.trim()
+      : ""
 
-  const { situation } = await req.json()
+    if (!situation) {
+      return Response.json(
+        { error: "Situation required" },
+        { status: 400 }
+      )
+    }
 
-  if (!situation) {
+    const meme = await findBestMeme(situation)
+
+    return Response.json(meme)
+  } catch (error) {
+    console.error("Failed to generate meme template", error)
+
     return Response.json(
-      { error: "Situation required" },
-      { status: 400 }
+      { error: "Unable to generate meme template" },
+      { status: 500 }
     )
   }
-
-  const meme = await findBestMeme(situation)
-
-  console.log("response = ",meme );
-  
-//   response is = response =  {
-//   id: 'gru-plan',
-//   name: "Gru's Plan",
-//   image: 'https://i.imgflip.com/26jxvz.jpg',
-//   description: 'A plan that backfires unexpectedly'
-// }
-
-  return Response.json(meme)
 }
