@@ -12,7 +12,7 @@ export function useMemeGenerator() {
   async function generate(e?: React.FormEvent) {
 
     if (e) e.preventDefault()
-    if (!situation.trim()) return
+    if (!situation.trim()) return null
 
     setIsLoading(true)
     setError("")
@@ -26,11 +26,13 @@ export function useMemeGenerator() {
 
 
       setTemplate(data)
+      return data as MemeResult
 
     } catch (error) {
 
       console.error(error)
       setError("Something went wrong")
+      return null
 
     } finally {
       setIsLoading(false)

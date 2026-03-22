@@ -1,13 +1,20 @@
 "use client";
 import { ChangeEvent, useEffect, useId, useState } from "react";
 import { Image as ImageIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import Header from "@/components/landing/Header";
 import MemeSearch from "@/components/landing/MemeSearch";
 import { useMemeGenerator } from "@/hooks/useMemeGenerator";
 import MemeEditor from "@/components/landing/meme-editor";
 import { Button } from "@/components/ui/button";
+import { useSession } from "@/lib/auth-client";
+import { useGuestUsage } from "@/hooks/useGuestUsage";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 export default function Home() {
+  const router = useRouter();
+  const { data: session, isPending: isSessionPending } = useSession();
+  const { incrementUsage, isLimitReached, limit, remainingUsage } = useGuestUsage();
   const {
     situation,
     setSituation,
@@ -25,6 +32,7 @@ export default function Home() {
   const [customTemplateName, setCustomTemplateName] = useState<string | null>(
     null
   );
+  const [showSignInDialog, setShowSignInDialog] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -65,8 +73,20 @@ export default function Home() {
   }
 
   async function handleGenerate(e?: React.FormEvent) {
+    if (!session?.user && isLimitReached) {
+      if (e) e.preventDefault();
+      setShowSignInDialog(true);
+      return;
+    }
+
     clearCustomTemplate();
-    await generate(e);
+    const generatedTemplate = await generate(e);
+
+    if (!generatedTemplate || session?.user) {
+      return;
+    }
+
+   incrementUsage()
   }
 
   const activeTemplateImage = customTemplateImage ?? template?.image ?? null;
@@ -82,6 +102,15 @@ export default function Home() {
         situation={situation}
         setSituation={setSituation}
       />
+
+      {!session?.user && !isSessionPending && (
+        <div className="rounded-full border border-border/70 bg-card/70 px-4 py-2 text-sm text-muted-foreground">
+          Free AI generations left:{" "}
+          <span className="font-medium text-foreground">
+            {remainingUsage}
+          </span>
+        </div>
+      )}
 
       {!activeTemplateImage ? (
         <div className="flex w-full max-w-2xl flex-col items-center gap-3 rounded-2xl border border-dashed border-border/70 bg-card/60 p-5 text-center">
@@ -141,6 +170,40 @@ export default function Home() {
           <p>Your generated meme will appear here</p>
         </div>
       )}
+
+     
+        <Dialog open={showSignInDialog} onOpenChange={
+          setShowSignInDialog
+        }>
+
+          <DialogContent>
+           
+<DialogHeader>
+
+             <DialogTitle>
+                Sign in to keep generating
+              </DialogTitle>
+             <DialogDescription>
+                You have used all {limit} free AI generations.
+                Sign in with Google to continue creating memes.
+              </DialogDescription>
+
+              </DialogHeader>
+          
+
+           
+              <Button
+                type="button"
+                className="flex-1 rounded-full cursor-pointer"
+                onClick={() => router.push("/sign-in")}
+              >
+                Sign In
+              </Button>
+           
+        
+          </DialogContent>
+       </Dialog>
+     
     </main>
   );
 }
