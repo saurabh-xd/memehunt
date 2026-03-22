@@ -1,27 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { signIn } from "@/lib/auth-client";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner"
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { signIn, useSession } from "@/lib/auth-client";
+import { Button } from "@/components/ui/button";
+import { GoogleIcon } from "@/components/common/google";
+
+
 
 export default function SignInPage() {
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
+  const { data: session, isPending } = useSession();
+  const [loading, setLoading] = useState(false);
 
-  const [loading, setLoading] = useState(false)
+  useEffect(() => {
+    if (session?.user) {
+      router.replace("/");
+    }
+  }, [router, session]);
 
-  
-   async function handleGoogleSignIn() {
+  async function handleGoogleSignIn() {
     try {
       setLoading(true);
       await signIn.social({
         provider: "google",
-        
       });
-      // redirect handled by Better Auth
     } catch {
       toast.error("Google sign-in failed");
       setLoading(false);
@@ -29,27 +34,40 @@ export default function SignInPage() {
   }
 
   return (
-    <main className="max-w-md h-screen flex items-center justify-center flex-col mx-auto p-6 space-y-4 text-white">
-      <h1 className="text-2xl font-bold">Sign In</h1>
-      {error && <p className="text-red-500">{error}</p>}
-       <Button
+    <main className="flex min-h-[calc(100vh-72px)] items-center justify-center px-6 py-12">
+      <section className="w-full max-w-md rounded-[2rem] border border-border/70 bg-card/80 p-8 shadow-[0_24px_70px_-40px_rgba(15,23,42,0.35)] backdrop-blur">
+        <div className="space-y-3 text-center">
+          <p className="text-xs font-medium uppercase tracking-[0.24em] text-muted-foreground">
+            Authentication
+          </p>
+          <h1 className="text-3xl font-semibold tracking-tight text-foreground">
+            Sign in to MemeHunt
+          </h1>
+          <p className="text-sm leading-6 text-muted-foreground">
+            Save your session and continue building memes with Google.
+          </p>
+        </div>
+
+        <div className="mt-8 space-y-4">
+          <Button
             variant="outline"
-            className="w-full mt-3 cursor-pointer"
-            disabled={loading || loading}
+            className="h-12 w-full rounded-full cursor-pointer justify-center gap-3"
+            disabled={loading || isPending}
             onClick={handleGoogleSignIn}
           >
-            {loading ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            {loading || isPending ? (
+              <Loader2 className="size-4 animate-spin" />
             ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" width="2443" height="2500" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262" id="google">
-  <path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"></path>
-  <path fill="#34A853" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"></path>
-  <path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"></path>
-  <path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"></path>
-</svg>
+              <GoogleIcon />
             )}
-         Sign in with Google
-            </Button>
+            Continue with Google
+          </Button>
+
+          <p className="text-center text-xs leading-5 text-muted-foreground">
+            By continuing, you&apos;ll authenticate with your Google account.
+          </p>
+        </div>
+      </section>
     </main>
   );
 }

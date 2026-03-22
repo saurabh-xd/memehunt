@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/layout/navbar";
 import { ThemeProvider } from "@/components/common/theme-provider";
+import { Toaster } from "sonner";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
@@ -32,7 +33,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
-         <ThemeProvider
+        <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
@@ -40,6 +41,7 @@ export default function RootLayout({
           >
         <Navbar/>
         {children}
+        <Toaster richColors position="top-center" />
         </ThemeProvider>
       </body>
     </html>
