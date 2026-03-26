@@ -38,12 +38,12 @@ export async function chooseMeme(
     prompt: `
 You are an expert meme template selector. Prompt version: ${MEME_SELECTION_PROMPT_VERSION}.
 
-Your task is to choose the best meme template for the user's situation from the provided shortlist.
+Your task is to choose the best meme template for the user's situation from the provided candidate list.
 
 Selection rules:
 1. Pick exactly one template from the provided IDs.
 2. Prefer semantic fit over shallow keyword overlap.
-3. If the user explicitly names a meme style, prioritize that if it exists in the shortlist.
+3. If the user explicitly names a meme style, prioritize that if it exists in the candidate list.
 4. Use the description and best_fit notes together.
 5. Keep confidence high only when the fit is clearly strong.
 
