@@ -72,12 +72,7 @@ export const memes: MemeResult[] = [
     description: "Two people arguing or blaming each other",
     selectionNotes: "Best when two sides are talking past each other, one side is dramatic and emotional, or the joke needs a loud accusation versus calm confused response.",
   },
-  {
-    id: "clown-makeup",
-    name: "Clown Putting on Makeup",
-    image: "https://i.imgflip.com/2xscjb.jpg",
-    description: "Making progressively worse decisions",
-  },
+  
   {
     id: "gru-plan",
     name: "Gru's Plan",
