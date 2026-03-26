@@ -423,5 +423,172 @@ export const memes: MemeResult[] = [
     keywords: ["stupid", "embarrassing", "facepalm", "idiot"],
     emotions: ["embarrassment", "frustration"],
     scenarios: ["obvious mistake", "stupidity", "second hand embarrassment"]
-  }
+  },
+  {
+    id: "always-has-been",
+    name: "Always Has Been",
+    image: "https://i.imgflip.com/4awjkp.png",
+    description: "Realizing something has secretly been the case all along",
+    aliases: ["wait its all", "astronaut meme", "always been meme"],
+    keywords: ["always", "all along", "realization", "secret truth"],
+    emotions: ["shock", "realization", "suspicion"],
+    scenarios: ["sudden realization", "twist", "truth revealed"]
+  },
+  {
+    id: "american-chopper",
+    name: "American Chopper Argument",
+    image: "https://i.imgflip.com/48usn4.png",
+    description: "A loud escalating argument where everyone is aggressively making their point",
+    aliases: ["chopper meme", "orange county choppers", "chair guy"],
+    keywords: ["argument", "fight", "debate", "shouting", "hot take"],
+    emotions: ["anger", "frustration", "chaos"],
+    scenarios: ["heated argument", "team disagreement", "online debate"]
+  },
+  {
+    id: "who-killed-hannibal",
+    name: "Who Killed Hannibal",
+    image: "https://i.imgflip.com/28qo5s.jpg",
+    description: "Blaming someone for a problem they clearly caused themselves",
+    aliases: ["hannibal meme", "self blame meme", "who did this meme"],
+    keywords: ["blame", "self own", "caused it", "responsible", "hypocrisy"],
+    emotions: ["confusion", "frustration", "irony"],
+    scenarios: ["self blame", "obvious cause", "accountability dodged"]
+  },
+  {
+    id: "they-dont-know",
+    name: "They Don't Know",
+    image: "https://i.imgflip.com/4pn1an.png",
+    description: "Quietly having a thought or secret while everyone around you is unaware",
+    aliases: ["party loner meme", "guy in corner meme", "no one knows meme"],
+    keywords: ["secret", "quiet thought", "they dont know", "inner monologue"],
+    emotions: ["isolation", "smugness", "awkwardness"],
+    scenarios: ["secret knowledge", "inner thought", "social awkwardness"]
+  },
+  {
+    id: "just-looking-like-a-wow",
+    name: "Just Looking Like A Wow",
+    image: "https://i.imgflip.com/84ym8m.png",
+    description: "Over-the-top admiration for something that looks stylish, pretty, or impressive",
+    aliases: ["so beautiful so elegant", "looking like a wow", "wow meme india"],
+    keywords: ["beautiful", "elegant", "stylish", "impressive", "wow"],
+    emotions: ["admiration", "excitement", "approval"],
+    scenarios: ["fashion reaction", "admiring look", "dramatic praise"]
+  },
+  {
+    id: "indian-parents",
+    name: "Indian Parents",
+    image: "https://i.imgflip.com/wqop7.jpg",
+    description: "Strict, exaggerated, or ultra-relatable Indian parent behavior",
+    aliases: ["desi parents", "strict parents meme", "indian mom dad meme"],
+    keywords: ["parents", "strict", "thappad", "study", "expectation"],
+    emotions: ["fear", "frustration", "relatability"],
+    scenarios: ["parent pressure", "family expectation", "desi household"]
+  },
+  {
+    id: "desi-parents",
+    name: "Desi Parents",
+    image: "https://i.imgflip.com/291ais.jpg",
+    description: "Classic desi-parent pressure around studies, careers, comparison, and respectability",
+    aliases: ["desi indian parents", "aunty uncle meme", "indian family pressure"],
+    keywords: ["desi", "parents", "comparison", "career", "doctor engineer"],
+    emotions: ["pressure", "annoyance", "resignation"],
+    scenarios: ["career pressure", "family comparison", "desi expectations"]
+  },
+  {
+    id: "binod",
+    name: "Dekh Raha Hai Binod",
+    image: "https://i.imgflip.com/2/6mrl56.jpg",
+    description: "Calling out something ridiculous in a deadpan, hyper-local, meme-aware way",
+    aliases: ["binod meme", "dekh raha hai binod", "indian reaction meme"],
+    keywords: ["ridiculous", "call out", "reaction", "binod", "viral india"],
+    emotions: ["disbelief", "sarcasm", "amusement"],
+    scenarios: ["reaction", "calling out nonsense", "meta internet joke"]
+  },
+  {
+    id: "indian-parents-pitai",
+    name: "Indian Parents Pitai",
+    image: "https://i.imgflip.com/58dief.png",
+    description: "An exaggerated Indian-parent punishment or scolding joke",
+    aliases: ["pitai meme", "thappad meme", "indian punishment meme"],
+    keywords: ["pitai", "punishment", "thappad", "scolding", "strict parents"],
+    emotions: ["fear", "panic", "dark humor"],
+    scenarios: ["getting scolded", "strict parenting", "family overreaction"]
+  },
+  {
+  id: "chud-gaye-guru",
+  name: "Chud Gaye Guru",
+  image: "/memes/indian/chud-gaye-guru.jpg",
+  description: "",
+  aliases: ["chud gaye guru"],
+  keywords: [],
+  emotions: [],
+  scenarios: [],
+},
+
+{
+  id: "doglapan",
+  name: "Doglapan",
+  image: "/memes/indian/doglapan.jpg",
+  description: "",
+  aliases: ["doglapan"],
+  keywords: [],
+  emotions: [],
+  scenarios: [],
+},
+
+{
+  id: "images-3",
+  name: "Images 3",
+  image: "/memes/indian/images (3).jpg",
+  description: "",
+  aliases: ["images 3"],
+  keywords: [],
+  emotions: [],
+  scenarios: [],
+},
+
+{
+  id: "mqdefault",
+  name: "Mqdefault",
+  image: "/memes/indian/mqdefault.jpg",
+  description: "",
+  aliases: ["mqdefault"],
+  keywords: [],
+  emotions: [],
+  scenarios: [],
+},
+
+{
+  id: "salman-khan-happy-to-sad-meme-template",
+  name: "Salman Khan Happy To Sad Meme Template",
+  image: "/memes/indian/salman khan happy to sad meme template.webp",       
+  description: "",
+  aliases: ["salman khan happy to sad meme template"],
+  keywords: [],
+  emotions: [],
+  scenarios: [],
+},
+
+{
+  id: "sitting-wolf",
+  name: "Sitting Wolf",
+  image: "/memes/indian/sitting-wolf.jpg",
+  description: "",
+  aliases: ["sitting wolf"],
+  keywords: [],
+  emotions: [],
+  scenarios: [],
+},
+
+{
+  id: "virat-kholio",
+  name: "Virat Kholio",
+  image: "/memes/indian/virat-kholio.jpg",
+  description: "",
+  aliases: ["virat kholio"],
+  keywords: [],
+  emotions: [],
+  scenarios: [],
+}
+
 ]

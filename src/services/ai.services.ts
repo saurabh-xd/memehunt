@@ -3,6 +3,8 @@ import { z } from "zod"
 import { google } from "@/lib/ai"
 import { MemeResult } from "@/types/meme"
 
+export const MEME_SELECTION_PROMPT_VERSION = "v1"
+
 const memeSelectionSchema = z.object({
   template: z.string(),
   confidence: z.number().min(0).max(1),
@@ -27,6 +29,7 @@ export async function chooseMeme(
   situation: string,
   candidates: MemeResult[]
 ) {
+  const candidateIds = candidates.map((meme) => meme.id).join(", ")
   const candidateList = candidates
     .map(formatCandidate)
     .join("\n\n")
@@ -36,7 +39,7 @@ export async function chooseMeme(
     schema: memeSelectionSchema,
     temperature: 0.2,
     prompt: `
-You are an expert meme template selector.
+You are an expert meme template selector. Prompt version: ${MEME_SELECTION_PROMPT_VERSION}.
 
 Your task is to choose the best meme template for the user's situation from the provided shortlist.
 
@@ -49,6 +52,9 @@ Selection rules:
 
 User request:
 ${situation}
+
+Allowed template IDs:
+${candidateIds}
 
 Candidate memes:
 ${candidateList}
