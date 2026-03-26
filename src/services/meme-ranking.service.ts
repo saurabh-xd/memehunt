@@ -58,7 +58,7 @@ export function getEnabledMemes() {
 }
 
 function getDirectValues(meme: MemeResult) {
-  return [meme.id, meme.name, ...meme.aliases].map(normalizeText)
+  return [meme.id, meme.name].map(normalizeText)
 }
 
 function findDirectMatch(situation: string, candidates: MemeResult[]) {
@@ -80,10 +80,7 @@ function scoreCandidate(situation: string, meme: MemeResult) {
     meme.id,
     meme.name,
     meme.description,
-    ...meme.aliases,
-    ...meme.keywords,
-    ...meme.emotions,
-    ...meme.scenarios,
+    meme.selectionNotes ?? "",
   ])
 
   let score = 0
@@ -95,21 +92,16 @@ function scoreCandidate(situation: string, meme: MemeResult) {
     else if (normalizedSituation.includes(value)) score += 20
   }
 
-  for (const phrase of [...meme.keywords, ...meme.emotions, ...meme.scenarios]) {
-    const normalizedPhrase = normalizeText(phrase)
-
-    if (normalizedPhrase && normalizedSituation.includes(normalizedPhrase)) {
-      score += normalizedPhrase.includes(" ") ? 8 : 5
-    }
-  }
-
   for (const token of situationTokens) {
     if (tokenFields.includes(token)) {
       score += 2
     }
   }
 
-  if (tokenize(meme.description).some((token) => situationTokens.includes(token))) {
+  if (
+    tokenize([meme.description, meme.selectionNotes ?? ""].join(" "))
+      .some((token) => situationTokens.includes(token))
+  ) {
     score += 4
   }
 

@@ -18,10 +18,7 @@ function formatCandidate(meme: MemeResult) {
     `id: ${meme.id}`,
     `name: ${meme.name}`,
     `description: ${meme.description}`,
-    `aliases: ${meme.aliases.join(", ")}`,
-    `keywords: ${meme.keywords.join(", ")}`,
-    `emotions: ${meme.emotions.join(", ")}`,
-    `scenarios: ${meme.scenarios.join(", ")}`
+    `best_fit: ${meme.selectionNotes ?? ""}`,
   ].join("\n")
 }
 
@@ -47,7 +44,7 @@ Selection rules:
 1. Pick exactly one template from the provided IDs.
 2. Prefer semantic fit over shallow keyword overlap.
 3. If the user explicitly names a meme style, prioritize that if it exists in the shortlist.
-4. Use the description, aliases, keywords, emotions, and scenarios together.
+4. Use the description and best_fit notes together.
 5. Keep confidence high only when the fit is clearly strong.
 
 User request:
