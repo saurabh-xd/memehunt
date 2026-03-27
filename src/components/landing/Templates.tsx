@@ -4,18 +4,17 @@ import { useMemo, useState } from "react"
 import Image from "next/image"
 import { Search } from "lucide-react"
 import { memes } from "@/data/meme"
-import { MemeResult } from "@/types/meme"
+import { useActiveTemplate } from "@/context/ActiveTemplateContext"
 
 type TemplatesProps = {
-  activeTemplateId?: string | null
-  onSelectTemplate: (template: MemeResult) => void
+  onTemplateSelect?: () => void
 }
 
 export default function Templates({
-  activeTemplateId,
-  onSelectTemplate,
+  onTemplateSelect,
 }: TemplatesProps) {
   const [query, setQuery] = useState("")
+  const { selectedTemplate, setSelectedTemplate } = useActiveTemplate()
 
   const filteredMemes = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase()
@@ -76,9 +75,12 @@ export default function Templates({
             <button
               key={meme.id}
               type="button"
-              onClick={() => onSelectTemplate(meme)}
+              onClick={() => {
+                setSelectedTemplate(meme)
+                onTemplateSelect?.()
+              }}
               className={`group overflow-hidden rounded-3xl border bg-card/70 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg cursor-pointer ${
-                activeTemplateId === meme.id
+                selectedTemplate?.id === meme.id
                   ? "border-foreground/40 ring-2 ring-foreground/10"
                   : "border-border/70"
               }`}

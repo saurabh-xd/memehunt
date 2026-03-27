@@ -3,7 +3,7 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/layout/navbar";
-import { ThemeProvider } from "@/components/common/theme-provider";
+import Providers from "@/components/providers/providers";
 import { Toaster } from "sonner";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
@@ -33,16 +33,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-        <Navbar/>
-        {children}
-        <Toaster richColors position="top-center" />
-        </ThemeProvider>
+        <Providers>
+          <Navbar/>
+          {children}
+          <Toaster richColors position="top-center" />
+        </Providers>
       </body>
     </html>
   );
