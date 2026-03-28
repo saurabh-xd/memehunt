@@ -14,7 +14,7 @@ export default function Templates({
   onTemplateSelect,
 }: TemplatesProps) {
   const [query, setQuery] = useState("")
-  const { selectedTemplate, setSelectedTemplate } = useActiveTemplate()
+  const { activeTemplateId, selectGalleryTemplate } = useActiveTemplate()
 
   const filteredMemes = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase()
@@ -76,11 +76,11 @@ export default function Templates({
               key={meme.id}
               type="button"
               onClick={() => {
-                setSelectedTemplate(meme)
+                selectGalleryTemplate(meme)
                 onTemplateSelect?.()
               }}
               className={`group overflow-hidden rounded-3xl border bg-card/70 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg cursor-pointer ${
-                selectedTemplate?.id === meme.id
+                activeTemplateId === meme.id
                   ? "border-foreground/40 ring-2 ring-foreground/10"
                   : "border-border/70"
               }`}

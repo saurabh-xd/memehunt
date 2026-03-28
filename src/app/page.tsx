@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, useEffect, useId, useRef, useState } from "react";
+import { ChangeEvent, useId, useRef, useState } from "react";
 import { Image as ImageIcon } from "lucide-react";
 import Header from "@/components/landing/Header";
 import MemeSearch from "@/components/landing/MemeSearch";
@@ -16,58 +16,29 @@ import { useActiveTemplate } from "@/context/ActiveTemplateContext";
 export default function Home() {
   const { data: session, isPending: isSessionPending } = useSession();
   const { incrementUsage, isLimitReached, limit, remainingUsage } = useGuestUsage();
-  const {situation, setSituation, template, isLoading, error, generate, clearTemplate} = useMemeGenerator(); //for api call
-  const { selectedTemplate, clearSelectedTemplate } = useActiveTemplate()
+  const {situation, setSituation, isLoading, error, generate, clearTemplate} = useMemeGenerator(); //for api call
+  const {
+    activeTemplateImage,
+    activeTemplateName,
+    hasActiveTemplate,
+    selectCustomTemplate,
+    selectGeneratedTemplate,
+    clearActiveTemplate,
+  } = useActiveTemplate()
 
   const uploadId = useId();
-  
-  const [customTemplateImage, setCustomTemplateImage] = useState<string | null>(
-    null,
-  );
-  const [customTemplateName, setCustomTemplateName] = useState<string | null>(
-    null,
-  );
   const editorRef = useRef<HTMLDivElement | null>(null);
 
   const [showSignInDialog, setShowSignInDialog] = useState(false);
-
-  useEffect(() => {
-    return () => {
-      if (customTemplateImage) {
-        URL.revokeObjectURL(customTemplateImage);
-      }
-    };
-  }, [customTemplateImage]);
 
   function handleCustomTemplateChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    if (customTemplateImage) {
-      URL.revokeObjectURL(customTemplateImage);
-    }
-
     const imageUrl = URL.createObjectURL(file);
-    setCustomTemplateImage(imageUrl);
-    setCustomTemplateName(file.name);
-    clearSelectedTemplate();
     clearTemplate();
+    selectCustomTemplate(imageUrl, file.name);
     event.target.value = "";
-  }
-
-  function clearCustomTemplate() {
-    if (customTemplateImage) {
-      URL.revokeObjectURL(customTemplateImage);
-    }
-
-    setCustomTemplateImage(null);
-    setCustomTemplateName(null);
-  }
-
-  function clearActiveTemplate() {
-    clearCustomTemplate();
-    clearTemplate();
-    clearSelectedTemplate();
   }
 
   function scrollToEditor() {
@@ -83,24 +54,19 @@ export default function Home() {
       return;
     }
 
-    clearCustomTemplate();
-    clearSelectedTemplate();
+    clearActiveTemplate();
     const generatedTemplate = await generate(e);
 
-    if (!generatedTemplate || session?.user) {
+    if (!generatedTemplate) {
       return;
     }
 
-    incrementUsage();
-  }
+    selectGeneratedTemplate(generatedTemplate);
 
-  const activeTemplateImage =
-    customTemplateImage ?? template?.image ?? selectedTemplate?.image ?? null;
-  const activeTemplateName =
-    customTemplateName ??
-    template?.name ??
-    selectedTemplate?.name ??
-    "Selected meme";
+    if (!session?.user) {
+      incrementUsage();
+    }
+  } 
 
   return (
     <main className="min-h-screen bg-background flex flex-col items-center pt-8 px-6 gap-10">
@@ -121,7 +87,7 @@ export default function Home() {
       )}
 
       <div ref={editorRef} className="w-full flex justify-center">
-        {!activeTemplateImage ?
+        {!hasActiveTemplate ?
           <div className="flex w-full max-w-2xl flex-col items-center gap-3 rounded-2xl border border-dashed border-border/70 bg-card/60 p-5 text-center">
             <div className="space-y-1">
               <h2 className="text-lg font-semibold">Use your own image</h2>
@@ -152,7 +118,7 @@ export default function Home() {
             <div className="flex items-center justify-between gap-4 border-b border-border/70 px-4 py-3">
               <div>
                 <p className="text-sm font-medium text-foreground">
-                  {activeTemplateName}
+                  {activeTemplateName ?? "Selected meme"}
                 </p>
                 <p className="text-xs text-muted-foreground">
                   Edit your loaded meme
@@ -181,7 +147,7 @@ export default function Home() {
       )}
 
       {/* Empty State */}
-      {!activeTemplateImage && !isLoading && !error && (
+      {!hasActiveTemplate && !isLoading && !error && (
         <div className="mt-16 flex flex-col items-center text-muted-foreground opacity-40">
           <ImageIcon className="w-16 h-16 mb-4" />
           <p>Your generated meme will appear here</p>
