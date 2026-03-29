@@ -167,7 +167,7 @@ export default function MemePreview({
                 layer={layer}
                 isSelected={activeImageId === layer.id}
                 onSelect={() => {
-                  setActiveTextId(null)
+                  onSelectText(null)
                   setActiveImageId(layer.id)
                 }}
                 onImageDrag={onImageDrag}

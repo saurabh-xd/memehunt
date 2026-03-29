@@ -49,7 +49,7 @@ export default function MemeEditor({
     >
      { !hasActiveTemplate ?
 
-       <div className="flex w-full max-w-md h-80 flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-border bg-card/60 p-5 text-center">
+       <div className="flex w-full max-w-md h-[400px] flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-border bg-card/60 p-5 text-center">
                   <div className="space-y-1">
                     <h2 className="text-lg font-semibold">Use your own image</h2>
                     <p className="text-sm text-muted-foreground">
@@ -75,7 +75,7 @@ export default function MemeEditor({
                     </Button>
                   </div>
                 </div>
-     :<div ref={containerRef} className="w-full max-w-[820px]">
+     :<div ref={containerRef} className="w-full max-w-md">
         <MemePreview
           image={image}
           stageRef={stageRef}
@@ -97,7 +97,6 @@ export default function MemeEditor({
         textLayers={textLayers}
         imageLayers={imageLayers}
         selectedTextLayer={selectedTextLayer}
-        selectedTextLayerId={selectedTextLayerId}
         selectTextLayer={setSelectedTextLayerId}
         updateTextLayer={updateTextLayer}
         updateTextLayerSize={updateTextLayerSize}

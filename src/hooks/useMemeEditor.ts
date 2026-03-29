@@ -11,7 +11,7 @@ const DEFAULT_BOTTOM_POSITION: Position = { x: TEXT_PADDING, y: 556 }
 const DEFAULT_FONT_SIZE = 44
 const MIN_IMAGE_SIZE = 48
 const MAX_STAGE_HEIGHT = 400
-const MAX_STAGE_WIDTH = 820
+const MAX_STAGE_WIDTH = 448
 
 function createInitialLayers(bottomY: number): MemeTextLayer[] {
   return [

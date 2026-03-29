@@ -66,7 +66,9 @@ export default function Home() {
   } 
 
   return (
-    <main className="min-h-screen bg-background flex flex-col items-center pt-8 px-6 gap-8">
+    <main className="min-h-screen bg-background flex flex-col items-center pt-6 px-6 gap-8">
+
+      
       <Header />
 
       <MemeSearch

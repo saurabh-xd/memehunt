@@ -10,7 +10,6 @@ type Props = {
   textLayers: MemeTextLayer[]
   imageLayers: MemeImageLayer[]
   selectedTextLayer: MemeTextLayer | null
-  selectedTextLayerId: string | null
   selectTextLayer: (id: string | null) => void
   updateTextLayer: (id: string, value: string) => void
   updateTextLayerSize: (id: string, value: number) => void
@@ -26,7 +25,6 @@ export default function MemeControls({
   textLayers,
   imageLayers,
   selectedTextLayer,
-  selectedTextLayerId,
   selectTextLayer,
   updateTextLayer,
   updateTextLayerSize,
