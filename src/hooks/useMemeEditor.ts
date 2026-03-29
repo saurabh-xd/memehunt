@@ -10,6 +10,7 @@ const DEFAULT_TOP_POSITION: Position = { x: TEXT_PADDING, y: 32 }
 const DEFAULT_BOTTOM_POSITION: Position = { x: TEXT_PADDING, y: 556 }
 const DEFAULT_FONT_SIZE = 44
 const MIN_IMAGE_SIZE = 48
+const MAX_STAGE_HEIGHT = 320
 
 function createInitialLayers(bottomY: number): MemeTextLayer[] {
   return [
@@ -50,11 +51,19 @@ export function useMemeEditor(templateImage: string) {
     return () => observer.disconnect()
   }, [])
 
+
+
   const naturalWidth = image?.width ?? 1200
   const naturalHeight = image?.height ?? 1200
   const aspectRatio = naturalWidth / naturalHeight
-  const stageHeight = Math.round(stageWidth / aspectRatio)
-  const exportScale = naturalWidth / stageWidth
+  const calculatedStageHeight = Math.round(stageWidth / aspectRatio)
+  const stageHeight = Math.min(calculatedStageHeight, MAX_STAGE_HEIGHT)
+  const renderWidth =
+    calculatedStageHeight > MAX_STAGE_HEIGHT
+      ? Math.round(stageHeight * aspectRatio)
+      : stageWidth
+  const exportScale = naturalWidth / renderWidth
+  const usableStageWidth = renderWidth
   const defaultBottomY = Math.max(stageHeight - DEFAULT_FONT_SIZE * 1.25 - 24, 32)
   const [textLayers, setTextLayers] = useState<MemeTextLayer[]>(() =>
     createInitialLayers(defaultBottomY)
@@ -62,7 +71,7 @@ export function useMemeEditor(templateImage: string) {
   const [imageLayers, setImageLayers] = useState<MemeImageLayer[]>([])
 
   function estimateTextBox(text: string, fontSize: number) {
-    const availableWidth = Math.max(stageWidth - TEXT_PADDING * 2, fontSize * 2)
+    const availableWidth = Math.max(usableStageWidth - TEXT_PADDING * 2, fontSize * 2)
     const estimatedTextWidth = Math.max(fontSize * 2, text.length * fontSize * 0.58)
     const estimatedLines = Math.max(1, Math.ceil(estimatedTextWidth / availableWidth))
     const estimatedTextHeight = estimatedLines * fontSize * 1.05
@@ -78,13 +87,13 @@ export function useMemeEditor(templateImage: string) {
     const { estimatedTextHeight, estimatedTextWidth } = estimateTextBox(text, fontSize)
 
     return {
-      x: Math.max(TEXT_PADDING, Math.min(position.x, stageWidth - estimatedTextWidth - TEXT_PADDING)),
+      x: Math.max(TEXT_PADDING, Math.min(position.x, usableStageWidth - estimatedTextWidth - TEXT_PADDING)),
       y: Math.max(TEXT_PADDING, Math.min(position.y, stageHeight - estimatedTextHeight - TEXT_PADDING)),
     }
   }
 
   function clampImageLayer(layer: MemeImageLayer): MemeImageLayer {
-    const width = Math.max(MIN_IMAGE_SIZE, Math.min(layer.width, stageWidth - TEXT_PADDING * 2))
+    const width = Math.max(MIN_IMAGE_SIZE, Math.min(layer.width, usableStageWidth - TEXT_PADDING * 2))
     const height = Math.max(MIN_IMAGE_SIZE, Math.min(layer.height, stageHeight - TEXT_PADDING * 2))
 
     return {
@@ -92,7 +101,7 @@ export function useMemeEditor(templateImage: string) {
       width,
       height,
       position: {
-        x: Math.max(TEXT_PADDING, Math.min(layer.position.x, stageWidth - width - TEXT_PADDING)),
+        x: Math.max(TEXT_PADDING, Math.min(layer.position.x, usableStageWidth - width - TEXT_PADDING)),
         y: Math.max(TEXT_PADDING, Math.min(layer.position.y, stageHeight - height - TEXT_PADDING)),
       },
     }
@@ -210,7 +219,7 @@ export function useMemeEditor(templateImage: string) {
           width,
           height,
           position: {
-            x: Math.max(TEXT_PADDING, Math.round((stageWidth - width) / 2)),
+            x: Math.max(TEXT_PADDING, Math.round((usableStageWidth - width) / 2)),
             y: Math.max(TEXT_PADDING, Math.round((stageHeight - height) / 2)),
           },
         }),
@@ -311,7 +320,7 @@ export function useMemeEditor(templateImage: string) {
     removeTextLayer,
     stageHeight,
     stageRef,
-    stageWidth,
+    stageWidth: renderWidth,
     textLayers: visibleTextLayers,
     updateTextLayer,
     updateTextLayerSize,

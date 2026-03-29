@@ -5,12 +5,39 @@ import MemeControls from "./MemeControls";
 import { useMemeEditor } from "@/hooks/useMemeEditor";
 import { Button } from "../ui/button";
 
+type MemeEditorProps = {
+  templateImage: string | null;
+  hasActiveTemplate: boolean;
+  uploadId: string;
+  handleCustomTemplateChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
 export default function MemeEditor({
-  templateImage, hasActiveTemplate, uploadId, handleCustomTemplateChange
-}: {
-  templateImage: string;
-}) {
-  const editor = useMemeEditor(templateImage);
+  templateImage,
+  hasActiveTemplate,
+  uploadId,
+  handleCustomTemplateChange,
+}: MemeEditorProps) {
+  const {
+    addImageLayer,
+    addTextLayer,
+    containerRef,
+    handleDownload,
+    handleImageDrag,
+    handleImageResize,
+    handleReset,
+    handleTextDrag,
+    image,
+    imageLayers,
+    removeImageLayer,
+    removeTextLayer,
+    stageHeight,
+    stageRef,
+    stageWidth,
+    textLayers,
+    updateTextLayer,
+    updateTextLayerSize,
+  } = useMemeEditor(templateImage ?? "");
 
   return (
     <section
@@ -45,32 +72,34 @@ export default function MemeEditor({
                     </Button>
                   </div>
                 </div>
-     :<MemePreview
-        image={editor.image}
-        containerRef={editor.containerRef}
-        stageRef={editor.stageRef}
-        stageWidth={editor.stageWidth}
-        stageHeight={editor.stageHeight}
-        textLayers={editor.textLayers}
-        imageLayers={editor.imageLayers}
-        onTextDrag={editor.handleTextDrag}
-        onImageDrag={editor.handleImageDrag}
-        onImageResize={editor.handleImageResize}
-      />
+     :<div ref={containerRef} className="w-full max-w-[700px]">
+        <MemePreview
+          image={image}
+          stageRef={stageRef}
+          stageWidth={stageWidth}
+          stageHeight={stageHeight}
+          textLayers={textLayers}
+          imageLayers={imageLayers}
+          onTextDrag={handleTextDrag}
+          onImageDrag={handleImageDrag}
+          onImageResize={handleImageResize}
+          downloadMeme={handleDownload}
+          resetMeme={handleReset}
+        />
+      </div>
 
      }
 
       <MemeControls
-        textLayers={editor.textLayers}
-        imageLayers={editor.imageLayers}
-        updateTextLayer={editor.updateTextLayer}
-        updateTextLayerSize={editor.updateTextLayerSize}
-        addTextLayer={editor.addTextLayer}
-        addImageLayer={editor.addImageLayer}
-        removeTextLayer={editor.removeTextLayer}
-        removeImageLayer={editor.removeImageLayer}
-        downloadMeme={editor.handleDownload}
-        resetMeme={editor.handleReset}
+        textLayers={textLayers}
+        imageLayers={imageLayers}
+        updateTextLayer={updateTextLayer}
+        updateTextLayerSize={updateTextLayerSize}
+        addTextLayer={addTextLayer}
+        addImageLayer={addImageLayer}
+        removeTextLayer={removeTextLayer}
+        removeImageLayer={removeImageLayer}
+       
       />
     </section>
   );

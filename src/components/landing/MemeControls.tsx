@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useId } from "react"
 import { MemeImageLayer, MemeTextLayer } from "@/types/meme"
-import { Download, ImagePlus, Plus, RotateCcw, X } from "lucide-react"
+import { ImagePlus, Plus, X } from "lucide-react"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 
@@ -15,8 +15,7 @@ type Props = {
   addImageLayer: (file: File) => Promise<void>
   removeTextLayer: (id: string) => void
   removeImageLayer: (id: string) => void
-  downloadMeme: () => void
-  resetMeme: () => void
+  
 }
 
 export default function MemeControls({
@@ -28,8 +27,6 @@ export default function MemeControls({
   addImageLayer,
   removeTextLayer,
   removeImageLayer,
-  downloadMeme,
-  resetMeme,
 }: Props) {
   const imageUploadId = useId()
 
@@ -159,16 +156,7 @@ export default function MemeControls({
 
       </div>
 
-      <div className="flex flex-col gap-3 sm:flex-row">
-        <Button type="button" className="h-12 flex-1 rounded-2xl" onClick={downloadMeme}>
-          <Download className="size-4" />
-          Download Meme
-        </Button>
-        <Button type="button" variant="outline" className="h-12 rounded-2xl" onClick={resetMeme}>
-          <RotateCcw className="size-4" />
-          Reset
-        </Button>
-      </div>
+     
     </div>
   )
 }

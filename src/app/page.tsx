@@ -1,11 +1,9 @@
 "use client";
 import { ChangeEvent, useId, useRef, useState } from "react";
-import { Image as ImageIcon } from "lucide-react";
 import Header from "@/components/landing/Header";
 import MemeSearch from "@/components/landing/MemeSearch";
 import { useMemeGenerator } from "@/hooks/useMemeGenerator";
 import MemeEditor from "@/components/landing/meme-editor";
-import { Button } from "@/components/ui/button";
 import { useSession } from "@/lib/auth-client";
 import { useGuestUsage } from "@/hooks/useGuestUsage";
 
@@ -14,12 +12,11 @@ import SignInDialog from "@/components/signInDialog";
 import { useActiveTemplate } from "@/context/ActiveTemplateContext";
 
 export default function Home() {
-  const { data: session, isPending: isSessionPending } = useSession();
-  const { incrementUsage, isLimitReached, limit, remainingUsage } = useGuestUsage();
+  const { data: session } = useSession();
+  const { incrementUsage, isLimitReached, limit } = useGuestUsage();
   const {situation, setSituation, isLoading, error, generate, clearTemplate} = useMemeGenerator(); //for api call
   const {
     activeTemplateImage,
-    activeTemplateName,
     hasActiveTemplate,
     selectCustomTemplate,
     selectGeneratedTemplate,
@@ -69,7 +66,7 @@ export default function Home() {
   } 
 
   return (
-    <main className="min-h-screen bg-background flex flex-col items-center pt-8 px-6 gap-10">
+    <main className="min-h-screen bg-background flex flex-col items-center pt-8 px-6 gap-8">
       <Header />
 
       <MemeSearch

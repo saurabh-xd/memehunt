@@ -6,10 +6,11 @@ import type { RefObject } from "react"
 import { Image as KonvaImage, Layer, Stage, Text, Transformer } from "react-konva"
 import useImage from "use-image"
 import { MemeImageLayer, MemeTextLayer } from "@/types/meme"
+import { Button } from "../ui/button"
+import { Download, RotateCcw } from "lucide-react"
 
 type Props = {
   image: HTMLImageElement | undefined
-  containerRef: RefObject<HTMLDivElement | null>
   stageRef: RefObject<import("konva/lib/Stage").Stage | null>
   stageWidth: number
   stageHeight: number
@@ -18,6 +19,8 @@ type Props = {
   onTextDrag: (id: string, position: { x: number; y: number }) => void
   onImageDrag: (id: string, position: { x: number; y: number }) => void
   onImageResize: (id: string, size: { width: number; height: number; x: number; y: number }) => void
+  downloadMeme: () => void
+  resetMeme: () => void
 }
 
 function EditableImageLayer({
@@ -101,7 +104,6 @@ function EditableImageLayer({
 
 export default function MemePreview({
   image,
-  containerRef,
   stageRef,
   stageWidth,
   stageHeight,
@@ -110,6 +112,8 @@ export default function MemePreview({
   onTextDrag,
   onImageDrag,
   onImageResize,
+    downloadMeme,
+  resetMeme,
 }: Props) {
   const [activeTextId, setActiveTextId] = useState<string | null>(null)
   const [activeImageId, setActiveImageId] = useState<string | null>(null)
@@ -136,10 +140,9 @@ export default function MemePreview({
 
   return (
     <div
-      ref={containerRef}
-      className="w-full max-w-[560px] rounded-[2rem] border border-border/60 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.16),_transparent_58%),linear-gradient(180deg,rgba(15,23,42,0.06),rgba(15,23,42,0.02))] p-4 shadow-[0_24px_80px_-40px_rgba(15,23,42,0.6)]"
+      className="mx-auto flex w-fit max-w-full flex-col gap-2"
     >
-      <div className="overflow-hidden rounded-[1.5rem] border border-black/10 bg-black/5">
+      <div className="overflow-hidden rounded-[1.5rem] border bg-card border-black/10 bg-black/5">
         <Stage
           ref={stageRef}
           width={stageWidth}
@@ -204,6 +207,17 @@ export default function MemePreview({
             ))}
           </Layer>
         </Stage>
+      </div>
+
+       <div className="flex flex-col gap-3 sm:flex-row">
+        <Button type="button" className="h-12 flex-1 rounded-2xl" onClick={downloadMeme}>
+          <Download className="size-4" />
+          Download Meme
+        </Button>
+        <Button type="button" variant="outline" className="h-12 rounded-2xl" onClick={resetMeme}>
+          <RotateCcw className="size-4" />
+          Reset
+        </Button>
       </div>
     </div>
   )
