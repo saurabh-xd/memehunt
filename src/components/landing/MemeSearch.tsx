@@ -20,7 +20,7 @@ export default function MemeSearch({
     <form onSubmit={generate} className="flex w-full max-w-2xl gap-2">
       <Input
         className="h-14 text-lg rounded-xl shadow-sm"
-        placeholder="e.g., When you fix one bug but create three more..."
+        placeholder="When you fix one bug but create three more..."
         value={situation}
         onChange={(e) => setSituation(e.target.value)}
       />

@@ -79,79 +79,22 @@ export default function Home() {
         setSituation={setSituation}
       />
 
-      {!session?.user && !isSessionPending && (
-        <div className="rounded-full border border-border/70 bg-card/70 px-4 py-2 text-sm text-muted-foreground">
-          Free AI generations left:{" "}
-          <span className="font-medium text-foreground">{remainingUsage}</span>
-        </div>
-      )}
 
-      <div ref={editorRef} className="w-full flex justify-center">
-        {!hasActiveTemplate ?
-          <div className="flex w-full max-w-2xl flex-col items-center gap-3 rounded-2xl border border-dashed border-border/70 bg-card/60 p-5 text-center">
-            <div className="space-y-1">
-              <h2 className="text-lg font-semibold">Use your own image</h2>
-              <p className="text-sm text-muted-foreground">
-                Upload a local image or template and edit it just like generated
-                memes.
-              </p>
-            </div>
+      <div ref={editorRef} className="w-full  flex justify-center ">
 
-            <div className="flex flex-col items-center gap-3 sm:flex-row">
-              <input
-                id={uploadId}
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handleCustomTemplateChange}
-              />
-              <Button
-                type="button"
-                asChild
-                className="cursor-pointer rounded-xl"
-              >
-                <label htmlFor={uploadId}>Upload Custom Image</label>
-              </Button>
-            </div>
+      
+         
+           
+              <MemeEditor templateImage={activeTemplateImage} hasActiveTemplate={hasActiveTemplate} uploadId={uploadId} handleCustomTemplateChange={handleCustomTemplateChange}/>
+            
           </div>
-        : <div className="w-full max-w-6xl overflow-hidden rounded-2xl border border-border/70 bg-card/70 px-4 py-5 sm:px-6">
-            <div className="flex items-center justify-between gap-4 border-b border-border/70 px-4 py-3">
-              <div>
-                <p className="text-sm font-medium text-foreground">
-                  {activeTemplateName ?? "Selected meme"}
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  Edit your loaded meme
-                </p>
-              </div>
-              <Button
-                type="button"
-                variant="outline"
-                className="rounded-xl"
-                onClick={clearActiveTemplate}
-              >
-                Remove Template
-              </Button>
-            </div>
-            <div className="pt-5">
-              <MemeEditor templateImage={activeTemplateImage} />
-            </div>
-          </div>
-        }
-      </div>
+        
+
 
       {error && (
         <p className="text-sm text-destructive bg-destructive/10 py-2 px-4 rounded-md">
           {error}
         </p>
-      )}
-
-      {/* Empty State */}
-      {!hasActiveTemplate && !isLoading && !error && (
-        <div className="mt-16 flex flex-col items-center text-muted-foreground opacity-40">
-          <ImageIcon className="w-16 h-16 mb-4" />
-          <p>Your generated meme will appear here</p>
-        </div>
       )}
 
       <SignInDialog

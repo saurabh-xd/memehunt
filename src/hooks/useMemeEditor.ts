@@ -43,7 +43,7 @@ export function useMemeEditor(templateImage: string) {
     const element = containerRef.current
     const observer = new ResizeObserver((entries) => {
       const nextWidth = entries[0]?.contentRect.width ?? 520
-      setStageWidth(Math.max(280, Math.min(nextWidth, 560)))
+      setStageWidth(Math.max(280, Math.min(nextWidth, 700)))
     })
 
     observer.observe(element)
