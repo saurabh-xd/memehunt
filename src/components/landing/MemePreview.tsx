@@ -6,8 +6,6 @@ import type { RefObject } from "react"
 import { Image as KonvaImage, Layer, Stage, Text, Transformer } from "react-konva"
 import useImage from "use-image"
 import { MemeImageLayer, MemeTextLayer } from "@/types/meme"
-import { Button } from "../ui/button"
-import { Download, RotateCcw } from "lucide-react"
 
 type Props = {
   image: HTMLImageElement | undefined
@@ -16,11 +14,11 @@ type Props = {
   stageHeight: number
   textLayers: MemeTextLayer[]
   imageLayers: MemeImageLayer[]
+  selectedTextLayerId: string | null
   onTextDrag: (id: string, position: { x: number; y: number }) => void
   onImageDrag: (id: string, position: { x: number; y: number }) => void
   onImageResize: (id: string, size: { width: number; height: number; x: number; y: number }) => void
-  downloadMeme: () => void
-  resetMeme: () => void
+  onSelectText: (id: string | null) => void
 }
 
 function EditableImageLayer({
@@ -109,13 +107,12 @@ export default function MemePreview({
   stageHeight,
   textLayers,
   imageLayers,
+  selectedTextLayerId,
   onTextDrag,
   onImageDrag,
   onImageResize,
-    downloadMeme,
-  resetMeme,
+  onSelectText,
 }: Props) {
-  const [activeTextId, setActiveTextId] = useState<string | null>(null)
   const [activeImageId, setActiveImageId] = useState<string | null>(null)
 
   function setStageCursor(cursor: string) {
@@ -151,7 +148,7 @@ export default function MemePreview({
           onMouseDown={(event) => {
             if (event.target === event.target.getStage()) {
               setActiveImageId(null)
-              setActiveTextId(null)
+              onSelectText(null)
             }
           }}
         >
@@ -187,37 +184,32 @@ export default function MemePreview({
                 fontSize={layer.fontSize}
                 {...sharedTextProps}
                 strokeWidth={Math.max(0.35, layer.fontSize * 0.013)}
-                opacity={activeTextId === layer.id ? 0.88 : 1}
-                scaleX={activeTextId === layer.id ? 1.02 : 1}
-                scaleY={activeTextId === layer.id ? 1.02 : 1}
+                opacity={selectedTextLayerId === layer.id ? 0.88 : 1}
+                scaleX={selectedTextLayerId === layer.id ? 1.02 : 1}
+                scaleY={selectedTextLayerId === layer.id ? 1.02 : 1}
                 draggable
                 onDragStart={() => {
                   setActiveImageId(null)
-                  setActiveTextId(layer.id)
+                  onSelectText(layer.id)
                 }}
                 onDragMove={(event) =>
                   onTextDrag(layer.id, { x: event.target.x(), y: event.target.y() })
                 }
-                onDragEnd={() => setActiveTextId(null)}
+                onDragEnd={() => onSelectText(layer.id)}
                 onMouseEnter={() => setStageCursor("pointer")}
                 onMouseLeave={() => setStageCursor("default")}
-                onClick={() => setActiveImageId(null)}
-                onTap={() => setActiveImageId(null)}
+                onClick={() => {
+                  setActiveImageId(null)
+                  onSelectText(layer.id)
+                }}
+                onTap={() => {
+                  setActiveImageId(null)
+                  onSelectText(layer.id)
+                }}
               />
             ))}
           </Layer>
         </Stage>
-      </div>
-
-       <div className="flex flex-col gap-3 sm:flex-row">
-        <Button type="button" className="h-12 flex-1 rounded-2xl" onClick={downloadMeme}>
-          <Download className="size-4" />
-          Download Meme
-        </Button>
-        <Button type="button" variant="outline" className="h-12 rounded-2xl" onClick={resetMeme}>
-          <RotateCcw className="size-4" />
-          Reset
-        </Button>
       </div>
     </div>
   )

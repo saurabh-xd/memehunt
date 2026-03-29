@@ -10,7 +10,8 @@ const DEFAULT_TOP_POSITION: Position = { x: TEXT_PADDING, y: 32 }
 const DEFAULT_BOTTOM_POSITION: Position = { x: TEXT_PADDING, y: 556 }
 const DEFAULT_FONT_SIZE = 44
 const MIN_IMAGE_SIZE = 48
-const MAX_STAGE_HEIGHT = 320
+const MAX_STAGE_HEIGHT = 400
+const MAX_STAGE_WIDTH = 820
 
 function createInitialLayers(bottomY: number): MemeTextLayer[] {
   return [
@@ -44,7 +45,7 @@ export function useMemeEditor(templateImage: string) {
     const element = containerRef.current
     const observer = new ResizeObserver((entries) => {
       const nextWidth = entries[0]?.contentRect.width ?? 520
-      setStageWidth(Math.max(280, Math.min(nextWidth, 700)))
+      setStageWidth(Math.max(280, Math.min(nextWidth, MAX_STAGE_WIDTH)))
     })
 
     observer.observe(element)
@@ -69,6 +70,7 @@ export function useMemeEditor(templateImage: string) {
     createInitialLayers(defaultBottomY)
   )
   const [imageLayers, setImageLayers] = useState<MemeImageLayer[]>([])
+  const [selectedTextLayerId, setSelectedTextLayerId] = useState<string | null>("text-1")
 
   function estimateTextBox(text: string, fontSize: number) {
     const availableWidth = Math.max(usableStageWidth - TEXT_PADDING * 2, fontSize * 2)
@@ -128,6 +130,7 @@ export function useMemeEditor(templateImage: string) {
   const visibleImageLayers = imageLayers.map((layer) => clampImageLayer(layer))
 
   function updateTextLayer(id: string, text: string) {
+    setSelectedTextLayerId(id)
     setTextLayers((current) =>
       current.map((layer) =>
         layer.id === id
@@ -142,6 +145,7 @@ export function useMemeEditor(templateImage: string) {
   }
 
   function updateTextLayerSize(id: string, fontSize: number) {
+    setSelectedTextLayerId(id)
     setTextLayers((current) =>
       current.map((layer) =>
         layer.id === id
@@ -156,6 +160,7 @@ export function useMemeEditor(templateImage: string) {
   }
 
   function handleTextDrag(id: string, position: Position) {
+    setSelectedTextLayerId(id)
     setTextLayers((current) =>
       current.map((layer) =>
         layer.id === id
@@ -167,6 +172,7 @@ export function useMemeEditor(templateImage: string) {
 
   function addTextLayer() {
     const nextIndex = nextLayerIndexRef.current
+    const nextId = `text-${nextIndex}`
     const centeredPosition = clampTextPosition(
       {
         x: TEXT_PADDING,
@@ -182,12 +188,13 @@ export function useMemeEditor(templateImage: string) {
     setTextLayers((current) => [
       ...current,
       {
-        id: `text-${nextIndex}`,
+        id: nextId,
         text: "",
         fontSize: DEFAULT_FONT_SIZE,
         position: centeredPosition,
       },
     ])
+    setSelectedTextLayerId(nextId)
 
     nextLayerIndexRef.current += 1
   }
@@ -234,7 +241,11 @@ export function useMemeEditor(templateImage: string) {
   function removeTextLayer(id: string) {
     setTextLayers((current) => {
       if (current.length <= 2) return current
-      return current.filter((layer) => layer.id !== id)
+      const nextLayers = current.filter((layer) => layer.id !== id)
+      setSelectedTextLayerId((selectedId) =>
+        selectedId === id ? (nextLayers[0]?.id ?? null) : selectedId
+      )
+      return nextLayers
     })
   }
 
@@ -286,9 +297,15 @@ export function useMemeEditor(templateImage: string) {
       current.forEach((layer) => URL.revokeObjectURL(layer.src))
       return []
     })
+    setSelectedTextLayerId("text-1")
     nextLayerIndexRef.current = 3
     nextImageLayerIndexRef.current = 1
   }
+
+  const selectedTextLayer =
+    visibleTextLayers.find((layer) => layer.id === selectedTextLayerId) ??
+    visibleTextLayers[0] ??
+    null
 
   useEffect(() => {
     return () => {
@@ -318,6 +335,9 @@ export function useMemeEditor(templateImage: string) {
     imageLayers: visibleImageLayers,
     removeImageLayer,
     removeTextLayer,
+    selectedTextLayer,
+    selectedTextLayerId,
+    setSelectedTextLayerId,
     stageHeight,
     stageRef,
     stageWidth: renderWidth,

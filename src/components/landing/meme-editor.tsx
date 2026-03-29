@@ -31,6 +31,9 @@ export default function MemeEditor({
     imageLayers,
     removeImageLayer,
     removeTextLayer,
+    selectedTextLayer,
+    selectedTextLayerId,
+    setSelectedTextLayerId,
     stageHeight,
     stageRef,
     stageWidth,
@@ -72,7 +75,7 @@ export default function MemeEditor({
                     </Button>
                   </div>
                 </div>
-     :<div ref={containerRef} className="w-full max-w-[700px]">
+     :<div ref={containerRef} className="w-full max-w-[820px]">
         <MemePreview
           image={image}
           stageRef={stageRef}
@@ -80,11 +83,11 @@ export default function MemeEditor({
           stageHeight={stageHeight}
           textLayers={textLayers}
           imageLayers={imageLayers}
+          selectedTextLayerId={selectedTextLayerId}
           onTextDrag={handleTextDrag}
           onImageDrag={handleImageDrag}
           onImageResize={handleImageResize}
-          downloadMeme={handleDownload}
-          resetMeme={handleReset}
+          onSelectText={setSelectedTextLayerId}
         />
       </div>
 
@@ -93,13 +96,17 @@ export default function MemeEditor({
       <MemeControls
         textLayers={textLayers}
         imageLayers={imageLayers}
+        selectedTextLayer={selectedTextLayer}
+        selectedTextLayerId={selectedTextLayerId}
+        selectTextLayer={setSelectedTextLayerId}
         updateTextLayer={updateTextLayer}
         updateTextLayerSize={updateTextLayerSize}
         addTextLayer={addTextLayer}
         addImageLayer={addImageLayer}
         removeTextLayer={removeTextLayer}
         removeImageLayer={removeImageLayer}
-       
+        downloadMeme={handleDownload}
+        resetMeme={handleReset}
       />
     </section>
   );
