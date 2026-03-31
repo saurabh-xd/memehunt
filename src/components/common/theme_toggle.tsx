@@ -9,7 +9,7 @@ export function ModeToggle() {
 
   return (
     <Button
-            variant="outline"
+            variant="ghost"
             size="icon"
             className="rounded-3xl cursor-pointer hover:text-foreground"
             onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
