@@ -5,6 +5,17 @@ import Image from "next/image"
 import { Search } from "lucide-react"
 import { memes } from "@/data/meme"
 import { useActiveTemplate } from "@/context/ActiveTemplateContext"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
+
+const PAGE_SIZE = 20
 
 type TemplatesProps = {
   onTemplateSelect?: () => void
@@ -13,6 +24,8 @@ type TemplatesProps = {
 export default function Templates({
   onTemplateSelect,
 }: TemplatesProps) {
+
+  const [currentPage, setCurrentPage] = useState(1)
   const [query, setQuery] = useState("")
   const { activeTemplateId, selectGalleryTemplate } = useActiveTemplate()
 
@@ -32,26 +45,34 @@ export default function Templates({
     )
   }, [query])
 
+  const totalPages = Math.max(1, Math.ceil(filteredMemes.length / PAGE_SIZE))
+  const safeCurrentPage = Math.min(currentPage, totalPages)
+  const startIndex = (safeCurrentPage - 1) * PAGE_SIZE
+  const visibleMemes = filteredMemes.slice(startIndex, startIndex + PAGE_SIZE)
+
+  const pageItems = useMemo(() => {
+    if (totalPages <= 5) {
+      return Array.from({ length: totalPages }, (_, index) => index + 1)
+    }
+
+    if (safeCurrentPage <= 3) {
+      return [1, 2, 3, 4, "ellipsis", totalPages]
+    }
+
+    if (safeCurrentPage >= totalPages - 2) {
+      return [1, "ellipsis", totalPages - 3, totalPages - 2, totalPages - 1, totalPages]
+    }
+
+    return [1, "ellipsis", safeCurrentPage - 1, safeCurrentPage, safeCurrentPage + 1, "ellipsis", totalPages]
+  }, [safeCurrentPage, totalPages])
+
   return (
     <section className="w-full max-w-7xl space-y-5 pb-12">
-      <div className="space-y-2">
+      <div >
         <p className="text-sm font-medium uppercase tracking-[0.24em] text-muted-foreground/80">
           Explore Templates
         </p>
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div className="space-y-1">
-            <h2 className="text-2xl font-semibold tracking-tight text-foreground">
-              Browse the full meme library
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              Search by template name or vibe and preview every meme image in one place.
-            </p>
-          </div>
-
-          <div className="text-sm text-muted-foreground">
-            {filteredMemes.length} template{filteredMemes.length === 1 ? "" : "s"}
-          </div>
-        </div>
+       
       </div>
 
       <div className="relative max-w-md">
@@ -59,19 +80,22 @@ export default function Templates({
         <input
           type="text"
           value={query}
-          onChange={(event) => setQuery(event.target.value)}
+          onChange={(event) => {
+            setQuery(event.target.value)
+            setCurrentPage(1)
+          }}
           placeholder="Search templates..."
           className="h-12 w-full rounded-2xl border border-border/70 bg-card/70 pl-11 pr-4 text-sm outline-none transition focus:border-foreground/30"
         />
       </div>
 
-      {filteredMemes.length === 0 ? (
+      {visibleMemes.length === 0 ? (
         <div className="rounded-3xl border border-dashed border-border/70 bg-card/50 px-6 py-12 text-center text-sm text-muted-foreground">
           No templates matched your search.
         </div>
       ) : (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {filteredMemes.map((meme) => (
+          {visibleMemes.map((meme) => (
             <button
               key={meme.id}
               type="button"
@@ -79,7 +103,7 @@ export default function Templates({
                 selectGalleryTemplate(meme)
                 onTemplateSelect?.()
               }}
-              className={`group overflow-hidden rounded-3xl border bg-card/70 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg cursor-pointer ${
+              className={`group overflow-hidden h-60 rounded-xl border bg-card/70 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg cursor-pointer ${
                 activeTemplateId === meme.id
                   ? "border-foreground/40 ring-2 ring-foreground/10"
                   : "border-border/70"
@@ -91,7 +115,7 @@ export default function Templates({
                   alt={meme.name}
                   fill
                   sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
-                  className="object-cover transition duration-300 group-hover:scale-[1.03]"
+                  className="object-cover transition duration-300 "
                 />
               </div>
 
@@ -103,6 +127,57 @@ export default function Templates({
             </button>
           ))}
         </div>
+      )}
+
+      {filteredMemes.length > PAGE_SIZE && (
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                href="#templates"
+                aria-disabled={safeCurrentPage === 1}
+                className={safeCurrentPage === 1 ? "pointer-events-none opacity-40" : ""}
+                onClick={(event) => {
+                  event.preventDefault()
+                  if (safeCurrentPage === 1) return
+                  setCurrentPage((page) => Math.max(1, page - 1))
+                }}
+              />
+            </PaginationItem>
+
+            {pageItems.map((item, index) => (
+              <PaginationItem key={`${item}-${index}`}>
+                {item === "ellipsis" ? (
+                  <PaginationEllipsis />
+                ) : (
+                  <PaginationLink
+                    href="#templates"
+                    isActive={safeCurrentPage === item}
+                    onClick={(event) => {
+                      event.preventDefault()
+                      setCurrentPage(item as number)
+                    }}
+                  >
+                    {item}
+                  </PaginationLink>
+                )}
+              </PaginationItem>
+            ))}
+
+            <PaginationItem>
+              <PaginationNext
+                href="#templates"
+                aria-disabled={safeCurrentPage === totalPages}
+                className={safeCurrentPage === totalPages ? "pointer-events-none opacity-40" : ""}
+                onClick={(event) => {
+                  event.preventDefault()
+                  if (safeCurrentPage === totalPages) return
+                  setCurrentPage((page) => Math.min(totalPages, page + 1))
+                }}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       )}
     </section>
   )

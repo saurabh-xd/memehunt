@@ -6,7 +6,6 @@ import { signOut, useSession } from "@/lib/auth-client"
 import { useRouter } from "next/navigation"
 import {  Loader2 } from "lucide-react"
 import { GithubIcon } from "../githubIcon"
-import Image from "next/image"
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
 import Link from "next/link"
 
