@@ -94,7 +94,7 @@ export default function Templates({
           No templates matched your search.
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {visibleMemes.map((meme) => (
             <button
               key={meme.id}
@@ -109,7 +109,7 @@ export default function Templates({
                   : "border-border/70"
               }`}
             >
-              <div className="relative aspect-[4/5] overflow-hidden bg-muted/40">
+              <div className="relative aspect-square overflow-hidden bg-muted/40">
                 <Image
                   src={meme.image}
                   alt={meme.name}
@@ -119,11 +119,7 @@ export default function Templates({
                 />
               </div>
 
-              <div className=" px-4 py-3">
-                <h3 className="line-clamp-1 text-sm font-semibold text-center text-foreground">
-                  {meme.name}
-                </h3>
-              </div>
+            
             </button>
           ))}
         </div>
