@@ -135,6 +135,22 @@ export default function MemePreview({
     align: "center" as const,
   }
 
+  const watermarkText = "MemeHunt"
+  const watermarkPadding = Math.max(10, Math.round(Math.min(stageWidth, stageHeight) * 0.03))
+  const watermarkFontSize = Math.max(
+    9,
+    Math.min(14, Math.round(Math.min(stageWidth, stageHeight) * 0.04))
+  )
+  const watermarkWidth = Math.min(
+    stageWidth - watermarkPadding * 2,
+    Math.round(watermarkText.length * watermarkFontSize * 0.72)
+  )
+  const watermarkX = watermarkPadding
+  const watermarkY = Math.max(
+    watermarkPadding,
+    stageHeight - watermarkPadding - Math.round(watermarkFontSize * 1.15)
+  )
+
   return (
     <div
       className="mx-auto flex w-fit max-w-full flex-col gap-2"
@@ -208,6 +224,25 @@ export default function MemePreview({
                 }}
               />
             ))}
+
+            {image && (
+              <Text
+                text={watermarkText}
+                x={watermarkX}
+                y={watermarkY}
+                width={watermarkWidth}
+                align="left"
+                fontSize={watermarkFontSize}
+                fontFamily="Inter, Arial, sans-serif"
+                fontStyle="bold"
+                fill="rgba(255, 255, 255, 0.55)"
+                shadowColor="rgba(0, 0, 0, 0.35)"
+                shadowBlur={2}
+                shadowOffset={{ x: 0, y: 1 }}
+                shadowOpacity={0.4}
+                listening={false}
+              />
+            )}
           </Layer>
         </Stage>
       </div>

@@ -46,7 +46,7 @@ export default function MemeControls({
   }
 
   return (
-    <div className="flex w-full max-w-lg flex-col gap-6 rounded-[2rem] border border-border/60 bg-card/80 p-5 shadow-[0_18px_60px_-40px_rgba(15,23,42,0.55)] backdrop-blur lg:flex-none">
+    <div className="flex w-full max-w-lg flex-col gap-6 rounded-[2rem] border border-border/60 bg-card/80 p-5 py-7 shadow-[0_18px_60px_-40px_rgba(15,23,42,0.55)] backdrop-blur lg:flex-none">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         
           <h3 className="text-lg font-semibold">Editor Controls</h3>
