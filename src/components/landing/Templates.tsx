@@ -1,19 +1,10 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import Image from "next/image"
 import { Search } from "lucide-react"
 import { memes } from "@/data/meme"
 import { useActiveTemplate } from "@/context/ActiveTemplateContext"
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination"
 
 const PAGE_SIZE = 20
 
@@ -24,10 +15,10 @@ type TemplatesProps = {
 export default function Templates({
   onTemplateSelect,
 }: TemplatesProps) {
-
-  const [currentPage, setCurrentPage] = useState(1)
   const [query, setQuery] = useState("")
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
   const { activeTemplateId, selectGalleryTemplate } = useActiveTemplate()
+  const loadMoreRef = useRef<HTMLDivElement | null>(null)
 
   const filteredMemes = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase()
@@ -45,34 +36,34 @@ export default function Templates({
     )
   }, [query])
 
-  const totalPages = Math.max(1, Math.ceil(filteredMemes.length / PAGE_SIZE))
-  const safeCurrentPage = Math.min(currentPage, totalPages)
-  const startIndex = (safeCurrentPage - 1) * PAGE_SIZE
-  const visibleMemes = filteredMemes.slice(startIndex, startIndex + PAGE_SIZE)
+  const visibleMemes = filteredMemes.slice(0, visibleCount)
+  const hasMoreTemplates = visibleCount < filteredMemes.length
 
-  const pageItems = useMemo(() => {
-    if (totalPages <= 5) {
-      return Array.from({ length: totalPages }, (_, index) => index + 1)
-    }
+  useEffect(() => {
+    const target = loadMoreRef.current
+    if (!target || !hasMoreTemplates) return
 
-    if (safeCurrentPage <= 3) {
-      return [1, 2, 3, 4, "ellipsis", totalPages]
-    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setVisibleCount((count) => Math.min(count + PAGE_SIZE, filteredMemes.length))
+        }
+      },
+      {
+        rootMargin: "200px 0px",
+      }
+    )
 
-    if (safeCurrentPage >= totalPages - 2) {
-      return [1, "ellipsis", totalPages - 3, totalPages - 2, totalPages - 1, totalPages]
-    }
-
-    return [1, "ellipsis", safeCurrentPage - 1, safeCurrentPage, safeCurrentPage + 1, "ellipsis", totalPages]
-  }, [safeCurrentPage, totalPages])
+    observer.observe(target)
+    return () => observer.disconnect()
+  }, [filteredMemes.length, hasMoreTemplates])
 
   return (
-    <section className="w-full max-w-7xl space-y-5 pb-12">
-      <div >
+    <section id="templates" className="w-full max-w-7xl space-y-5 pb-12">
+      <div>
         <p className="text-sm font-medium uppercase tracking-[0.24em] text-muted-foreground/80">
           Explore Templates
         </p>
-       
       </div>
 
       <div className="relative max-w-md">
@@ -82,7 +73,7 @@ export default function Templates({
           value={query}
           onChange={(event) => {
             setQuery(event.target.value)
-            setCurrentPage(1)
+            setVisibleCount(PAGE_SIZE)
           }}
           placeholder="Search templates..."
           className="h-12 w-full rounded-2xl border border-border/70 bg-card/70 pl-11 pr-4 text-sm outline-none transition focus:border-foreground/30"
@@ -115,65 +106,20 @@ export default function Templates({
                   alt={meme.name}
                   fill
                   sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
-                  className="object-cover transition duration-300 "
+                  className="object-cover transition duration-300"
                 />
               </div>
-
-            
             </button>
           ))}
         </div>
       )}
 
-      {filteredMemes.length > PAGE_SIZE && (
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious
-                href="#templates"
-                aria-disabled={safeCurrentPage === 1}
-                className={safeCurrentPage === 1 ? "pointer-events-none opacity-40" : ""}
-                onClick={(event) => {
-                  event.preventDefault()
-                  if (safeCurrentPage === 1) return
-                  setCurrentPage((page) => Math.max(1, page - 1))
-                }}
-              />
-            </PaginationItem>
-
-            {pageItems.map((item, index) => (
-              <PaginationItem key={`${item}-${index}`}>
-                {item === "ellipsis" ? (
-                  <PaginationEllipsis />
-                ) : (
-                  <PaginationLink
-                    href="#templates"
-                    isActive={safeCurrentPage === item}
-                    onClick={(event) => {
-                      event.preventDefault()
-                      setCurrentPage(item as number)
-                    }}
-                  >
-                    {item}
-                  </PaginationLink>
-                )}
-              </PaginationItem>
-            ))}
-
-            <PaginationItem>
-              <PaginationNext
-                href="#templates"
-                aria-disabled={safeCurrentPage === totalPages}
-                className={safeCurrentPage === totalPages ? "pointer-events-none opacity-40" : ""}
-                onClick={(event) => {
-                  event.preventDefault()
-                  if (safeCurrentPage === totalPages) return
-                  setCurrentPage((page) => Math.min(totalPages, page + 1))
-                }}
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+      {hasMoreTemplates && (
+        <div ref={loadMoreRef} className="flex justify-center py-6">
+          <div className="rounded-full border border-border/70 bg-card/60 px-4 py-2 text-sm text-muted-foreground">
+            Loading more templates...
+          </div>
+        </div>
       )}
     </section>
   )
