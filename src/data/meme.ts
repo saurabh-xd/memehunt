@@ -382,6 +382,13 @@ export const memes: MemeResult[] = [
   image: "/memes/indian/marriage-vs-event.jpg",
   description: "",
   selectionNotes: "",
+},
+{
+  id: "monkey thinking",
+  name: "monkey thinking",
+  image: "/memes/indian/monkey-thinking.png",
+  description: "",
+  selectionNotes: "",
 }
 
 ]
