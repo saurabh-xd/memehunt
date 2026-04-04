@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, useId, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Header from "@/components/landing/Header";
 import MemeSearch from "@/components/landing/MemeSearch";
 import { useMemeGenerator } from "@/hooks/useMemeGenerator";
@@ -23,19 +23,14 @@ export default function Home() {
     clearActiveTemplate,
   } = useActiveTemplate()
 
-  const uploadId = useId();
   const editorRef = useRef<HTMLDivElement | null>(null);
 
   const [showSignInDialog, setShowSignInDialog] = useState(false);
 
-  function handleCustomTemplateChange(event: ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
+  function handleCustomTemplateSelect(file: File) {
     const imageUrl = URL.createObjectURL(file);
     clearTemplate();
     selectCustomTemplate(imageUrl, file.name);
-    event.target.value = "";
   }
 
   function scrollToEditor() {
@@ -84,7 +79,12 @@ export default function Home() {
       
          
            
-              <MemeEditor templateImage={activeTemplateImage} hasActiveTemplate={hasActiveTemplate} uploadId={uploadId} handleCustomTemplateChange={handleCustomTemplateChange}/>
+              <MemeEditor
+                templateImage={activeTemplateImage}
+                hasActiveTemplate={hasActiveTemplate}
+                handleCustomTemplateSelect={handleCustomTemplateSelect}
+                clearActiveTemplate={clearActiveTemplate}
+              />
             
           </div>
         

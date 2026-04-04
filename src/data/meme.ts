@@ -374,6 +374,14 @@ export const memes: MemeResult[] = [
   image: "/memes/indian/virat-kholio.jpg",
   description: "A laid-back Indian reaction image with smug, casual, or playful energy",
   selectionNotes: "Best for cheeky confidence, relaxed wins, stylish reactions, and lightly smug responses to a situation.",
+},
+
+{
+  id: "marriage vs event",
+  name: "marriage vs event",
+  image: "/memes/indian/marriage-vs-event.jpg",
+  description: "",
+  selectionNotes: "",
 }
 
 ]

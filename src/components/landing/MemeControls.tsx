@@ -19,6 +19,8 @@ type Props = {
   removeImageLayer: (id: string) => void
   downloadMeme: () => void
   resetMeme: () => void
+  hasActiveTemplate: boolean
+  clearActiveTemplate: () => void
 }
 
 export default function MemeControls({
@@ -34,6 +36,8 @@ export default function MemeControls({
   removeImageLayer,
   downloadMeme,
   resetMeme,
+  hasActiveTemplate,
+  clearActiveTemplate,
 }: Props) {
   const imageUploadId = useId()
 
@@ -46,33 +50,45 @@ export default function MemeControls({
   }
 
   return (
-    <div className="flex w-full max-w-lg flex-col gap-6 rounded-[2rem] border border-border/60 bg-card/80 p-5 py-7 shadow-[0_18px_60px_-40px_rgba(15,23,42,0.55)] backdrop-blur lg:flex-none">
+    <div className="flex w-full max-w-xl flex-col gap-6 rounded-xl border border-border/60 bg-card/80 px-6 py-7 shadow-[0_18px_60px_-40px_rgba(15,23,42,0.55)] backdrop-blur lg:flex-none">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-        
-          <h3 className="text-lg font-semibold">Editor Controls</h3>
-         
-    
-        <div className="flex items-center gap-2">
-          <Button
-            type="button"
-            size="sm"
-            className="h-9 rounded-xl bg-emerald-600 px-3 text-white hover:bg-emerald-700"
-            onClick={downloadMeme}
-          >
-            <Download className="size-4" />
-            Download
-          </Button>
+      
+          
+          <div className="flex flex-wrap items-center gap-2">
+            <Button
+              type="button"
+              size="sm"
+              className="h-9 rounded-xl bg-emerald-600 px-3 text-white hover:bg-emerald-700"
+              onClick={downloadMeme}
+            >
+              <Download className="size-4" />
+              Download
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              variant="outline"
+              className="h-9 rounded-xl border-border/70 px-3 text-muted-foreground hover:text-foreground"
+              onClick={resetMeme}
+            >
+              <RotateCcw className="size-4" />
+              Reset
+            </Button>
+          </div>
+      
+
+        {hasActiveTemplate && (
           <Button
             type="button"
             size="sm"
             variant="outline"
-            className="h-9 rounded-xl border-border/70 px-3 text-muted-foreground hover:text-foreground"
-            onClick={resetMeme}
+            className="h-9 rounded-xl cursor-pointer border-border/70 px-3 text-muted-foreground hover:border-destructive/40 hover:text-destructive sm:self-start"
+            onClick={clearActiveTemplate}
           >
-            <RotateCcw className="size-4" />
-            Reset
+            <X className="size-4" />
+            Clear Template
           </Button>
-        </div>
+        )}
       </div>
 
       <div className="space-y-4">
