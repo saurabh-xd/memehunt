@@ -31,10 +31,14 @@ export const FileUpload = ({
   onChange,
   className,
   contentClassName,
+  title = "Upload file",
+  description = "Drag or drop your files here or click to upload",
 }: {
   onChange?: (files: File[]) => void;
   className?: string;
   contentClassName?: string;
+  title?: string;
+  description?: string;
 }) => {
   const [files, setFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -60,12 +64,12 @@ export const FileUpload = ({
   });
 
   return (
-    <div className={cn("w-full", className)} {...getRootProps()}>
+    <div className={cn("h-full w-full", className)} {...getRootProps()}>
       <motion.div
         onClick={handleClick}
         whileHover="animate"
         className={cn(
-          "group/file relative block w-full cursor-pointer overflow-hidden rounded-lg p-10",
+          "group/file relative block h-full w-full cursor-pointer overflow-hidden rounded-lg p-10",
           contentClassName
         )}
       >
@@ -79,12 +83,12 @@ export const FileUpload = ({
         <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,white,transparent)]">
           <GridPattern />
         </div>
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex h-full flex-col items-center justify-center">
           <p className="relative z-20 font-sans text-base font-bold text-neutral-700 dark:text-neutral-300">
-            Upload file
+            {title}
           </p>
           <p className="relative z-20 mt-2 font-sans text-base font-normal text-neutral-400 dark:text-neutral-400">
-            Drag or drop your files here or click to upload
+            {description}
           </p>
           <div className="relative mx-auto mt-10 w-full max-w-xl">
             {files.length > 0 &&

@@ -48,14 +48,17 @@ export default function MemeEditor({
       className="mb-9 flex w-full max-w-7xl flex-col items-center gap-8 lg:flex-row lg:items-start lg:justify-center"
     >
      { !hasActiveTemplate ?
-      <div className="w-full max-w-md h-[400px]  border-dashed border-2 rounded-xl ">
+      <div className="h-[400px] w-full max-w-md rounded-xl border-2 border-dashed">
         <FileUpload
           onChange={(files) => {
             const file = files[0]
             if (!file) return
             handleCustomTemplateSelect(file)
           }}
-          
+          className="h-full"
+          contentClassName="h-full rounded-xl bg-card/60"
+          title="Upload Custom Image"
+          description="Drop your image here or click to start editing it"
         />
       </div>
      :<div ref={containerRef} className="w-full max-w-md">
