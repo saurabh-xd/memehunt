@@ -6,7 +6,6 @@ import { signOut, useSession } from "@/lib/auth-client"
 import { useRouter } from "next/navigation"
 import {  Loader2 } from "lucide-react"
 import { GithubIcon } from "../githubIcon"
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
 import Link from "next/link"
 
 export default function Navbar() {
@@ -56,8 +55,8 @@ export default function Navbar() {
 
  <ModeToggle />
 
- <Tooltip >
-  <TooltipTrigger asChild>
+ 
+  
       <Button asChild variant="outline" className="rounded-full">
           <a
             href="https://github.com/saurabh-xd/memehunt"
@@ -71,11 +70,7 @@ export default function Navbar() {
             
           </a>
         </Button>
-  </TooltipTrigger>
-  <TooltipContent side="bottom">
-    Github
-  </TooltipContent>
-</Tooltip>
+
 
       
 

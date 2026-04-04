@@ -28,12 +28,19 @@ export default function MemeSearch({
       <Button
         type="submit"
         disabled={isLoading || !situation.trim()}
-        className="h-14 px-6 rounded-xl text-lg cursor-pointer text-lg"
+        className="h-14 min-w-40 rounded-xl px-6 text-lg cursor-pointer"
       >
-        
-        {isLoading ?
-        <Loader2 className="animate-spin w-5 h-5" />
-        : <><WandSparkles />   <span>Get Meme </span></> }
+        {isLoading ? (
+          <>
+            <Loader2 className="h-5 w-5 animate-spin" />
+            <span>Matching...</span>
+          </>
+        ) : (
+          <>
+            <WandSparkles className="h-5 w-5" />
+            <span>Get Meme</span>
+          </>
+        )}
       </Button>
     </form>
   );
