@@ -4,6 +4,7 @@ import { ChangeEvent, useId } from "react"
 import { MemeImageLayer, MemeTextLayer } from "@/types/meme"
 import { Download, ImagePlus, Plus, RotateCcw, X } from "lucide-react"
 import { Button } from "../ui/button"
+import { Input } from "../ui/input"
 
 type Props = {
   textLayers: MemeTextLayer[]
@@ -22,6 +23,13 @@ type Props = {
   resetMeme: () => void
   hasActiveTemplate: boolean
   clearActiveTemplate: () => void
+  isSignedIn: boolean
+  defaultWatermarkText: string
+  customWatermark: string
+  showDefaultWatermark: boolean
+  setCustomWatermark: (value: string) => void
+  setShowDefaultWatermark: (value: boolean) => void
+  openWatermarkSignInDialog: () => void
 }
 
 export default function MemeControls({
@@ -41,6 +49,13 @@ export default function MemeControls({
   resetMeme,
   hasActiveTemplate,
   clearActiveTemplate,
+  isSignedIn,
+  defaultWatermarkText,
+  customWatermark,
+  showDefaultWatermark,
+  setCustomWatermark,
+  setShowDefaultWatermark,
+  openWatermarkSignInDialog,
 }: Props) {
   const imageUploadId = useId()
 
@@ -52,8 +67,17 @@ export default function MemeControls({
     event.target.value = ""
   }
 
+  function handleDefaultWatermarkToggle() {
+    if (!isSignedIn) {
+      openWatermarkSignInDialog()
+      return
+    }
+
+    setShowDefaultWatermark(!showDefaultWatermark)
+  }
+
   return (
-    <div className="flex w-full max-w-xl flex-col gap-6 rounded-xl border border-border/60 bg-card/80 px-6 py-7 shadow-[0_18px_60px_-40px_rgba(15,23,42,0.55)] backdrop-blur lg:flex-none">
+    <div className="flex w-full max-w-xl flex-col gap-4 rounded-xl border border-border/60 bg-card/80 px-4 py-5 shadow-[0_18px_60px_-40px_rgba(15,23,42,0.55)] backdrop-blur lg:flex-none">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
       
           
@@ -95,7 +119,7 @@ export default function MemeControls({
       </div>
 
       <div className="space-y-4">
-        <div className="space-y-4">
+        <div className="space-y-2">
           {textLayers.map((layer, index) => (
               <div key={layer.id} className="relative">
                 <textarea
@@ -126,11 +150,57 @@ export default function MemeControls({
               </div>
            
           ))}
+
+           <div className="relative">
+            <Input
+              id="custom-watermark"
+              value={customWatermark}
+              placeholder={
+                isSignedIn
+                  ? showDefaultWatermark
+                    ? defaultWatermarkText
+                    : "Add custom watermark"
+                  : "Sign in to add custom watermark"
+              }
+              readOnly={!isSignedIn}
+              onPointerDown={!isSignedIn ? (event) => {
+                event.preventDefault()
+                openWatermarkSignInDialog()
+              } : undefined}
+              onFocus={!isSignedIn ? (event) => {
+                event.target.blur()
+                openWatermarkSignInDialog()
+              } : undefined}
+              onChange={(event) => {
+                if (!isSignedIn) {
+                  openWatermarkSignInDialog()
+                  return
+                }
+                setCustomWatermark(event.target.value)
+              }}
+              className="h-10 rounded-2xl pr-18"
+            />
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="absolute right-1 top-1 h-8 rounded-md px-3 text-xs cursor-pointer"
+              onClick={handleDefaultWatermarkToggle}
+            >
+              {showDefaultWatermark ? "Hide" : "Show"}
+            </Button>
+          </div>
         </div>
+
+       
+
+       
+         
+      
 
 
 {/* text size control  */}
-        <div className="space-y-3 rounded-[1.5rem] border border-border/60 bg-background/70 p-4">
+        <div className="space-y- rounded-xl border border-border/60 bg-background/70 p-2 px-3">
           <div className="flex items-center justify-between">
             <label className="text-sm font-medium">
               {selectedTextLayer ? "Selected text size" : "Text size"}
@@ -149,9 +219,11 @@ export default function MemeControls({
               updateTextLayerSize(selectedTextLayer.id, Number(e.target.value))
             }}
             disabled={!selectedTextLayer}
-            className="w-full accent-foreground cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+            className="h-1.5 w-full cursor-pointer accent-foreground disabled:cursor-not-allowed disabled:opacity-50"
           />
         </div>
+
+       
 
        {/* add text and image control */}
 

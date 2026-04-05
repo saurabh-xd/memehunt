@@ -11,6 +11,18 @@ import Templates from "@/components/landing/Templates";
 import SignInDialog from "@/components/signInDialog";
 import { useActiveTemplate } from "@/context/ActiveTemplateContext";
 
+const GENERATION_DIALOG_COPY = {
+  title: "Sign in to keep generating",
+  description:
+    "You have used all 5 free AI generations. Sign in with Google to continue creating memes.",
+}
+
+const WATERMARK_DIALOG_COPY = {
+  title: "Sign in to customize watermarks",
+  description:
+    "Sign in with Google to remove the default MemeHunt watermark or add your own custom watermark.",
+}
+
 export default function Home() {
   const { data: session } = useSession();
   const { incrementUsage, isLimitReached, limit } = useGuestUsage();
@@ -27,11 +39,17 @@ export default function Home() {
   const editorRef = useRef<HTMLDivElement | null>(null);
 
   const [showSignInDialog, setShowSignInDialog] = useState(false);
+  const [signInDialogCopy, setSignInDialogCopy] = useState(GENERATION_DIALOG_COPY);
 
   function handleCustomTemplateSelect(file: File) {
     const imageUrl = URL.createObjectURL(file);
     clearTemplate();
     selectCustomTemplate(imageUrl, file.name);
+  }
+
+  function openWatermarkSignInDialog() {
+    setSignInDialogCopy(WATERMARK_DIALOG_COPY)
+    setShowSignInDialog(true)
   }
 
   function scrollToEditor() {
@@ -43,6 +61,10 @@ export default function Home() {
   async function handleGenerate(e?: React.FormEvent) {
     if (!session?.user && isLimitReached) {
       if (e) e.preventDefault();
+      setSignInDialogCopy({
+        title: GENERATION_DIALOG_COPY.title,
+        description: `You have used all ${limit} free AI generations. Sign in with Google to continue creating memes.`,
+      })
       setShowSignInDialog(true);
       return;
     }
@@ -76,8 +98,10 @@ export default function Home() {
         <MemeEditor
           templateImage={activeTemplateImage}
           hasActiveTemplate={hasActiveTemplate}
+          isSignedIn={Boolean(session?.user)}
           handleCustomTemplateSelect={handleCustomTemplateSelect}
           clearActiveTemplate={clearActiveTemplate}
+          openWatermarkSignInDialog={openWatermarkSignInDialog}
         />
       </div>
 
@@ -91,6 +115,8 @@ export default function Home() {
         showSignInDialog={showSignInDialog}
         setShowSignInDialog={setShowSignInDialog}
         limit={limit}
+        title={signInDialogCopy.title}
+        description={signInDialogCopy.description}
       />
 
       <Templates onTemplateSelect={scrollToEditor} />

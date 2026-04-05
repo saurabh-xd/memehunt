@@ -12,6 +12,7 @@ const DEFAULT_FONT_SIZE = 44
 const MIN_IMAGE_SIZE = 48
 const MAX_STAGE_HEIGHT = 400
 const MAX_STAGE_WIDTH = 448
+const DEFAULT_WATERMARK_TEXT = "MemeHunt"
 
 function createInitialLayers(bottomY: number): MemeTextLayer[] {
   return [
@@ -72,6 +73,8 @@ export function useMemeEditor(templateImage: string) {
   const [imageLayers, setImageLayers] = useState<MemeImageLayer[]>([])
   const [selectedTextLayerId, setSelectedTextLayerId] = useState<string | null>("text-1")
   const [selectedImageLayerId, setSelectedImageLayerId] = useState<string | null>(null)
+  const [showDefaultWatermark, setShowDefaultWatermark] = useState(true)
+  const [customWatermark, setCustomWatermark] = useState("")
 
   function estimateTextBox(text: string, fontSize: number) {
     const availableWidth = Math.max(usableStageWidth - TEXT_PADDING * 2, fontSize * 2)
@@ -300,6 +303,8 @@ export function useMemeEditor(templateImage: string) {
       current.forEach((layer) => URL.revokeObjectURL(layer.src))
       return []
     })
+    setShowDefaultWatermark(true)
+    setCustomWatermark("")
     setSelectedTextLayerId("text-1")
     setSelectedImageLayerId(null)
     nextLayerIndexRef.current = 3
@@ -312,7 +317,7 @@ export function useMemeEditor(templateImage: string) {
     null
   useEffect(() => {
     return () => {
-      imageLayers.forEach((layer) => URL.revokeObjectURL(layer.src))
+    imageLayers.forEach((layer) => URL.revokeObjectURL(layer.src))
     }
   }, [imageLayers])
 
@@ -336,13 +341,18 @@ export function useMemeEditor(templateImage: string) {
     handleTextDrag,
     image,
     imageLayers: visibleImageLayers,
+    customWatermark,
+    defaultWatermarkText: DEFAULT_WATERMARK_TEXT,
     removeImageLayer,
     removeTextLayer,
     selectedImageLayerId,
     selectedTextLayer,
     selectedTextLayerId,
+    setCustomWatermark,
     setSelectedImageLayerId,
     setSelectedTextLayerId,
+    setShowDefaultWatermark,
+    showDefaultWatermark,
     stageHeight,
     stageRef,
     stageWidth: renderWidth,

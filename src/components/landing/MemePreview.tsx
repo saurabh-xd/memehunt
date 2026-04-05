@@ -16,6 +16,9 @@ type Props = {
   imageLayers: MemeImageLayer[]
   selectedImageLayerId: string | null
   selectedTextLayerId: string | null
+  defaultWatermarkText: string
+  customWatermark: string
+  showDefaultWatermark: boolean
   onTextDrag: (id: string, position: { x: number; y: number }) => void
   onImageDrag: (id: string, position: { x: number; y: number }) => void
   onImageResize: (id: string, size: { width: number; height: number; x: number; y: number }) => void
@@ -111,6 +114,9 @@ export default function MemePreview({
   imageLayers,
   selectedImageLayerId,
   selectedTextLayerId,
+  defaultWatermarkText,
+  customWatermark,
+  showDefaultWatermark,
   onTextDrag,
   onImageDrag,
   onImageResize,
@@ -137,7 +143,7 @@ export default function MemePreview({
     align: "center" as const,
   }
 
-  const watermarkText = "MemeHunt"
+  const watermarkText = customWatermark.trim() || (showDefaultWatermark ? defaultWatermarkText : "")
   const watermarkPadding = Math.max(10, Math.round(Math.min(stageWidth, stageHeight) * 0.03))
   const watermarkFontSize = Math.max(
     9,
@@ -231,7 +237,7 @@ export default function MemePreview({
               />
             ))}
 
-            {image && (
+            {image && watermarkText && (
               <Text
                 text={watermarkText}
                 x={watermarkX}

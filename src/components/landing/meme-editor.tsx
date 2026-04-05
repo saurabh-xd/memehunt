@@ -8,20 +8,26 @@ import { FileUpload } from "../ui/file-upload";
 type MemeEditorProps = {
   templateImage: string | null;
   hasActiveTemplate: boolean;
+  isSignedIn: boolean;
   handleCustomTemplateSelect: (file: File) => void;
   clearActiveTemplate: () => void;
+  openWatermarkSignInDialog: () => void;
 };
 
 export default function MemeEditor({
   templateImage,
   hasActiveTemplate,
+  isSignedIn,
   handleCustomTemplateSelect,
   clearActiveTemplate,
+  openWatermarkSignInDialog,
 }: MemeEditorProps) {
   const {
     addImageLayer,
     addTextLayer,
     containerRef,
+    customWatermark,
+    defaultWatermarkText,
     handleDownload,
     handleImageDrag,
     handleImageResize,
@@ -34,8 +40,11 @@ export default function MemeEditor({
     selectedImageLayerId,
     selectedTextLayer,
     selectedTextLayerId,
+    setCustomWatermark,
     setSelectedImageLayerId,
     setSelectedTextLayerId,
+    setShowDefaultWatermark,
+    showDefaultWatermark,
     stageHeight,
     stageRef,
     stageWidth,
@@ -73,6 +82,9 @@ export default function MemeEditor({
           imageLayers={imageLayers}
           selectedImageLayerId={selectedImageLayerId}
           selectedTextLayerId={selectedTextLayerId}
+          defaultWatermarkText={defaultWatermarkText}
+          customWatermark={customWatermark}
+          showDefaultWatermark={showDefaultWatermark}
           onTextDrag={handleTextDrag}
           onImageDrag={handleImageDrag}
           onImageResize={handleImageResize}
@@ -100,6 +112,13 @@ export default function MemeEditor({
         resetMeme={handleReset}
         hasActiveTemplate={hasActiveTemplate}
         clearActiveTemplate={clearActiveTemplate}
+        isSignedIn={isSignedIn}
+        defaultWatermarkText={defaultWatermarkText}
+        customWatermark={customWatermark}
+        showDefaultWatermark={showDefaultWatermark}
+        setCustomWatermark={setCustomWatermark}
+        setShowDefaultWatermark={setShowDefaultWatermark}
+        openWatermarkSignInDialog={openWatermarkSignInDialog}
       />
     </section>
   );
