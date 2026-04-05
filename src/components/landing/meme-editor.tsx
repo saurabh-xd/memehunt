@@ -31,8 +31,10 @@ export default function MemeEditor({
     imageLayers,
     removeImageLayer,
     removeTextLayer,
+    selectedImageLayerId,
     selectedTextLayer,
     selectedTextLayerId,
+    setSelectedImageLayerId,
     setSelectedTextLayerId,
     stageHeight,
     stageRef,
@@ -69,10 +71,12 @@ export default function MemeEditor({
           stageHeight={stageHeight}
           textLayers={textLayers}
           imageLayers={imageLayers}
+          selectedImageLayerId={selectedImageLayerId}
           selectedTextLayerId={selectedTextLayerId}
           onTextDrag={handleTextDrag}
           onImageDrag={handleImageDrag}
           onImageResize={handleImageResize}
+          onSelectImage={setSelectedImageLayerId}
           onSelectText={setSelectedTextLayerId}
         />
       </div>
@@ -82,6 +86,8 @@ export default function MemeEditor({
       <MemeControls
         textLayers={textLayers}
         imageLayers={imageLayers}
+        selectedImageLayerId={selectedImageLayerId}
+        selectImageLayer={setSelectedImageLayerId}
         selectedTextLayer={selectedTextLayer}
         selectTextLayer={setSelectedTextLayerId}
         updateTextLayer={updateTextLayer}

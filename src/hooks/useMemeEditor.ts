@@ -71,6 +71,7 @@ export function useMemeEditor(templateImage: string) {
   )
   const [imageLayers, setImageLayers] = useState<MemeImageLayer[]>([])
   const [selectedTextLayerId, setSelectedTextLayerId] = useState<string | null>("text-1")
+  const [selectedImageLayerId, setSelectedImageLayerId] = useState<string | null>(null)
 
   function estimateTextBox(text: string, fontSize: number) {
     const availableWidth = Math.max(usableStageWidth - TEXT_PADDING * 2, fontSize * 2)
@@ -231,6 +232,7 @@ export function useMemeEditor(templateImage: string) {
           },
         }),
       ])
+      setSelectedImageLayerId(`image-${nextImageLayerIndexRef.current}`)
 
       nextImageLayerIndexRef.current += 1
     } catch {
@@ -256,6 +258,7 @@ export function useMemeEditor(templateImage: string) {
         URL.revokeObjectURL(target.src)
       }
 
+      setSelectedImageLayerId((selectedId) => (selectedId === id ? null : selectedId))
       return current.filter((layer) => layer.id !== id)
     })
   }
@@ -298,6 +301,7 @@ export function useMemeEditor(templateImage: string) {
       return []
     })
     setSelectedTextLayerId("text-1")
+    setSelectedImageLayerId(null)
     nextLayerIndexRef.current = 3
     nextImageLayerIndexRef.current = 1
   }
@@ -306,7 +310,6 @@ export function useMemeEditor(templateImage: string) {
     visibleTextLayers.find((layer) => layer.id === selectedTextLayerId) ??
     visibleTextLayers[0] ??
     null
-
   useEffect(() => {
     return () => {
       imageLayers.forEach((layer) => URL.revokeObjectURL(layer.src))
@@ -335,8 +338,10 @@ export function useMemeEditor(templateImage: string) {
     imageLayers: visibleImageLayers,
     removeImageLayer,
     removeTextLayer,
+    selectedImageLayerId,
     selectedTextLayer,
     selectedTextLayerId,
+    setSelectedImageLayerId,
     setSelectedTextLayerId,
     stageHeight,
     stageRef,

@@ -1,7 +1,7 @@
 "use client"
 
 import Konva from "konva"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import type { RefObject } from "react"
 import { Image as KonvaImage, Layer, Stage, Text, Transformer } from "react-konva"
 import useImage from "use-image"
@@ -14,10 +14,12 @@ type Props = {
   stageHeight: number
   textLayers: MemeTextLayer[]
   imageLayers: MemeImageLayer[]
+  selectedImageLayerId: string | null
   selectedTextLayerId: string | null
   onTextDrag: (id: string, position: { x: number; y: number }) => void
   onImageDrag: (id: string, position: { x: number; y: number }) => void
   onImageResize: (id: string, size: { width: number; height: number; x: number; y: number }) => void
+  onSelectImage: (id: string | null) => void
   onSelectText: (id: string | null) => void
 }
 
@@ -107,14 +109,14 @@ export default function MemePreview({
   stageHeight,
   textLayers,
   imageLayers,
+  selectedImageLayerId,
   selectedTextLayerId,
   onTextDrag,
   onImageDrag,
   onImageResize,
+  onSelectImage,
   onSelectText,
 }: Props) {
-  const [activeImageId, setActiveImageId] = useState<string | null>(null)
-
   function setStageCursor(cursor: string) {
     const stage = stageRef.current
     if (!stage) return
@@ -163,7 +165,7 @@ export default function MemePreview({
           className="mx-auto"
           onMouseDown={(event) => {
             if (event.target === event.target.getStage()) {
-              setActiveImageId(null)
+              onSelectImage(null)
               onSelectText(null)
             }
           }}
@@ -181,10 +183,10 @@ export default function MemePreview({
               <EditableImageLayer
                 key={layer.id}
                 layer={layer}
-                isSelected={activeImageId === layer.id}
+                isSelected={selectedImageLayerId === layer.id}
                 onSelect={() => {
                   onSelectText(null)
-                  setActiveImageId(layer.id)
+                  onSelectImage(layer.id)
                 }}
                 onImageDrag={onImageDrag}
                 onImageResize={onImageResize}
@@ -205,7 +207,7 @@ export default function MemePreview({
                 scaleY={selectedTextLayerId === layer.id ? 1.02 : 1}
                 draggable
                 onDragStart={() => {
-                  setActiveImageId(null)
+                  onSelectImage(null)
                   onSelectText(layer.id)
                 }}
                 onDragMove={(event) =>
@@ -215,11 +217,11 @@ export default function MemePreview({
                 onMouseEnter={() => setStageCursor("pointer")}
                 onMouseLeave={() => setStageCursor("default")}
                 onClick={() => {
-                  setActiveImageId(null)
+                  onSelectImage(null)
                   onSelectText(layer.id)
                 }}
                 onTap={() => {
-                  setActiveImageId(null)
+                  onSelectImage(null)
                   onSelectText(layer.id)
                 }}
               />

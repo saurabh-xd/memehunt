@@ -14,14 +14,15 @@ import { useActiveTemplate } from "@/context/ActiveTemplateContext";
 export default function Home() {
   const { data: session } = useSession();
   const { incrementUsage, isLimitReached, limit } = useGuestUsage();
-  const {situation, setSituation, isLoading, error, generate, clearTemplate} = useMemeGenerator(); //for api call
+  const { situation, setSituation, isLoading, error, generate, clearTemplate } =
+    useMemeGenerator(); //for api call
   const {
     activeTemplateImage,
     hasActiveTemplate,
     selectCustomTemplate,
     selectGeneratedTemplate,
     clearActiveTemplate,
-  } = useActiveTemplate()
+  } = useActiveTemplate();
 
   const editorRef = useRef<HTMLDivElement | null>(null);
 
@@ -58,12 +59,10 @@ export default function Home() {
     if (!session?.user) {
       incrementUsage();
     }
-  } 
+  }
 
   return (
     <main className="min-h-screen bg-background flex flex-col items-center pt-6 px-6 gap-8">
-
-      
       <Header />
 
       <MemeSearch
@@ -73,22 +72,14 @@ export default function Home() {
         setSituation={setSituation}
       />
 
-
       <div ref={editorRef} className="w-full  flex justify-center ">
-
-      
-         
-           
-              <MemeEditor
-                templateImage={activeTemplateImage}
-                hasActiveTemplate={hasActiveTemplate}
-                handleCustomTemplateSelect={handleCustomTemplateSelect}
-                clearActiveTemplate={clearActiveTemplate}
-              />
-            
-          </div>
-        
-
+        <MemeEditor
+          templateImage={activeTemplateImage}
+          hasActiveTemplate={hasActiveTemplate}
+          handleCustomTemplateSelect={handleCustomTemplateSelect}
+          clearActiveTemplate={clearActiveTemplate}
+        />
+      </div>
 
       {error && (
         <p className="text-sm text-destructive bg-destructive/10 py-2 px-4 rounded-md">

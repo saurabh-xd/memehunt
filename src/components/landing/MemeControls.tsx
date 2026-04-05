@@ -9,7 +9,9 @@ import { Button } from "../ui/button"
 type Props = {
   textLayers: MemeTextLayer[]
   imageLayers: MemeImageLayer[]
+  selectedImageLayerId: string | null
   selectedTextLayer: MemeTextLayer | null
+  selectImageLayer: (id: string | null) => void
   selectTextLayer: (id: string | null) => void
   updateTextLayer: (id: string, value: string) => void
   updateTextLayerSize: (id: string, value: number) => void
@@ -26,7 +28,9 @@ type Props = {
 export default function MemeControls({
   textLayers,
   imageLayers,
+  selectedImageLayerId,
   selectedTextLayer,
+  selectImageLayer,
   selectTextLayer,
   updateTextLayer,
   updateTextLayerSize,
@@ -149,7 +153,7 @@ export default function MemeControls({
               updateTextLayerSize(selectedTextLayer.id, Number(e.target.value))
             }}
             disabled={!selectedTextLayer}
-            className="w-full accent-foreground disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full accent-foreground cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
           />
         </div>
 
@@ -178,32 +182,43 @@ export default function MemeControls({
         </div>
 
         {imageLayers.length > 0 && (
-          <div className="space-y-3 rounded-[1.5rem] border border-border/60 bg-muted/20 p-4">
-            <div className="flex items-center justify-between">
-              <p className="text-sm font-medium">Images</p>
-              <p className="text-xs text-muted-foreground">Drag and resize on canvas</p>
-            </div>
+          <div className="col-span-2 space-y-3 rounded-[1.5rem]  mt-1">
+           
 
             {imageLayers.map((layer, index) => (
               <div
                 key={layer.id}
-                className="flex items-center justify-between gap-3 rounded-2xl border border-border/60 bg-background/70 px-3 py-2"
+                className={`flex cursor-pointer items-center justify-between gap-3 rounded-2xl border px-3 py-2 transition-colors ${
+                  selectedImageLayerId === layer.id
+                    ? "border-foreground/25 bg-background"
+                    : "border-border/60 bg-background/70 hover:border-foreground/15"
+                }`}
+                onClick={() => {
+                  selectTextLayer(null)
+                  selectImageLayer(layer.id)
+                }}
               >
-                <div>
+               
                   <p className="text-sm font-medium">Image {index + 1}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {Math.round(layer.width)} x {Math.round(layer.height)}
-                  </p>
+                 
+               
+                <div className="flex items-center gap-2">
+                  {selectedImageLayerId === layer.id && (
+                    <span className="text-xs font-medium text-muted-foreground">Selected</span>
+                  )}
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      removeImageLayer(layer.id)
+                    }}
+                    className="size-10 rounded-2xl px-0"
+                    aria-label={`Remove image ${index + 1}`}
+                  >
+                    <X className="size-4" />
+                  </Button>
                 </div>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => removeImageLayer(layer.id)}
-                  className="size-10 rounded-2xl px-0"
-                  aria-label={`Remove image ${index + 1}`}
-                >
-                  <X className="size-4" />
-                </Button>
               </div>
             ))}
           </div>
