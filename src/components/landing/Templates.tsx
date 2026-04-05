@@ -60,13 +60,11 @@ export default function Templates({
 
   return (
     <section id="templates" className="w-full max-w-7xl space-y-5 pb-12">
-      <div>
+      <div className="flex flex-col gap-2 justify-center">
         <p className="text-sm font-medium uppercase tracking-[0.24em] text-muted-foreground/80">
           Explore Templates
         </p>
-      </div>
-
-      <div className="relative max-w-md">
+         <div className="relative max-w-md">
         <Search className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
         <input
           type="text"
@@ -79,6 +77,9 @@ export default function Templates({
           className="h-12 w-full rounded-2xl border border-border/70 bg-card/70 pl-11 pr-4 text-sm outline-none transition focus:border-foreground/30"
         />
       </div>
+      </div>
+
+     
 
       {visibleMemes.length === 0 ? (
         <div className="rounded-3xl border border-dashed border-border/70 bg-card/50 px-6 py-12 text-center text-sm text-muted-foreground">

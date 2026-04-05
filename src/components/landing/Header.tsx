@@ -16,7 +16,7 @@ export default function Header() {
 
   return (
     <div className="flex flex-col items-center gap-3 text-center">
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
+        <h1 className="font-heading text-4xl font-extrabold tracking-tight md:text-5xl">
          Find a meme that actually <LineShadowText className="italic" shadowColor={shadowColor}>
         Fits
       </LineShadowText>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Geist_Mono, Manrope, Sora } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/layout/navbar";
@@ -7,11 +7,10 @@ import Providers from "@/components/providers/providers";
 import { Toaster } from "sonner";
 import Footer from "@/components/layout/footer";
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
+const sora = Sora({
   subsets: ["latin"],
+  variable: "--font-heading",
 });
 
 const geistMono = Geist_Mono({
@@ -30,9 +29,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", inter.variable)} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={cn("font-sans", manrope.variable, sora.variable)}
+      suppressHydrationWarning
+    >
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased `}
+        className={`${geistMono.variable} antialiased `}
       >
         <Providers>
           <Navbar/>

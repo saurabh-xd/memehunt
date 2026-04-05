@@ -46,7 +46,7 @@ export default function Navbar() {
     <div className="flex items-center justify-between px-4 py-4">
       <Link
        href="/"
-        className="cursor-pointer text-lg font-bold tracking-tight"
+        className="font-heading cursor-pointer text-lg font-bold tracking-tight"
       >
        MemeHunt AI
       </Link>
