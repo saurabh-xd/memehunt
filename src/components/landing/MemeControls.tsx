@@ -3,7 +3,6 @@
 import { ChangeEvent, useId } from "react"
 import { MemeImageLayer, MemeTextLayer } from "@/types/meme"
 import { Download, ImagePlus, Plus, RotateCcw, X } from "lucide-react"
-import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 
 type Props = {
@@ -98,35 +97,32 @@ export default function MemeControls({
       <div className="space-y-4">
         <div className="space-y-4">
           {textLayers.map((layer, index) => (
-            // <div
-              
-            //   className={`space-y-3 rounded-[1.5rem] border p-4 transition-colors ${
-            //     selectedTextLayerId === layer.id
-            //       ? "border-foreground/30 bg-muted/40"
-            //       : "border-border/60 bg-background/70"
-            //   }`}
-            // >
-              <div key={layer.id} className="flex items-center gap-2">
-                {index >= 2 && (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => removeTextLayer(layer.id)}
-                    className="size-12 rounded-2xl px-0"
-                    aria-label={`Remove text ${index + 1}`}
-                  >
-                    <X className="size-4" />
-                  </Button>
-                )}
-
-                <Input
+              <div key={layer.id} className="relative">
+                <textarea
                   placeholder={`Text ${index + 1}`}
                   value={layer.text}
                   onChange={(e) => updateTextLayer(layer.id, e.target.value)}
                   onFocus={() => selectTextLayer(layer.id)}
                   onClick={() => selectTextLayer(layer.id)}
-                  className="h-12 rounded-2xl"
+                  rows={Math.max(1, layer.text.split("\n").length)}
+                  className={
+                    index >= 2
+                      ? "min-h-12 w-full resize-none rounded-2xl border border-input bg-transparent px-3 py-3 pr-12 text-sm shadow-xs outline-none transition-[color,box-shadow] placeholder:text-muted-foreground/70 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                      : "min-h-12 w-full resize-none rounded-2xl border border-input bg-transparent px-3 py-3 text-sm shadow-xs outline-none transition-[color,box-shadow] placeholder:text-muted-foreground/70 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                  }
                 />
+                {index >= 2 && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => removeTextLayer(layer.id)}
+                    className="absolute right-1 top-1 size-10 rounded-xl cursor-pointer text-muted-foreground hover:text-destructive"
+                    aria-label={`Remove text ${index + 1}`}
+                  >
+                    <X className="size-4" />
+                  </Button>
+                )}
               </div>
            
           ))}
