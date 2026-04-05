@@ -155,14 +155,18 @@ export default function MemePreview({
 
   return (
     <div
-      className="mx-auto flex w-fit max-w-full flex-col gap-2"
+      className="mx-auto flex max-w-full flex-col gap-2"
+      style={{ width: stageWidth }}
     >
-      <div className="overflow-hidden rounded-[1.5rem] border bg-card border-black/10 bg-black/5">
+      <div
+        className="overflow-hidden rounded-[1.5rem] border border-black/10 bg-black/5 bg-card"
+        style={{ width: stageWidth, height: stageHeight, lineHeight: 0 }}
+      >
         <Stage
           ref={stageRef}
           width={stageWidth}
           height={stageHeight}
-          className="mx-auto"
+          style={{ display: "block" }}
           onMouseDown={(event) => {
             if (event.target === event.target.getStage()) {
               onSelectImage(null)

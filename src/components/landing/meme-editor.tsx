@@ -63,7 +63,7 @@ export default function MemeEditor({
           description="Drop your image here or click to start editing it"
         />
       </div>
-     :<div ref={containerRef} className="w-full max-w-md">
+     :<div ref={containerRef} className="w-full max-w-xl">
         <MemePreview
           image={image}
           stageRef={stageRef}
