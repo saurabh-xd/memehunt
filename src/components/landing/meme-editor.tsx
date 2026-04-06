@@ -59,7 +59,7 @@ export default function MemeEditor({
       className="mb-9 flex w-full max-w-7xl flex-col items-center gap-8 lg:flex-row lg:items-start lg:justify-center"
     >
      { !hasActiveTemplate ?
-      <div className="h-[400px] w-full max-w-md rounded-xl border-2 border-dashed">
+      <div className="md:h-[400px] h-[320px] w-full max-w-md rounded-xl border-2 border-dashed">
         <FileUpload
           onChange={(files) => {
             const file = files[0]

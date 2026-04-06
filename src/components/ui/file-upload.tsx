@@ -87,7 +87,7 @@ export const FileUpload = ({
           <p className="relative z-20 font-sans text-base font-bold text-neutral-700 dark:text-neutral-300">
             {title}
           </p>
-          <p className="relative z-20 mt-2 font-sans text-base font-normal text-neutral-400 dark:text-neutral-400">
+          <p className="relative text-center z-20 mt-2 font-sans text-base font-normal text-neutral-400 dark:text-neutral-400">
             {description}
           </p>
           <div className="relative mx-auto mt-10 w-full max-w-xl">

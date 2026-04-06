@@ -17,9 +17,12 @@ export default function MemeSearch({
   setSituation,
 }: props) {
   return (
-    <form onSubmit={generate} className="flex w-full max-w-[1050px] gap-2">
+    <form
+      onSubmit={generate}
+      className="flex w-full max-w-[1050px] items-stretch gap-2"
+    >
       <Input
-        className="h-14 text-lg rounded-xl  flex-1"
+        className="h-12 min-w-0 flex-1 rounded-xl text-xs sm:h-14 sm:text-lg"
         placeholder="When you fix one bug but create three more..."
         value={situation}
         onChange={(e) => setSituation(e.target.value)}
@@ -28,7 +31,7 @@ export default function MemeSearch({
       <Button
         type="submit"
         disabled={isLoading || !situation.trim()}
-        className="h-14 min-w-40 rounded-xl px-6 text-lg cursor-pointer"
+        className="h-12 shrink-0 rounded-xl px-2.5 text-sm cursor-pointer bg-gradient-to-b from-blue-500 to-blue-500 text-white font-medium hover:opacity-80 transition-all duration-300 sm:h-14 sm:min-w-40 sm:px-6 sm:text-lg"
       >
         {isLoading ? (
           <>
