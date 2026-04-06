@@ -6,6 +6,7 @@ import Navbar from "@/components/layout/navbar";
 import Providers from "@/components/providers/providers";
 import { Toaster } from "sonner";
 import Footer from "@/components/layout/footer";
+import { Analytics } from "@vercel/analytics/next";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
 const sora = Sora({
@@ -43,6 +44,7 @@ export default function RootLayout({
           <Footer/>
           <Toaster richColors position="top-center" />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
