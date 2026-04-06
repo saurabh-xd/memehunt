@@ -7,7 +7,7 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
-//   trustedOrigins: ["http://localhost:3001"],  if app runs on another port or url
+  trustedOrigins: ["https://www.memehunt.tech"], 
 socialProviders: {
         google: { 
             clientId: process.env.GOOGLE_CLIENT_ID as string, 

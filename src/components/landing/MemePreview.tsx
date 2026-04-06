@@ -3,6 +3,7 @@
 import Konva from "konva"
 import { useEffect, useRef } from "react"
 import type { RefObject } from "react"
+import { motion } from "motion/react"
 import { Image as KonvaImage, Layer, Stage, Text, Transformer } from "react-konva"
 import useImage from "use-image"
 import { MemeImageLayer, MemeTextLayer } from "@/types/meme"
@@ -164,9 +165,17 @@ export default function MemePreview({
       className="mx-auto flex max-w-full flex-col gap-2"
       style={{ width: stageWidth }}
     >
-      <div
+      <motion.div
         className="overflow-hidden rounded-[1.5rem] border border-black/10 bg-black/5 bg-card"
         style={{ width: stageWidth, height: stageHeight, lineHeight: 0 }}
+         initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
+          whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+          transition={{
+            duration: 0.3,
+            delay:   0.1,
+            ease: "easeInOut",
+          }}
+          viewport={{ once: true }}
       >
         <Stage
           ref={stageRef}
@@ -257,7 +266,7 @@ export default function MemePreview({
             )}
           </Layer>
         </Stage>
-      </div>
+      </motion.div>
     </div>
   )
 }
