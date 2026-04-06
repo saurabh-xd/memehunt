@@ -162,11 +162,11 @@ export default function MemePreview({
 
   return (
     <div
-      className="mx-auto flex max-w-full flex-col gap-2"
+      className="mx-auto flex w-full max-w-full flex-col gap-2"
       style={{ width: stageWidth }}
     >
       <motion.div
-        className="overflow-hidden rounded-[1.5rem] border border-black/10 bg-black/5 bg-card"
+        className="overflow-hidden rounded-[1.25rem] border border-black/10 bg-black/5 bg-card sm:rounded-[1.5rem]"
         style={{ width: stageWidth, height: stageHeight, lineHeight: 0 }}
          initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
           whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}

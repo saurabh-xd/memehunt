@@ -56,10 +56,10 @@ export default function MemeEditor({
   return (
     <section
       key={templateImage}
-      className="mb-9 flex w-full max-w-7xl flex-col items-center gap-8 lg:flex-row lg:items-start lg:justify-center"
+      className="mb-7 flex w-full max-w-7xl flex-col items-stretch gap-5 sm:mb-9 sm:gap-6 lg:flex-row lg:items-start lg:justify-center lg:gap-8"
     >
      { !hasActiveTemplate ?
-      <div className="md:h-[400px] h-[320px] w-full max-w-md rounded-xl border-2 border-dashed">
+      <div className="h-[300px] w-full max-w-md self-center rounded-2xl border-2 border-dashed sm:h-[360px] lg:h-[400px] lg:self-auto">
         <FileUpload
           onChange={(files) => {
             const file = files[0]
@@ -72,7 +72,7 @@ export default function MemeEditor({
           description="Drop your image here or click to start editing it"
         />
       </div>
-     :<div ref={containerRef} className="w-full max-w-xl">
+     :<div ref={containerRef} className="w-full max-w-md self-center lg:max-w-xl lg:self-auto">
         <MemePreview
           image={image}
           stageRef={stageRef}
