@@ -59,12 +59,12 @@ export default function Templates({
   }, [filteredMemes.length, hasMoreTemplates])
 
   return (
-    <section id="templates" className="w-full max-w-7xl space-y-5 pb-12">
-      <div className="flex flex-col gap-2 justify-center">
-        <p className="text-sm font-medium uppercase tracking-[0.24em] text-muted-foreground/80">
+    <section id="templates" className="w-full max-w-7xl space-y-4 px-1 pb-10 sm:space-y-5 sm:pb-12">
+      <div className="flex flex-col justify-center gap-2">
+        <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground/80 sm:text-sm sm:tracking-[0.24em]">
           Explore Templates
         </p>
-         <div className="relative max-w-md">
+         <div className="relative w-full max-w-md">
         <Search className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
         <input
           type="text"
@@ -74,7 +74,7 @@ export default function Templates({
             setVisibleCount(PAGE_SIZE)
           }}
           placeholder="Search templates..."
-          className="h-12 w-full rounded-2xl border border-border/70 bg-card/70 pl-11 pr-4 text-sm outline-none transition focus:border-foreground/30"
+          className="h-11 w-full rounded-2xl border border-border/70 bg-card/70 pl-11 pr-4 text-sm outline-none transition focus:border-foreground/30 sm:h-12"
         />
       </div>
       </div>
@@ -82,11 +82,11 @@ export default function Templates({
      
 
       {visibleMemes.length === 0 ? (
-        <div className="rounded-3xl border border-dashed border-border/70 bg-card/50 px-6 py-12 text-center text-sm text-muted-foreground">
+        <div className="rounded-3xl border border-dashed border-border/70 bg-card/50 px-5 py-10 text-center text-sm text-muted-foreground sm:px-6 sm:py-12">
           No templates matched your search.
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-5 xl:grid-cols-5 xl:gap-6">
           {visibleMemes.map((meme) => (
             <button
               key={meme.id}
@@ -95,7 +95,7 @@ export default function Templates({
                 selectGalleryTemplate(meme)
                 onTemplateSelect?.()
               }}
-              className={`group overflow-hidden h-60 rounded-xl border bg-card/70 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg cursor-pointer ${
+              className={`group overflow-hidden  rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg cursor-pointer sm:h-52 lg:h-60 ${
                 activeTemplateId === meme.id
                   ? "border-foreground/40 ring-2 ring-foreground/10"
                   : "border-border/70"
@@ -116,8 +116,8 @@ export default function Templates({
       )}
 
       {hasMoreTemplates && (
-        <div ref={loadMoreRef} className="flex justify-center py-6">
-          <div className="rounded-full border border-border/70 bg-card/60 px-4 py-2 text-sm text-muted-foreground">
+        <div ref={loadMoreRef} className="flex justify-center py-4 sm:py-6">
+          <div className="rounded-full border border-border/70 bg-card/60 px-4 py-2 text-xs text-muted-foreground sm:text-sm">
             Loading more templates...
           </div>
         </div>

@@ -13,6 +13,30 @@ const MIN_IMAGE_SIZE = 48
 const MAX_STAGE_HEIGHT = 400
 const MAX_STAGE_WIDTH = 448
 const DEFAULT_WATERMARK_TEXT = "MemeHunt"
+const DESKTOP_MIN_STAGE_WIDTH = 280
+const MOBILE_BREAKPOINT = 640
+
+function getClampedStageWidth(nextWidth: number) {
+  if (typeof window === "undefined") {
+    return Math.min(Math.max(nextWidth, DESKTOP_MIN_STAGE_WIDTH), MAX_STAGE_WIDTH)
+  }
+
+  const isMobileViewport = window.innerWidth < MOBILE_BREAKPOINT
+
+  return Math.min(
+    Math.max(nextWidth, isMobileViewport ? 0 : DESKTOP_MIN_STAGE_WIDTH),
+    MAX_STAGE_WIDTH
+  )
+}
+
+function getInitialStageWidth() {
+  if (typeof window === "undefined") {
+    return 520
+  }
+
+  const viewportPadding = window.innerWidth < MOBILE_BREAKPOINT ? 48 : 0
+  return getClampedStageWidth(window.innerWidth - viewportPadding)
+}
 
 function createInitialLayers(bottomY: number): MemeTextLayer[] {
   return [
@@ -32,7 +56,7 @@ function createInitialLayers(bottomY: number): MemeTextLayer[] {
 }
 
 export function useMemeEditor(templateImage: string) {
-  const [stageWidth, setStageWidth] = useState(520)
+  const [stageWidth, setStageWidth] = useState(getInitialStageWidth)
 
   const containerRef = useRef<HTMLDivElement | null>(null)
   const stageRef = useRef<import("konva/lib/Stage").Stage | null>(null)
@@ -45,8 +69,8 @@ export function useMemeEditor(templateImage: string) {
 
     const element = containerRef.current
     const observer = new ResizeObserver((entries) => {
-      const nextWidth = entries[0]?.contentRect.width ?? 520
-      setStageWidth(Math.max(280, Math.min(nextWidth, MAX_STAGE_WIDTH)))
+      const nextWidth = entries[0]?.contentRect.width ?? element.clientWidth ?? 520
+      setStageWidth(getClampedStageWidth(nextWidth))
     })
 
     observer.observe(element)
