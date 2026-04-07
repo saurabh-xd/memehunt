@@ -18,7 +18,7 @@ export default function Navbar() {
 
     async function loadStars() {
       try {
-        const response = await fetch("https://api.github.com/repos/saurabh-xd/chatMate")
+        const response = await fetch("https://api.github.com/repos/saurabh-xd/memehunt")
         if (!response.ok) return
 
         const data = await response.json()

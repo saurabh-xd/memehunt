@@ -8,19 +8,19 @@ export default function Footer() {
 
   return (
     <footer className="w-full border-t-2 bg-background mt-auto">
-      <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-10">
         <div className="flex flex-col items-center gap-5 sm:gap-4 md:flex-row md:justify-between">
             
          
         
 
         
-          <p className="text-sm text-muted-foreground order-1 md:order-2">
+          <p className="text-sm text-muted-foreground font-bold order-1 md:order-2">
             © {currentYear} MemeHunt 
           </p>
 
           {/* Social Links */}
-          <div className="flex items-center gap-5 sm:gap-4 order-3">
+          <div className="flex items-center gap-5  order-3">
             <Link 
               href="https://github.com/saurabh-xd" 
               target="_blank" 
