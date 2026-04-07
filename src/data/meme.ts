@@ -377,9 +377,23 @@ export const memes: MemeResult[] = [
   },
 
   {
+    id: "ajay-devgan-cool-pose",
+    name: "Ajay Devgan Cool Pose",
+    image: "/memes/indian/ajay-devgan-cool-pose.jpg",
+    description: ""
+  },
+
+  {
     id: "ballon",
     name: "Ballon",
     image: "/memes/indian/ballon.jpg",
+    description: ""
+  },
+
+  {
+    id: "ben-10-cool-log-hai",
+    name: "Ben 10 Cool Log Hai",
+    image: "/memes/indian/ben-10-cool log hai.jpg",
     description: ""
   },
 
@@ -407,11 +421,32 @@ export const memes: MemeResult[] = [
   },
 
   {
+    id: "deeply-thinking",
+    name: "Deeply Thinking",
+    image: "/memes/indian/deeply-thinking.jpg",
+    description: ""
+  },
+
+  {
     id: "doglapan",
     name: "Doglapan",
     image: "/memes/indian/doglapan.jpg",
     description: "Calling out hypocrisy, double standards, or fake behavior",
     selectionNotes: "Best for hypocrisy jokes, double standards, fake morality, and moments where someone says one thing and does another."
+  },
+
+  {
+    id: "doremon-evil-smile",
+    name: "Doremon Evil Smile",
+    image: "/memes/indian/doremon-evil-smile.jpg",
+    description: ""
+  },
+
+  {
+    id: "freedom",
+    name: "Freedom",
+    image: "/memes/indian/freedom.jpg",
+    description: ""
   },
 
   {
@@ -423,11 +458,32 @@ export const memes: MemeResult[] = [
   },
 
   {
+    id: "kid-in-coporate",
+    name: "Kid In Coporate",
+    image: "/memes/indian/kid-in-coporate.jpg",
+    description: ""
+  },
+
+  {
     id: "marriage vs event",
     name: "marriage vs event",
     image: "/memes/indian/marriage-vs-event.jpg",
     description: "",
     selectionNotes: ""
+  },
+
+  {
+    id: "mens-feeling",
+    name: "Mens Feeling",
+    image: "/memes/indian/mens-feeling.jpg",
+    description: ""
+  },
+
+  {
+    id: "modiji-thinking",
+    name: "Modiji Thinking",
+    image: "/memes/indian/modiji-thinking.jpg",
+    description: ""
   },
 
   {
@@ -484,6 +540,41 @@ export const memes: MemeResult[] = [
   },
 
   {
+    id: "smart-vs-fool",
+    name: "Smart Vs Fool",
+    image: "/memes/indian/smart-vs-fool.jpg",
+    description: ""
+  },
+
+  {
+    id: "smiling-on-rip",
+    name: "Smiling On Rip",
+    image: "/memes/indian/smiling-on-rip.jpg",
+    description: ""
+  },
+
+  {
+    id: "srk-dark-circles",
+    name: "Srk Dark Circles",
+    image: "/memes/indian/srk-dark-circles.jpg",
+    description: ""
+  },
+
+  {
+    id: "struggle",
+    name: "Struggle",
+    image: "/memes/indian/struggle.jpg",
+    description: ""
+  },
+
+  {
+    id: "study-nred",
+    name: "Study Nred",
+    image: "/memes/indian/study-nred.jpg",
+    description: ""
+  },
+
+  {
     id: "two-options",
     name: "Two Options",
     image: "/memes/indian/two-options.jpg",
@@ -503,5 +594,12 @@ export const memes: MemeResult[] = [
     image: "/memes/indian/virat-kholio.jpg",
     description: "A laid-back Indian reaction image with smug, casual, or playful energy",
     selectionNotes: "Best for cheeky confidence, relaxed wins, stylish reactions, and lightly smug responses to a situation."
+  },
+
+  {
+    id: "wolf-under-sheep",
+    name: "Wolf Under Sheep",
+    image: "/memes/indian/wolf-under-sheep.jpg",
+    description: ""
   }
 ]

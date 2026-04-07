@@ -213,7 +213,7 @@ export default function MemeControls({
             type="range"
             min="24"
             max="84"
-            value={selectedTextLayer?.fontSize ?? 44}
+            value={selectedTextLayer?.fontSize ?? 33}
             onChange={(e) => {
               if (!selectedTextLayer) return
               updateTextLayerSize(selectedTextLayer.id, Number(e.target.value))

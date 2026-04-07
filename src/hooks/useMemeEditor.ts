@@ -8,7 +8,7 @@ import useImage from "use-image"
 const TEXT_PADDING = 12
 const DEFAULT_TOP_POSITION: Position = { x: TEXT_PADDING, y: 32 }
 const DEFAULT_BOTTOM_POSITION: Position = { x: TEXT_PADDING, y: 556 }
-const DEFAULT_FONT_SIZE = 44
+const DEFAULT_FONT_SIZE = 33
 const MIN_IMAGE_SIZE = 48
 const MAX_STAGE_HEIGHT = 400
 const MAX_STAGE_WIDTH = 448
