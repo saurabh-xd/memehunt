@@ -31,7 +31,7 @@ export default function MemeSearch({
       <Button
         type="submit"
         disabled={isLoading || !situation.trim()}
-        className="h-12 shrink-0 rounded-xl px-2.5 text-sm cursor-pointer bg-gradient-to-b from-blue-500 to-blue-500 text-white font-medium hover:opacity-80 transition-all duration-300 sm:h-14 sm:min-w-40 sm:px-6 sm:text-lg"
+        className="h-12 shrink-0 rounded-xl px-2.5 text-sm cursor-pointer  text-white font-medium hover:opacity-80 transition-all duration-300 sm:h-14 sm:min-w-40 sm:px-6 sm:text-lg"
       >
         {isLoading ? (
           <>

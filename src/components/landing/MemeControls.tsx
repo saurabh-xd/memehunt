@@ -178,7 +178,7 @@ export default function MemeControls({
                 }
                 setCustomWatermark(event.target.value)
               }}
-              className="h-10 rounded-2xl pr-16 sm:pr-18"
+              className="h-10 rounded-2xl pr-16 sm:pr-[4.5rem]"
             />
             <Button
               type="button"
@@ -228,7 +228,7 @@ export default function MemeControls({
        {/* add text and image control */}
 
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-        <Button type="button" onClick={addTextLayer} className="h-11 rounded-2xl cursor-pointer bg-gradient-to-b from-blue-300 to-blue-500 text-white font-medium hover:opacity-80 transition-all duration-300">
+        <Button type="button" onClick={addTextLayer} className="h-11 rounded-2xl cursor-pointer text-white font-medium hover:opacity-80 transition-all duration-300">
           <Plus className="size-4" />
           Add Text
         </Button>

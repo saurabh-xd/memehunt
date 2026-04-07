@@ -93,7 +93,7 @@ export default function Navbar() {
             </Button>
          
         ) : (
-          <Button className="rounded-full cursor-pointer bg-gradient-to-b from-blue-300 to-blue-500 text-white font-medium hover:opacity-80 transition-all duration-300 " onClick={() => router.push("/sign-in")}>
+          <Button className="rounded-full cursor-pointer  text-white font-medium hover:opacity-80 transition-all duration-300 " onClick={() => router.push("/sign-in")}>
                  <CircleUser className="size-4" />
             <span className="hidden sm:inline">Sign In</span>
        

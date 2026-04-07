@@ -428,6 +428,13 @@ export const memes: MemeResult[] = [
   },
 
   {
+    id: "didnt-expect",
+    name: "Didnt Expect",
+    image: "/memes/indian/didnt-expect.jpg",
+    description: ""
+  },
+
+  {
     id: "doglapan",
     name: "Doglapan",
     image: "/memes/indian/doglapan.jpg",
@@ -439,6 +446,13 @@ export const memes: MemeResult[] = [
     id: "doremon-evil-smile",
     name: "Doremon Evil Smile",
     image: "/memes/indian/doremon-evil-smile.jpg",
+    description: ""
+  },
+
+  {
+    id: "emotional-scene",
+    name: "Emotional Scene",
+    image: "/memes/indian/emotional-scene.jpg",
     description: ""
   },
 
@@ -458,9 +472,23 @@ export const memes: MemeResult[] = [
   },
 
   {
+    id: "ishowspeed-smile",
+    name: "Ishowspeed Smile",
+    image: "/memes/indian/ishowspeed-smile.jpg",
+    description: ""
+  },
+
+  {
     id: "kid-in-coporate",
     name: "Kid In Coporate",
     image: "/memes/indian/kid-in-coporate.jpg",
+    description: ""
+  },
+
+  {
+    id: "kinfe-on-neck",
+    name: "Kinfe On Neck",
+    image: "/memes/indian/kinfe-on-neck.jpg",
     description: ""
   },
 
@@ -513,6 +541,13 @@ export const memes: MemeResult[] = [
     id: "ok-claude-cursor-make-a-billion-dollar-b2b-saas-app-and-v0-vkpoy57qmdbf1",
     name: "Ok Claude Cursor Make A Billion Dollar B2b Saas App And V0 Vkpoy57qmdbf1",
     image: "/memes/indian/ok-claude-cursor-make-a-billion-dollar-b2b-saas-app-and-v0-vkpoy57qmdbf1.webp",
+    description: ""
+  },
+
+  {
+    id: "peak",
+    name: "Peak",
+    image: "/memes/indian/peak.jpg",
     description: ""
   },
 
@@ -575,6 +610,13 @@ export const memes: MemeResult[] = [
   },
 
   {
+    id: "tension-gta",
+    name: "Tension Gta",
+    image: "/memes/indian/tension-gta.jpg",
+    description: ""
+  },
+
+  {
     id: "two-options",
     name: "Two Options",
     image: "/memes/indian/two-options.jpg",
@@ -594,6 +636,20 @@ export const memes: MemeResult[] = [
     image: "/memes/indian/virat-kholio.jpg",
     description: "A laid-back Indian reaction image with smug, casual, or playful energy",
     selectionNotes: "Best for cheeky confidence, relaxed wins, stylish reactions, and lightly smug responses to a situation."
+  },
+
+  {
+    id: "who-is-best",
+    name: "Who Is Best",
+    image: "/memes/indian/who-is-best.jpg",
+    description: ""
+  },
+
+  {
+    id: "who-is-gonna-tell-him",
+    name: "Who Is Gonna Tell Him",
+    image: "/memes/indian/who-is-gonna-tell-him.jpg",
+    description: ""
   },
 
   {
