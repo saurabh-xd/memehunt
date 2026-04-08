@@ -20,9 +20,41 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MemeHunt",
-  description: "Find the perfect meme template using AI in seconds",
+  metadataBase: new URL("https://memehunt.tech"),
+  title: {
+    default: "MemeHunt - AI Meme Finder & Editor",
+    template: "%s | MemeHunt",
+  },
+  description:
+    "Find the right meme with AI, customize it in the editor, and download it instantly.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "MemeHunt - AI Meme Finder & Editor",
+    description:
+      "Find the right meme with AI, customize it in the editor, and download it instantly.",
+    url: "https://memehunt.tech",
+    siteName: "MemeHunt",
+    type: "website",
+    images: [
+      {
+        url: "/og.png",
+        width: 1895,
+        height: 905,
+        alt: "MemeHunt - AI Meme Finder & Editor",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MemeHunt - AI Meme Finder & Editor",
+    description:
+      "Find the right meme with AI, customize it in the editor, and download it instantly.",
+    images: ["/og.png"],
+  },
 };
+
 
 export default function RootLayout({
   children,
