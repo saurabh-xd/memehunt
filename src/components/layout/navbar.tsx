@@ -7,11 +7,13 @@ import { useRouter } from "next/navigation"
 import {  CircleUser, Loader2 } from "lucide-react"
 import { GithubIcon } from "../githubIcon"
 import Link from "next/link"
+import { toast } from "sonner"
 
 export default function Navbar() {
   const { data: session, isPending } = useSession()
   const router = useRouter()
   const [stars, setStars] = useState<number | null>(null)
+  const [isSigningOut, setIsSigningOut] = useState(false)
 
   useEffect(() => {
     let isMounted = true
@@ -38,8 +40,32 @@ export default function Navbar() {
   }, [])
 
   async function handleSignOut() {
-    await signOut()
-    router.refresh()
+    try {
+      setIsSigningOut(true)
+      await signOut()
+      toast.success("Signed out")
+      router.refresh()
+    } catch {
+      toast.error("Could not sign out. Try again.")
+    } finally {
+      setIsSigningOut(false)
+    }
+  }
+
+  const isSignedIn = Boolean(session?.user)
+  const isAuthLoading = isPending || isSigningOut
+  const authLabel = isSignedIn ? "Sign Out" : "Sign In"
+  const authAriaLabel = isAuthLoading ? "Checking sign in status" : authLabel
+
+  function handleAuthAction() {
+    if (isAuthLoading) return
+
+    if (isSignedIn) {
+      handleSignOut()
+      return
+    }
+
+    router.push("/sign-in")
   }
 
   return (
@@ -76,29 +102,19 @@ export default function Navbar() {
 
        
 
-        {isPending ? (
-          <div className="flex h-10 min-w-10 items-center justify-center rounded-full border border-border/70 px-3 text-sm text-muted-foreground sm:min-w-28 sm:px-4">
+        <Button
+          className="min-w-10 rounded-full cursor-pointer px-3 text-white font-medium transition-all duration-300 hover:opacity-80 sm:min-w-28 sm:px-4"
+          onClick={handleAuthAction}
+          disabled={isAuthLoading}
+          aria-label={authAriaLabel}
+        >
+          {isAuthLoading ? (
             <Loader2 className="size-4 animate-spin" />
-          </div>
-        ) : session?.user ? (
-         
-            
-            <Button
-              
-              className="rounded-full cursor-pointer bg-gradient-to-b from-blue-300 to-blue-500 px-3 text-white font-medium hover:opacity-80 transition-all duration-300 sm:px-4"
-              onClick={handleSignOut}
-            > <CircleUser className="size-4" />
-              <span className="hidden sm:inline">Sign Out</span>
-            
-            </Button>
-         
-        ) : (
-          <Button className="rounded-full cursor-pointer  text-white font-medium hover:opacity-80 transition-all duration-300 " onClick={() => router.push("/sign-in")}>
-                 <CircleUser className="size-4" />
-            <span className="hidden sm:inline">Sign In</span>
-       
-          </Button>
-        )}
+          ) : (
+            <CircleUser className="size-4" />
+          )}
+          <span className="hidden sm:inline">{isAuthLoading ? "Loading" : authLabel}</span>
+        </Button>
       </div>
     </div>
   )

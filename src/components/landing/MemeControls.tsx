@@ -85,7 +85,7 @@ export default function MemeControls({
             <Button
               type="button"
               size="sm"
-              className="h-10 rounded-xl bg-emerald-600 px-3 text-white hover:bg-emerald-700"
+              className="h-10 rounded-xl cursor-pointer bg-emerald-600 px-3 text-white hover:bg-emerald-700"
               onClick={downloadMeme}
             >
               <Download className="size-4" />
@@ -95,7 +95,7 @@ export default function MemeControls({
               type="button"
               size="sm"
               variant="outline"
-              className="h-10 rounded-xl border-border/70 px-3 text-muted-foreground hover:text-foreground"
+              className="h-10 rounded-xl cursor-pointer border-border/70 px-3 text-muted-foreground hover:text-foreground"
               onClick={resetMeme}
             >
               <RotateCcw className="size-4" />
