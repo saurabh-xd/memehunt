@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Manrope, Sora } from "next/font/google";
+import { Geist_Mono, Manrope, Sora, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/layout/navbar";
@@ -12,6 +12,10 @@ const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
 const sora = Sora({
   subsets: ["latin"],
   variable: "--font-heading",
+});
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-brand",
 });
 
 const geistMono = Geist_Mono({
@@ -64,7 +68,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("font-sans", manrope.variable, sora.variable)}
+      className={cn("font-sans", manrope.variable, sora.variable, spaceGrotesk.variable)}
       suppressHydrationWarning
     >
       <body

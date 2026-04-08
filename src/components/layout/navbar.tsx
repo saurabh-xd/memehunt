@@ -73,14 +73,14 @@ export default function Navbar() {
     <div className="flex w-full items-center justify-between gap-3 p-3 py-2 sm:p-4">
       <Link
        href="/"
-        className="font-heading min-w-0 flex items-center justify-center cursor-pointer text-sm font-bold tracking-tight sm:text-base md:text-lg"
+        className="font-brand min-w-0 flex items-center justify-center cursor-pointer text-sm font-extrabold tracking-[-0.04em] sm:text-base md:text-lg"
       >
       <Image
         src="/logo.png"
         alt="MemeHunt logo"
         width={32}
         height={32}
-        className="size-10 shrink-0 "
+        className="md:size-10 size-8 shrink-0 "
       />
       <span className="block truncate">MemeHunt AI</span>
       </Link>
