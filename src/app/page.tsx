@@ -14,6 +14,7 @@ import {
   GENERATION_DIALOG_COPY,
   WATERMARK_DIALOG_COPY,
 } from "@/constants/dialog-copy";
+import { DialogCopy } from "@/types/ui";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -31,7 +32,7 @@ export default function Home() {
   const editorRef = useRef<HTMLDivElement | null>(null);
 
   const [showSignInDialog, setShowSignInDialog] = useState(false);
-  const [signInDialogCopy, setSignInDialogCopy] = useState(GENERATION_DIALOG_COPY);
+  const [signInDialogCopy, setSignInDialogCopy] = useState<DialogCopy>(GENERATION_DIALOG_COPY);
 
   function handleCustomTemplateSelect(file: File) {
     const imageUrl = URL.createObjectURL(file);

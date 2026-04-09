@@ -17,12 +17,15 @@ export default function Templates({
 }: TemplatesProps) {
   const [query, setQuery] = useState("")
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
+  const [failedImageIds, setFailedImageIds] = useState<string[]>([])
   const { activeTemplateId, selectGalleryTemplate } = useActiveTemplate()
   const loadMoreRef = useRef<HTMLDivElement | null>(null)
 
   const filteredMemes = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase()
-    const enabledMemes = memes.filter((meme) => meme.selectionEnabled !== false)
+    const enabledMemes = memes.filter(
+      (meme) => meme.selectionEnabled !== false && !failedImageIds.includes(meme.id)
+    )
 
     if (!normalizedQuery) {
       return enabledMemes
@@ -34,7 +37,7 @@ export default function Templates({
         .toLowerCase()
         .includes(normalizedQuery)
     )
-  }, [query])
+  }, [failedImageIds, query])
 
   const visibleMemes = filteredMemes.slice(0, visibleCount)
   const hasMoreTemplates = visibleCount < filteredMemes.length
@@ -108,6 +111,11 @@ export default function Templates({
                   fill
                   sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
                   className="object-cover transition duration-300"
+                  onError={() => {
+                    setFailedImageIds((current) =>
+                      current.includes(meme.id) ? current : [...current, meme.id]
+                    )
+                  }}
                 />
               </div>
             </button>

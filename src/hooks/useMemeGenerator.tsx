@@ -1,6 +1,11 @@
 import { useState } from "react"
 import { MemeResult } from "@/types/meme"
 import axios from "axios"
+import {
+  MemeApiErrorResponse,
+  MemeGenerateRequest,
+  MemeGenerateResponse,
+} from "@/types/api"
 
 export function useMemeGenerator() {
 
@@ -20,18 +25,24 @@ export function useMemeGenerator() {
 
     try {
 
-      const res = await axios.post("api/meme", { situation})
+      const res = await axios.post<MemeGenerateResponse>("api/meme", {
+        situation,
+      } satisfies MemeGenerateRequest)
 
-      const data = await res.data
+      const data = res.data
 
 
       setTemplate(data)
       return data as MemeResult
 
     } catch (error) {
+      const message =
+        axios.isAxiosError<MemeApiErrorResponse>(error)
+          ? error.response?.data?.error ?? "Something went wrong"
+          : "Something went wrong"
 
       console.error(error)
-      setError("Something went wrong")
+      setError(message)
       return null
 
     } finally {

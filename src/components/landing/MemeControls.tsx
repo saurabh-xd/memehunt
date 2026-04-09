@@ -131,8 +131,8 @@ export default function MemeControls({
                   rows={Math.max(1, layer.text.split("\n").length)}
                   className={
                     index >= 2
-                      ? "min-h-11 w-full resize-none rounded-2xl border border-input bg-transparent px-3 py-2.5 pr-12 text-sm shadow-xs outline-none transition-[color,box-shadow] placeholder:text-muted-foreground/70 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
-                      : "min-h-11 w-full resize-none rounded-2xl border border-input bg-transparent px-3 py-2.5 text-sm shadow-xs outline-none transition-[color,box-shadow] placeholder:text-muted-foreground/70 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                      ? "min-h-11 w-full resize-none rounded-2xl border border-input bg-transparent px-3 py-2.5 pr-12 text-sm shadow-xs outline-none transition-[color,box-shadow] placeholder:text-muted-foreground/70 focus-visible:border-ring focus-visible:ring-[1px] focus-visible:ring-ring/50"
+                      : "min-h-11 w-full resize-none rounded-2xl border border-input bg-transparent px-3 py-2.5 text-sm shadow-xs outline-none transition-[color,box-shadow] placeholder:text-muted-foreground/70 focus-visible:border-ring focus-visible:ring-[1px] focus-visible:ring-ring/50"
                   }
                 />
                 {index >= 2 && (
