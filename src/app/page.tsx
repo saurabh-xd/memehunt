@@ -10,24 +10,16 @@ import { useGuestUsage } from "@/hooks/useGuestUsage";
 import Templates from "@/components/landing/Templates";
 import SignInDialog from "@/components/signInDialog";
 import { useActiveTemplate } from "@/context/ActiveTemplateContext";
-
-const GENERATION_DIALOG_COPY = {
-  title: "Sign in to keep generating",
-  description:
-    "You have used all 5 free AI generations. Sign in with Google to continue creating memes.",
-}
-
-const WATERMARK_DIALOG_COPY = {
-  title: "Sign in to customize watermarks",
-  description:
-    "Sign in with Google to remove the default MemeHunt watermark or add your own custom watermark.",
-}
+import {
+  GENERATION_DIALOG_COPY,
+  WATERMARK_DIALOG_COPY,
+} from "@/constants/dialog-copy";
 
 export default function Home() {
   const { data: session } = useSession();
   const { incrementUsage, isLimitReached, limit } = useGuestUsage();
   const { situation, setSituation, isLoading, error, generate, clearTemplate } =
-    useMemeGenerator(); //for api call
+    useMemeGenerator(); 
   const {
     activeTemplateImage,
     hasActiveTemplate,

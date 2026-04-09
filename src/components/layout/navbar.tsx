@@ -80,7 +80,7 @@ export default function Navbar() {
         alt="MemeHunt logo"
         width={32}
         height={32}
-        className="md:size-10 size-8 shrink-0 "
+        className="md:size-9 size-7 shrink-0 "
       />
       <span className="block truncate">MemeHunt AI</span>
       </Link>

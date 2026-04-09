@@ -373,35 +373,35 @@ export const memes: MemeResult[] = [
     id: "absolute-cinema",
     name: "Absolute Cinema",
     image: "/memes/indian/absolute-cinema.jpg",
-    description: ""
+    description: "Best for moments that feel legendary, dramatic, or unexpectedly perfect."
   },
 
   {
     id: "ajay-devgan-cool-pose",
     name: "Ajay Devgan Cool Pose",
     image: "/memes/indian/ajay-devgan-cool-pose.jpg",
-    description: ""
+    description: "Best for overconfident reactions, swagger, or acting completely unbothered."
   },
 
   {
     id: "ballon",
     name: "Ballon",
     image: "/memes/indian/ballon.jpg",
-    description: ""
+    description: "Best for fragile plans, inflated expectations, or things about to burst."
   },
 
   {
     id: "ben-10-cool-log-hai",
     name: "Ben 10 Cool Log Hai",
     image: "/memes/indian/ben-10-cool log hai.jpg",
-    description: ""
+    description: "Best for flexing, acting cooler than everyone else, or showing off status."
   },
 
   {
     id: "black man happy and sad",
     name: "black man happy and sad",
     image: "/memes/indian/black-man-happy-and-sad.jpg",
-    description: "black man happy then suddenly sad",
+    description: "Best for mixed emotions, instant regret, or joy turning into pain.",
     selectionNotes: ""
   },
 
@@ -414,24 +414,31 @@ export const memes: MemeResult[] = [
   },
 
   {
+    id: "cooked",
+    name: "Cooked",
+    image: "/memes/indian/cooked.jpg",
+    description: "Best for moments when someone is finished, exposed, or completely done for."
+  },
+
+  {
     id: "crowd",
     name: "Crowd",
     image: "/memes/indian/crowd.jpg",
-    description: ""
+    description: "Best for public drama, mass reactions, or when everyone joins the chaos."
   },
 
   {
     id: "deeply-thinking",
     name: "Deeply Thinking",
     image: "/memes/indian/deeply-thinking.jpg",
-    description: ""
+    description: "Best for overthinking, pretending to analyze deeply, or fake serious thought."
   },
 
   {
     id: "didnt-expect",
     name: "Didnt Expect",
     image: "/memes/indian/didnt-expect.jpg",
-    description: ""
+    description: "Best for surprise twists, unexpected outcomes, or instant shock."
   },
 
   {
@@ -446,21 +453,28 @@ export const memes: MemeResult[] = [
     id: "doremon-evil-smile",
     name: "Doremon Evil Smile",
     image: "/memes/indian/doremon-evil-smile.jpg",
-    description: ""
+    description: "Best for sneaky plans, hidden intentions, or chaotic evil confidence."
   },
 
   {
     id: "emotional-scene",
     name: "Emotional Scene",
     image: "/memes/indian/emotional-scene.jpg",
-    description: ""
+    description: "Best for heartbreak, emotional damage, or overly dramatic sadness."
   },
 
   {
     id: "freedom",
     name: "Freedom",
     image: "/memes/indian/freedom.jpg",
-    description: ""
+    description: "Best for relief, escaping stress, or finally being free from something."
+  },
+
+  {
+    id: "hey",
+    name: "Hey",
+    image: "/memes/indian/hey.jpg",
+    description: "Best for awkward greetings, random attention, or lightly unserious reactions."
   },
 
   {
@@ -475,28 +489,28 @@ export const memes: MemeResult[] = [
     id: "ishowspeed-smile",
     name: "Ishowspeed Smile",
     image: "/memes/indian/ishowspeed-smile.jpg",
-    description: ""
+    description: "Best for chaotic happiness, cursed excitement, or unhinged reactions."
   },
 
   {
     id: "kid-in-coporate",
     name: "Kid In Coporate",
     image: "/memes/indian/kid-in-coporate.jpg",
-    description: ""
+    description: "Best for feeling unqualified, fake professionalism, or being thrown into serious work."
   },
 
   {
     id: "kinfe-on-neck",
     name: "Kinfe On Neck",
     image: "/memes/indian/kinfe-on-neck.jpg",
-    description: ""
+    description: "Best for pressure, forced choices, or doing something under threat."
   },
 
   {
     id: "marriage vs event",
     name: "marriage vs event",
     image: "/memes/indian/marriage-vs-event.jpg",
-    description: "",
+    description: "Best for comparing priorities, effort mismatch, or funny value differences.",
     selectionNotes: ""
   },
 
@@ -504,21 +518,21 @@ export const memes: MemeResult[] = [
     id: "mens-feeling",
     name: "Mens Feeling",
     image: "/memes/indian/mens-feeling.jpg",
-    description: ""
+    description: "Best for hidden pain, quiet suffering, or emotions left unsaid."
   },
 
   {
     id: "modiji-thinking",
     name: "Modiji Thinking",
     image: "/memes/indian/modiji-thinking.jpg",
-    description: ""
+    description: "Best for deep thought, fake seriousness, or trying to look strategic."
   },
 
   {
     id: "monkey thinking",
     name: "monkey thinking",
     image: "/memes/indian/monkey-thinking.png",
-    description: "",
+    description: "Best for confusion, low-level overthinking, or brain-not-working moments.",
     selectionNotes: ""
   },
 
@@ -526,7 +540,7 @@ export const memes: MemeResult[] = [
     id: "monkey-with-gun",
     name: "Monkey With Gun",
     image: "/memes/indian/monkey-with-gun.webp",
-    description: ""
+    description: "Best for dangerous stupidity, chaotic decisions, or too much power in the wrong hands."
   },
 
   {
@@ -541,14 +555,14 @@ export const memes: MemeResult[] = [
     id: "ok-claude-cursor-make-a-billion-dollar-b2b-saas-app-and-v0-vkpoy57qmdbf1",
     name: "Ok Claude Cursor Make A Billion Dollar B2b Saas App And V0 Vkpoy57qmdbf1",
     image: "/memes/indian/ok-claude-cursor-make-a-billion-dollar-b2b-saas-app-and-v0-vkpoy57qmdbf1.webp",
-    description: ""
+    description: "Best for unrealistic AI expectations, startup delusion, or absurd prompt engineering hopes."
   },
 
   {
     id: "peak",
     name: "Peak",
     image: "/memes/indian/peak.jpg",
-    description: ""
+    description: "Best for peak performance, ultimate wins, or when something cannot get better."
   },
 
   {
@@ -560,10 +574,17 @@ export const memes: MemeResult[] = [
   },
 
   {
+    id: "same-same",
+    name: "Same Same",
+    image: "/memes/indian/same-same.jpg",
+    description: "Best for calling out two things that are basically identical."
+  },
+
+  {
     id: "shock-looking",
     name: "Shock Looking",
     image: "/memes/indian/shock-looking.jpg",
-    description: ""
+    description: "Best for pure shock, disbelief, or seeing something unbelievable."
   },
 
   {
@@ -578,61 +599,68 @@ export const memes: MemeResult[] = [
     id: "smart-vs-fool",
     name: "Smart Vs Fool",
     image: "/memes/indian/smart-vs-fool.jpg",
-    description: ""
+    description: "Best for intelligence comparisons, obvious bad choices, or smart-vs-dumb behavior."
   },
 
   {
     id: "smiling-on-rip",
     name: "Smiling On Rip",
     image: "/memes/indian/smiling-on-rip.jpg",
-    description: ""
+    description: "Best for fake happiness during pain, forced positivity, or laughing through suffering."
   },
 
   {
     id: "srk-dark-circles",
     name: "Srk Dark Circles",
     image: "/memes/indian/srk-dark-circles.jpg",
-    description: ""
+    description: "Best for exhaustion, no-sleep life, burnout, or looking tired all the time."
   },
 
   {
     id: "struggle",
     name: "Struggle",
     image: "/memes/indian/struggle.jpg",
-    description: ""
+    description: "Best for hard work, daily suffering, or endless effort with little reward."
   },
 
   {
     id: "study-nred",
     name: "Study Nred",
     image: "/memes/indian/study-nred.jpg",
-    description: ""
+    description: "Best for study pressure, exam stress, or failing to focus."
+  },
+
+  {
+    id: "suprise-trojin",
+    name: "Suprise Trojin",
+    image: "/memes/indian/suprise-trojin.jpg",
+    description: "Best for surprise betrayal, hidden threats, or a twist nobody saw coming."
   },
 
   {
     id: "tension-gta",
     name: "Tension Gta",
     image: "/memes/indian/tension-gta.jpg",
-    description: ""
+    description: "Best for stress, danger, or feeling like life has turned into a GTA mission."
   },
 
   {
     id: "two-options",
     name: "Two Options",
     image: "/memes/indian/two-options.jpg",
-    description: ""
+    description: "Best for choice memes, unfair decisions, or comparing two possible outcomes."
   },
 
   {
     id: "two-paths",
     name: "Two Paths",
     image: "/memes/indian/two-paths.jpg",
-    description: ""
+    description: "Best for crossroads, life decisions, or choosing between a safe path and a risky one."
   },
 
   {
-    id: "virat-kholio",
-    name: "Virat Kholio",
+    id: "virat-kholi",
+    name: "Virat Kholi",
     image: "/memes/indian/virat-kholio.jpg",
     description: "A laid-back Indian reaction image with smug, casual, or playful energy",
     selectionNotes: "Best for cheeky confidence, relaxed wins, stylish reactions, and lightly smug responses to a situation."
@@ -642,20 +670,27 @@ export const memes: MemeResult[] = [
     id: "who-is-best",
     name: "Who Is Best",
     image: "/memes/indian/who-is-best.jpg",
-    description: ""
+    description: "Best for comparisons, rankings, and deciding which option is clearly the best."
   },
 
   {
     id: "who-is-gonna-tell-him",
     name: "Who Is Gonna Tell Him",
     image: "/memes/indian/who-is-gonna-tell-him.jpg",
-    description: ""
+    description: "Best for when someone is confidently wrong and nobody wants to break the truth to them."
+  },
+
+  {
+    id: "wojak",
+    name: "Wojak",
+    image: "/memes/indian/wojak.jpg",
+    description: "Best for hidden sadness, emotional pain, or pretending to be fine while suffering inside."
   },
 
   {
     id: "wolf-under-sheep",
     name: "Wolf Under Sheep",
     image: "/memes/indian/wolf-under-sheep.jpg",
-    description: ""
+    description: "Best for hidden danger, fake innocence, or someone pretending to be harmless."
   }
 ]
