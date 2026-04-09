@@ -23,22 +23,24 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl = "https://memehunt.tech";
+const siteDescription =
+  "Find the right meme with AI, customize text and images in the meme editor, and download it instantly.";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://memehunt.tech"),
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "MemeHunt - AI Meme Finder & Editor",
+    default: "MemeHunt - AI Meme Finder & Meme Editor",
     template: "%s | MemeHunt",
   },
-  description:
-    "Find the right meme with AI, customize it in the editor, and download it instantly.",
+  description: siteDescription,
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "MemeHunt - AI Meme Finder & Editor",
-    description:
-      "Find the right meme with AI, customize it in the editor, and download it instantly.",
-    url: "https://memehunt.tech",
+    title: "MemeHunt - AI Meme Finder & Meme Editor",
+    description: siteDescription,
+    url: siteUrl,
     siteName: "MemeHunt",
     type: "website",
     images: [
@@ -52,9 +54,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "MemeHunt - AI Meme Finder & Editor",
-    description:
-      "Find the right meme with AI, customize it in the editor, and download it instantly.",
+    title: "MemeHunt - AI Meme Finder & Meme Editor",
+    description: siteDescription,
     images: ["/og.png"],
   },
 };
