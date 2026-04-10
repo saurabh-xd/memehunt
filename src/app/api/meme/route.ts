@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     const situation = parsed.data.situation
     const meme = await findBestMeme(situation)
 
-    return Response.json<MemeGenerateResponse>(meme)
+    return Response.json(meme)
   } catch (error) {
     console.error("Failed to generate meme template", error)
 
