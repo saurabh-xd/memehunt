@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.43",
+    "@ai-sdk/groq": "^3.0.35",
     "@prisma/adapter-pg": "^7.5.0",
     "@prisma/client": "^7.5.0",
     "@vercel/analytics": "^2.0.1",

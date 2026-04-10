@@ -1,6 +1,6 @@
 import { generateObject } from "ai"
 import { z } from "zod"
-import { google } from "@/lib/ai"
+import { groq } from "@/lib/ai"
 import { MemeResult } from "@/types/meme"
 
 export const MEME_SELECTION_PROMPT_VERSION = "v1"
@@ -32,7 +32,8 @@ export async function chooseMeme(
     .join("\n\n")
 
   const result = await generateObject({
-    model: google("gemini-2.5-flash"),
+    model: groq("openai/gpt-oss-20b")
+,
     schema: memeSelectionSchema,
     temperature: 0.2,
     prompt: `
