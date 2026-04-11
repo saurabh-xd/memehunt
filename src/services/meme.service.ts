@@ -3,9 +3,16 @@ import { MEME_SELECTION_PROMPT_VERSION, chooseMeme } from "./ai.services"
 
 const MIN_AI_CONFIDENCE = 0.55
 
+function pickRandomMeme(candidates: typeof memes) {
+  if (candidates.length === 0) return memes[0]
+
+  const randomIndex = Math.floor(Math.random() * candidates.length)
+  return candidates[randomIndex]
+}
+
 export async function findBestMeme(situation: string) {
   const candidates = memes.filter((meme) => meme.selectionEnabled !== false)
-  const fallback = candidates[0] ?? memes[0]
+  const fallback = pickRandomMeme(candidates)
 
   if (!situation) {
     return fallback
