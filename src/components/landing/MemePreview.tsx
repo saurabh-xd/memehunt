@@ -147,8 +147,8 @@ export default function MemePreview({
   const watermarkText = customWatermark.trim() || (showDefaultWatermark ? defaultWatermarkText : "")
   const watermarkPadding = Math.max(10, Math.round(Math.min(stageWidth, stageHeight) * 0.03))
   const watermarkFontSize = Math.max(
-    9,
-    Math.min(14, Math.round(Math.min(stageWidth, stageHeight) * 0.04))
+    8,
+    Math.min(12, Math.round(Math.min(stageWidth, stageHeight) * 0.032))
   )
   const watermarkWidth = Math.min(
     stageWidth - watermarkPadding * 2,
