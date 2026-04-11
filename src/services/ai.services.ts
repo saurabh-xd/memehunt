@@ -1,6 +1,6 @@
 import { generateObject } from "ai"
 import { z } from "zod"
-import { groq } from "@/lib/ai"
+import { google, groq } from "@/lib/ai"
 import { MemeResult } from "@/types/meme"
 
 export const MEME_SELECTION_PROMPT_VERSION = "v1"
@@ -22,21 +22,11 @@ function formatCandidate(meme: MemeResult) {
   ].join("\n")
 }
 
-export async function chooseMeme(
-  situation: string,
-  candidates: MemeResult[]
-) {
+function buildSelectionPrompt(situation: string, candidates: MemeResult[]) {
   const candidateIds = candidates.map((meme) => meme.id).join(", ")
-  const candidateList = candidates
-    .map(formatCandidate)
-    .join("\n\n")
+  const candidateList = candidates.map(formatCandidate).join("\n\n")
 
-  const result = await generateObject({
-    model: groq("openai/gpt-oss-20b")
-,
-    schema: memeSelectionSchema,
-    temperature: 0.2,
-    prompt: `
+  return `
 You are an expert meme template selector. Prompt version: ${MEME_SELECTION_PROMPT_VERSION}.
 
 Your task is to choose the best meme template for the user's situation from the provided candidate list.
@@ -62,7 +52,41 @@ Return JSON with:
 - confidence: number from 0 to 1
 - reason: short explanation
 `
-  })
+}
 
-  return result.object
+export async function chooseMeme(
+  situation: string,
+  candidates: MemeResult[]
+) {
+  const prompt = buildSelectionPrompt(situation, candidates)
+  const providers = [
+    {
+      name: "groq",
+      model: groq("openai/gpt-oss-20b"),
+    },
+    {
+      name: "gemini",
+      model: google("gemini-2.5-flash"),
+    },
+  ] as const
+
+  let lastError: unknown = null
+
+  for (const provider of providers) {
+    try {
+      const result = await generateObject({
+        model: provider.model,
+        schema: memeSelectionSchema,
+        temperature: 0.2,
+        prompt,
+      })
+
+      return result.object
+    } catch (error) {
+      lastError = error
+      console.warn(`Meme selection failed with ${provider.name}, trying next provider`, error)
+    }
+  }
+
+  throw lastError
 }
