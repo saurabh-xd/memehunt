@@ -478,6 +478,13 @@ export const memes: MemeResult[] = [
   },
 
   {
+    id: "freaky-superman",
+    name: "Freaky Superman",
+    image: "/memes/indian/freaky superman.jpg",
+    description: ""
+  },
+
+  {
     id: "freedom",
     name: "Freedom",
     image: "/memes/indian/freedom.jpg",
@@ -496,6 +503,13 @@ export const memes: MemeResult[] = [
     name: "Good Vs Bad",
     image: "/memes/indian/good-vs-bad.jpg",
     description: "Best for clear comparisons between the better option and the obviously worse one."
+  },
+
+  {
+    id: "happy-and-sad-wojak",
+    name: "Happy And Sad Wojak",
+    image: "/memes/indian/happy and sad wojak.jpg",
+    description: ""
   },
 
   {
@@ -525,6 +539,13 @@ export const memes: MemeResult[] = [
     image: "/memes/indian/images (3).jpg",
     description: "A portrait-style reaction image with no meme metadata yet",
     selectionEnabled: false
+  },
+
+  {
+    id: "interstellar-mc-crying-scene",
+    name: "Interstellar Mc Crying Scene",
+    image: "/memes/indian/Interstellar mc crying scene.jpg",
+    description: ""
   },
 
   {
@@ -719,6 +740,13 @@ export const memes: MemeResult[] = [
     name: "Tension Gta",
     image: "/memes/indian/tension-gta.jpg",
     description: "Best for stress, danger, or feeling like life has turned into a GTA mission."
+  },
+
+  {
+    id: "too-many-buzz-light-year",
+    name: "Too Many Buzz Light Year",
+    image: "/memes/indian/too many buzz light year.jpg",
+    description: ""
   },
 
   {
