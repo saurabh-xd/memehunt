@@ -130,8 +130,17 @@ export default function MemePreview({
     stage.container().style.cursor = cursor
   }
 
+  const isMobileViewport =
+  typeof window !== "undefined" && window.innerWidth < 640
+  
+
+const memeFontFamily = isMobileViewport
+  ? "Anton, Impact, Arial Black, sans-serif"
+  : "Impact, Arial Black, sans-serif"
+
+
   const sharedTextProps = {
-    fontFamily: "Impact, Arial Black, sans-serif",
+    fontFamily: memeFontFamily,
     fontStyle: "bold" as const,
     fill: "#f8fafc",
     stroke: "#000000",
