@@ -384,6 +384,13 @@ export const memes: MemeResult[] = [
   },
 
   {
+    id: "alakh-sir-naughty-smile",
+    name: "Alakh Sir Naughty Smile",
+    image: "/memes/indian/alakh-sir naughty smile.jpg",
+    description: ""
+  },
+
+  {
     id: "ballon",
     name: "Ballon",
     image: "/memes/indian/ballon.jpg",
@@ -403,6 +410,13 @@ export const memes: MemeResult[] = [
     image: "/memes/indian/black-man-happy-and-sad.jpg",
     description: "Best for mixed emotions, instant regret, or joy turning into pain.",
     selectionNotes: ""
+  },
+
+  {
+    id: "chill-dog",
+    name: "Chill Dog",
+    image: "/memes/indian/chill-dog.jpg",
+    description: "Best for relaxed confidence, staying calm under pressure, or acting completely unfazed."
   },
 
   {
@@ -471,10 +485,38 @@ export const memes: MemeResult[] = [
   },
 
   {
+    id: "ghee-khtm-fuked-up",
+    name: "Ghee Khtm Fuked Up",
+    image: "/memes/indian/ghee-khtm(fuked up).jpg",
+    description: ""
+  },
+
+  {
+    id: "good-vs-bad",
+    name: "Good Vs Bad",
+    image: "/memes/indian/good-vs-bad.jpg",
+    description: "Best for clear comparisons between the better option and the obviously worse one."
+  },
+
+  {
     id: "hey",
     name: "Hey",
     image: "/memes/indian/hey.jpg",
     description: "Best for awkward greetings, random attention, or lightly unserious reactions."
+  },
+
+  {
+    id: "i-know-but-i-cant-prove-it-guy",
+    name: "I Know But I Cant Prove It Guy",
+    image: "/memes/indian/i know but i cant prove it guy.jpg",
+    description: ""
+  },
+
+  {
+    id: "i-aint-reading-all-that-im-happy-for-you-tho-or-sorry-that-happend",
+    name: "I Aint Reading All That Im Happy For You Tho Or Sorry That Happend",
+    image: "/memes/indian/i-aint-reading-all-that-im-happy-for-you-tho-or-sorry-that-happend.webp",
+    description: ""
   },
 
   {
@@ -493,6 +535,13 @@ export const memes: MemeResult[] = [
   },
 
   {
+    id: "jim-halpert-explains",
+    name: "Jim Halpert Explains",
+    image: "/memes/indian/Jim Halpert Explains.jpg",
+    description: "Best for dry explanations, obvious corrections, or patiently spelling something out."
+  },
+
+  {
     id: "kid-in-coporate",
     name: "Kid In Coporate",
     image: "/memes/indian/kid-in-coporate.jpg",
@@ -504,6 +553,13 @@ export const memes: MemeResult[] = [
     name: "Kinfe On Neck",
     image: "/memes/indian/kinfe-on-neck.jpg",
     description: "Best for pressure, forced choices, or doing something under threat."
+  },
+
+  {
+    id: "lion-vs-calm-monkey",
+    name: "Lion Vs Calm Monkey",
+    image: "/memes/indian/lion-vs-calm-monkey.jpg",
+    description: "Best for chaos versus calm, overreaction versus composure, or loud people meeting quiet confidence."
   },
 
   {
@@ -519,6 +575,13 @@ export const memes: MemeResult[] = [
     name: "Mens Feeling",
     image: "/memes/indian/mens-feeling.jpg",
     description: "Best for hidden pain, quiet suffering, or emotions left unsaid."
+  },
+
+  {
+    id: "michael-scott",
+    name: "Michael Scott",
+    image: "/memes/indian/michael scott.jpg",
+    description: "Best for awkward confidence, clueless leadership, or saying the wrong thing with full conviction."
   },
 
   {
@@ -563,6 +626,20 @@ export const memes: MemeResult[] = [
     name: "Peak",
     image: "/memes/indian/peak.jpg",
     description: "Best for peak performance, ultimate wins, or when something cannot get better."
+  },
+
+  {
+    id: "robot-ai-dangerous-stare",
+    name: "Robot Ai Dangerous Stare",
+    image: "/memes/indian/robot(ai) dangerous stare.jpg",
+    description: ""
+  },
+
+  {
+    id: "sad-batman",
+    name: "Sad Batman",
+    image: "/memes/indian/sad-batman.jpg",
+    description: ""
   },
 
   {
