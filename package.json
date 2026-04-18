@@ -7,7 +7,7 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
-    "generate:indian-memes": "tsx scripts/generate-indian-memes.ts"
+    "generate-memes": "tsx scripts/generate-indian-memes.ts"
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.43",

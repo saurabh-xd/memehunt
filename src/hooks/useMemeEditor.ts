@@ -64,7 +64,7 @@ export function useMemeEditor(templateImage: string) {
   const nextLayerIndexRef = useRef(3)
   const nextImageLayerIndexRef = useRef(1)
 
-  useEffect(() => {
+  useEffect(() => {   
     if (!containerRef.current) return
 
     const element = containerRef.current
@@ -228,7 +228,7 @@ export function useMemeEditor(templateImage: string) {
   }
 
   async function addImageLayer(file: File) {
-    const src = URL.createObjectURL(file)
+    const src = URL.createObjectURL(file) // creates temporaly url browser can use it something - blob:http://localhost:3000/abc-123-xyz
 
     try {
       const dimensions = await new Promise<{ width: number; height: number }>((resolve, reject) => {
