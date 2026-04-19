@@ -16,44 +16,6 @@ export const memes: MemeResult[] = [
     description: "A person struggling to choose between two difficult options",
     selectionNotes: "Best when the humor comes from being stuck between two bad options, two tempting options, or a stressful decision where both choices have a cost."
   },
-  {
-    id: "absolute-cinema",
-    name: "Absolute Cinema",
-    image: "/memes/indian/absolute-cinema.jpg",
-    description: "Best for moments that feel legendary, dramatic, or unexpectedly perfect."
-  },
-
-
-  
-{
-    id: "cooked",
-    name: "Cooked",
-    image: "/memes/indian/cooked.jpg",
-    description: "Best for moments when someone is finished, exposed, or completely done for."
-  },
-
-   {
-    id: "doremon-evil-smile",
-    name: "Doremon Evil Smile",
-    image: "/memes/indian/doremon-evil-smile.jpg",
-    description: "Best for sneaky plans, hidden intentions, or chaotic evil confidence."
-  },
-
-  {
-    id: "who-is-best",
-    name: "Who Is Best",
-    image: "/memes/indian/who-is-best.jpg",
-    description: "Best for comparisons, rankings, and deciding which option is clearly the best."
-  },
-
- 
-
-   {
-    id: "freaky-superman",
-    name: "Freaky Superman",
-    image: "/memes/indian/freaky superman.jpg",
-    description: ""
-  },
 
   {
     id: "change-my-mind",
@@ -71,39 +33,10 @@ export const memes: MemeResult[] = [
   },
 
   {
-    id: "ghee-khtm-fuked-up",
-    name: "Ghee Khtm Fuked Up",
-    image: "/memes/indian/ghee-khtm(fuked up).jpg",
-    description: ""
-  },
-
-  {
     id: "expanding-brain",
     name: "Expanding Brain",
     image: "https://i.imgflip.com/1jwhww.jpg",
     description: "Showing increasing levels of intelligence or ideas"
-  },
-
-   {
-    id: "sad-batman",
-    name: "Sad Batman",
-    image: "/memes/indian/sad-batman.jpg",
-    description: ""
-  },
-
- 
-  {
-    id: "shock-looking",
-    name: "Shock Looking",
-    image: "/memes/indian/shock-looking.jpg",
-    description: "Best for pure shock, disbelief, or seeing something unbelievable."
-  },
-
-   {
-    id: "interstellar-mc-crying-scene",
-    name: "Interstellar Mc Crying Scene",
-    image: "/memes/indian/Interstellar mc crying scene.jpg",
-    description: ""
   },
 
   {
@@ -166,13 +99,6 @@ export const memes: MemeResult[] = [
   },
 
   {
-    id: "ishowspeed-smile",
-    name: "Ishowspeed Smile",
-    image: "/memes/indian/ishowspeed-smile.jpg",
-    description: "Best for chaotic happiness, cursed excitement, or unhinged reactions."
-  },
-
-  {
     id: "ancient-aliens",
     name: "Ancient Aliens Guy",
     image: "https://i.imgflip.com/26am.jpg",
@@ -193,8 +119,6 @@ export const memes: MemeResult[] = [
     description: "Smiling through hidden pain or suffering",
     selectionNotes: "Best for fake positivity, smiling through stress, pretending work is fine, or silently suffering while trying to look normal."
   },
-
-  
 
   {
     id: "futurama-fry",
@@ -325,26 +249,6 @@ export const memes: MemeResult[] = [
     description: "Someone behaving selfishly or badly"
   },
 
-  {
-    id: "skeptical-baby",
-    name: "Skeptical Baby",
-    image: "https://i.imgflip.com/1bhq.jpg",
-    description: "Being skeptical about something"
-  },
-
-  {
-    id: "grumpy-cat",
-    name: "Grumpy Cat",
-    image: "https://i.imgflip.com/8p0a.jpg",
-    description: "Showing strong dislike or grumpiness"
-  },
-
-  {
-    id: "facepalm",
-    name: "Captain Picard Facepalm",
-    image: "https://i.imgflip.com/3vzej.jpg",
-    description: "Reacting to stupidity or embarrassment"
-  },
 
   {
     id: "always-has-been",
@@ -374,13 +278,6 @@ export const memes: MemeResult[] = [
     image: "https://i.imgflip.com/4pn1an.png",
     description: "Quietly having a thought or secret while everyone around you is unaware",
     selectionNotes: "Best for secret wins, private sadness, hidden context, niche knowledge, and situations where the joke is that everyone else is unaware of something important."
-  },
-
-   {
-    id: "hey",
-    name: "Hey",
-    image: "/memes/indian/hey.jpg",
-    description: "Best for awkward greetings, random attention, or lightly unserious reactions."
   },
 
   {
@@ -415,7 +312,27 @@ export const memes: MemeResult[] = [
     selectionNotes: "Best for over-the-top fear of getting caught by parents, bad report cards, breaking house rules, and exaggerated desi punishment jokes."
   },
 
-  
+  {
+    id: "mocking-spongebob",
+    name: "Mocking SpongeBob",
+    image: "https://i.imgflip.com/1otk96.jpg",
+    description: "Mocking or sarcastically repeating someone"
+  },
+
+  {
+    id: "surprised-pikachu",
+    name: "Surprised Pikachu",
+    image: "https://i.imgflip.com/2kbn1e.jpg",
+    description: "When something predictable happens but people act surprised",
+    selectionNotes: "Best for obvious consequences, self-inflicted outcomes, or situations where someone ignores warnings and then acts shocked when the expected result happens."
+  },
+
+  {
+    id: "absolute-cinema",
+    name: "Absolute Cinema",
+    image: "/memes/indian/absolute-cinema.jpg",
+    description: "Best for moments that feel legendary, dramatic, or unexpectedly perfect."
+  },
 
   {
     id: "ajay-devgan-cool-pose",
@@ -468,7 +385,12 @@ export const memes: MemeResult[] = [
     selectionNotes: "Best for sudden panic, being doomed, plans collapsing, exam fear, deadlines, or any 'we are finished' moment."
   },
 
-  
+  {
+    id: "cooked",
+    name: "Cooked",
+    image: "/memes/indian/cooked.jpg",
+    description: "Best for moments when someone is finished, exposed, or completely done for."
+  },
 
   {
     id: "crowd",
@@ -499,14 +421,13 @@ export const memes: MemeResult[] = [
     selectionNotes: "Best for hypocrisy jokes, double standards, fake morality, and moments where someone says one thing and does another."
   },
 
-   {
-    id: "mocking-spongebob",
-    name: "Mocking SpongeBob",
-    image: "https://i.imgflip.com/1otk96.jpg",
-    description: "Mocking or sarcastically repeating someone"
+  {
+    id: "doremon-evil-smile",
+    name: "Doremon Evil Smile",
+    image: "/memes/indian/doremon-evil-smile.jpg",
+    description: "Best for sneaky plans, hidden intentions, or chaotic evil confidence."
   },
 
- 
   {
     id: "emotional-scene",
     name: "Emotional Scene",
@@ -514,7 +435,12 @@ export const memes: MemeResult[] = [
     description: "Best for heartbreak, emotional damage, or overly dramatic sadness."
   },
 
- 
+  {
+    id: "freaky-superman",
+    name: "Freaky Superman",
+    image: "/memes/indian/freaky superman.jpg",
+    description: ""
+  },
 
   {
     id: "freedom",
@@ -523,7 +449,12 @@ export const memes: MemeResult[] = [
     description: "Best for relief, escaping stress, or finally being free from something."
   },
 
-  
+  {
+    id: "ghee-khtm-fuked-up",
+    name: "Ghee Khtm Fuked Up",
+    image: "/memes/indian/ghee-khtm(fuked up).jpg",
+    description: ""
+  },
 
   {
     id: "good-vs-bad",
@@ -539,7 +470,12 @@ export const memes: MemeResult[] = [
     description: ""
   },
 
- 
+  {
+    id: "hey",
+    name: "Hey",
+    image: "/memes/indian/hey.jpg",
+    description: "Best for awkward greetings, random attention, or lightly unserious reactions."
+  },
 
   {
     id: "i-know-but-i-cant-prove-it-guy",
@@ -563,9 +499,19 @@ export const memes: MemeResult[] = [
     selectionEnabled: false
   },
 
- 
+  {
+    id: "interstellar-mc-crying-scene",
+    name: "Interstellar Mc Crying Scene",
+    image: "/memes/indian/Interstellar mc crying scene.jpg",
+    description: ""
+  },
 
-  
+  {
+    id: "ishowspeed-smile",
+    name: "Ishowspeed Smile",
+    image: "/memes/indian/ishowspeed-smile.jpg",
+    description: "Best for chaotic happiness, cursed excitement, or unhinged reactions."
+  },
 
   {
     id: "jack-relaxing",
@@ -662,6 +608,20 @@ export const memes: MemeResult[] = [
   },
 
   {
+    id: "mr-bean-weired-face-gta",
+    name: "Mr Bean Weired Face Gta",
+    image: "/memes/indian/Mr bean weired face gta.jpg",
+    description: ""
+  },
+
+  {
+    id: "mysterious-funny-guy",
+    name: "Mysterious Funny Guy",
+    image: "/memes/indian/mysterious-funny-guy.jpg",
+    description: ""
+  },
+
+  {
     id: "ok-claude-cursor-make-a-billion-dollar-b2b-saas-app-and-v0-vkpoy57qmdbf1",
     name: "Ok Claude Cursor Make A Billion Dollar B2b Saas App And V0 Vkpoy57qmdbf1",
     image: "/memes/indian/ok-claude-cursor-make-a-billion-dollar-b2b-saas-app-and-v0-vkpoy57qmdbf1.webp",
@@ -682,7 +642,12 @@ export const memes: MemeResult[] = [
     description: ""
   },
 
- 
+  {
+    id: "sad-batman",
+    name: "Sad Batman",
+    image: "/memes/indian/sad-batman.jpg",
+    description: ""
+  },
 
   {
     id: "salman-khan-happy-to-sad-meme-template",
@@ -699,14 +664,12 @@ export const memes: MemeResult[] = [
     description: "Best for calling out two things that are basically identical."
   },
 
-   {
-    id: "surprised-pikachu",
-    name: "Surprised Pikachu",
-    image: "https://i.imgflip.com/2kbn1e.jpg",
-    description: "When something predictable happens but people act surprised",
-    selectionNotes: "Best for obvious consequences, self-inflicted outcomes, or situations where someone ignores warnings and then acts shocked when the expected result happens."
+  {
+    id: "shock-looking",
+    name: "Shock Looking",
+    image: "/memes/indian/shock-looking.jpg",
+    description: "Best for pure shock, disbelief, or seeing something unbelievable."
   },
-  
 
   {
     id: "sitting-wolf",
@@ -728,6 +691,13 @@ export const memes: MemeResult[] = [
     name: "Smiling On Rip",
     image: "/memes/indian/smiling-on-rip.jpg",
     description: "Best for fake happiness during pain, forced positivity, or laughing through suffering."
+  },
+
+  {
+    id: "something-danger-behind",
+    name: "Something Danger Behind",
+    image: "/memes/indian/something-danger-behind.jpg",
+    description: ""
   },
 
   {
@@ -801,7 +771,12 @@ export const memes: MemeResult[] = [
     selectionNotes: "Best for cheeky confidence, relaxed wins, stylish reactions, and lightly smug responses to a situation."
   },
 
-  
+  {
+    id: "who-is-best",
+    name: "Who Is Best",
+    image: "/memes/indian/who-is-best.jpg",
+    description: "Best for comparisons, rankings, and deciding which option is clearly the best."
+  },
 
   {
     id: "who-is-gonna-tell-him",
