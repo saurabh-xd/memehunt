@@ -249,7 +249,6 @@ export const memes: MemeResult[] = [
     description: "Someone behaving selfishly or badly"
   },
 
-
   {
     id: "always-has-been",
     name: "Always Has Been",
@@ -345,7 +344,7 @@ export const memes: MemeResult[] = [
     id: "alakh-sir-naughty-smile",
     name: "Alakh Sir Naughty Smile",
     image: "/memes/indian/alakh-sir naughty smile.jpg",
-    description: ""
+    description: "Best for smug confidence, playful mischief, or reacting like you know something others do not."
   },
 
   {
@@ -360,6 +359,13 @@ export const memes: MemeResult[] = [
     name: "Ben 10 Cool Log Hai",
     image: "/memes/indian/ben-10-cool log hai.jpg",
     description: "Best for flexing, acting cooler than everyone else, or showing off status."
+  },
+
+  {
+    id: "black-man-crying",
+    name: "Black Man Crying",
+    image: "/memes/indian/black-man-crying.jpg",
+    description: "Best for emotional breakdowns, silent heartbreak, or crying over painful truth."
   },
 
   {
@@ -429,6 +435,13 @@ export const memes: MemeResult[] = [
   },
 
   {
+    id: "eminem-rose-throw-meme",
+    name: "Eminem Rose Throw Meme",
+    image: "/memes/indian/eminem-rose-throw-meme.jpg",
+    description: "Best for dramatic exits, mic-drop moments, or ending a conversation with flair."
+  },
+
+  {
     id: "emotional-scene",
     name: "Emotional Scene",
     image: "/memes/indian/emotional-scene.jpg",
@@ -439,7 +452,7 @@ export const memes: MemeResult[] = [
     id: "freaky-superman",
     name: "Freaky Superman",
     image: "/memes/indian/freaky superman.jpg",
-    description: ""
+    description: "Best for cursed reactions, unhinged energy, or unexpectedly chaotic behavior."
   },
 
   {
@@ -453,7 +466,7 @@ export const memes: MemeResult[] = [
     id: "ghee-khtm-fuked-up",
     name: "Ghee Khtm Fuked Up",
     image: "/memes/indian/ghee-khtm(fuked up).jpg",
-    description: ""
+    description: "Best for sudden disaster, realizing supplies are gone, or tiny problems becoming huge panic."
   },
 
   {
@@ -467,7 +480,7 @@ export const memes: MemeResult[] = [
     id: "happy-and-sad-wojak",
     name: "Happy And Sad Wojak",
     image: "/memes/indian/happy and sad wojak.jpg",
-    description: ""
+    description: "Best for mood swings, mixed feelings, or happiness that quickly turns into sadness."
   },
 
   {
@@ -481,14 +494,14 @@ export const memes: MemeResult[] = [
     id: "i-know-but-i-cant-prove-it-guy",
     name: "I Know But I Cant Prove It Guy",
     image: "/memes/indian/i know but i cant prove it guy.jpg",
-    description: ""
+    description: "Best for gut-feeling truths, suspicious situations, or being right without evidence."
   },
 
   {
     id: "i-aint-reading-all-that-im-happy-for-you-tho-or-sorry-that-happend",
     name: "I Aint Reading All That Im Happy For You Tho Or Sorry That Happend",
     image: "/memes/indian/i-aint-reading-all-that-im-happy-for-you-tho-or-sorry-that-happend.webp",
-    description: ""
+    description: "Best for ignoring long messages, low attention replies, or unserious reactions to huge paragraphs."
   },
 
   {
@@ -503,7 +516,7 @@ export const memes: MemeResult[] = [
     id: "interstellar-mc-crying-scene",
     name: "Interstellar Mc Crying Scene",
     image: "/memes/indian/Interstellar mc crying scene.jpg",
-    description: ""
+    description: "Best for intense emotional pain, devastating realizations, or crying over irreversible moments."
   },
 
   {
@@ -517,7 +530,7 @@ export const memes: MemeResult[] = [
     id: "jack-relaxing",
     name: "Jack Relaxing",
     image: "/memes/indian/jack-relaxing.jpg",
-    description: ""
+    description: "Best for calm confidence, laid-back vibes, or staying chill while chaos happens around you."
   },
 
   {
@@ -574,7 +587,7 @@ export const memes: MemeResult[] = [
     id: "milking-the-cow-meme-2mspu2",
     name: "Milking The Cow Meme 2mspu2",
     image: "/memes/indian/milking-the-cow-meme-2mspu2.jpg",
-    description: ""
+    description: "Best for overusing ideas, squeezing extra value, or dragging something longer than needed."
   },
 
   {
@@ -582,6 +595,13 @@ export const memes: MemeResult[] = [
     name: "Modiji Thinking",
     image: "/memes/indian/modiji-thinking.jpg",
     description: "Best for deep thought, fake seriousness, or trying to look strategic."
+  },
+
+  {
+    id: "mom-how-did-we-get-so-rich-your-father",
+    name: "Mom How Did We Get So Rich Your Father",
+    image: "/memes/indian/mom-how-did-we-get-so-rich-your-father---.webp",
+    description: "Best for suspicious success, shady methods, or joking about how wealth came from wild choices."
   },
 
   {
@@ -611,14 +631,14 @@ export const memes: MemeResult[] = [
     id: "mr-bean-weired-face-gta",
     name: "Mr Bean Weired Face Gta",
     image: "/memes/indian/Mr bean weired face gta.jpg",
-    description: ""
+    description: "Best for weird confusion, clueless reactions, or processing complete nonsense."
   },
 
   {
     id: "mysterious-funny-guy",
     name: "Mysterious Funny Guy",
     image: "/memes/indian/mysterious-funny-guy.jpg",
-    description: ""
+    description: "Best for cryptic humor, suspiciously clever lines, or mysterious but funny one-liners."
   },
 
   {
@@ -636,17 +656,24 @@ export const memes: MemeResult[] = [
   },
 
   {
+    id: "poor-beggar-emoji",
+    name: "Poor Beggar Emoji",
+    image: "/memes/indian/poor-beggar-emoji.jpg",
+    description: "Best for broke moments, asking for help dramatically, or acting financially destroyed."
+  },
+
+  {
     id: "robot-ai-dangerous-stare",
     name: "Robot Ai Dangerous Stare",
     image: "/memes/indian/robot(ai) dangerous stare.jpg",
-    description: ""
+    description: "Best for AI takeover jokes, cold intimidation, or machine-like dangerous focus."
   },
 
   {
     id: "sad-batman",
     name: "Sad Batman",
     image: "/memes/indian/sad-batman.jpg",
-    description: ""
+    description: "Best for lonely hero moments, silent sadness, or emotionally heavy introspection."
   },
 
   {
@@ -669,6 +696,13 @@ export const memes: MemeResult[] = [
     name: "Shock Looking",
     image: "/memes/indian/shock-looking.jpg",
     description: "Best for pure shock, disbelief, or seeing something unbelievable."
+  },
+
+  {
+    id: "shut-up",
+    name: "Shut Up",
+    image: "/memes/indian/shut-up.webp",
+    description: "Best for blunt comebacks, shutting down nonsense, or ending arguments instantly."
   },
 
   {
@@ -697,7 +731,7 @@ export const memes: MemeResult[] = [
     id: "something-danger-behind",
     name: "Something Danger Behind",
     image: "/memes/indian/something-danger-behind.jpg",
-    description: ""
+    description: "Best for unseen threats, danger you notice too late, or panic from what is behind you."
   },
 
   {
@@ -732,7 +766,7 @@ export const memes: MemeResult[] = [
     id: "talking-to-wall",
     name: "Talking To Wall",
     image: "/memes/indian/talking-to-wall.jpg",
-    description: ""
+    description: "Best for being ignored, explaining things to unresponsive people, or pointless conversations."
   },
 
   {
@@ -746,7 +780,7 @@ export const memes: MemeResult[] = [
     id: "too-many-buzz-light-year",
     name: "Too Many Buzz Light Year",
     image: "/memes/indian/too many buzz light year.jpg",
-    description: ""
+    description: "Best for overwhelming quantity, copy-paste repetition, or too many identical things everywhere."
   },
 
   {
