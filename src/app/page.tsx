@@ -19,7 +19,15 @@ import { DialogCopy } from "@/types/ui";
 export default function Home() {
   const { data: session } = useSession();
   const { incrementUsage, isLimitReached, limit } = useGuestUsage();
-  const { situation, setSituation, isLoading, error, generate, clearTemplate } =
+  const {
+    situation,
+    setSituation,
+    isLoading,
+    error,
+    generate,
+    clearTemplate,
+    cancelGeneration,
+  } =
     useMemeGenerator(); 
   const {
     activeTemplateImage,
@@ -36,6 +44,7 @@ export default function Home() {
 
   function handleCustomTemplateSelect(file: File) {
     const imageUrl = URL.createObjectURL(file);
+    cancelGeneration();
     clearTemplate();
     selectCustomTemplate(imageUrl, file.name);
   }
@@ -49,6 +58,12 @@ export default function Home() {
     requestAnimationFrame(() => {
       editorRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+  }
+
+  function handleTemplateSelect() {
+    cancelGeneration();
+    clearTemplate();
+    scrollToEditor();
   }
 
   async function handleGenerate(e?: React.FormEvent) {
@@ -112,7 +127,7 @@ export default function Home() {
         description={signInDialogCopy.description}
       />
 
-      <Templates onTemplateSelect={scrollToEditor} />
+      <Templates onTemplateSelect={handleTemplateSelect} />
     </main>
   );
 }

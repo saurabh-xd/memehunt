@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { MemeResult } from "@/types/meme"
 import axios from "axios"
 import {
@@ -8,16 +8,23 @@ import {
 } from "@/types/api"
 
 export function useMemeGenerator() {
-
   const [situation, setSituation] = useState("")
   const [template, setTemplate] = useState<MemeResult | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
+  const generationVersionRef = useRef(0)
+
+  function cancelGeneration() {
+    generationVersionRef.current += 1
+    setIsLoading(false)
+  }
 
   async function generate(e?: React.FormEvent) {
-
     if (e) e.preventDefault()
     if (!situation.trim()) return null
+
+    const currentGenerationVersion = generationVersionRef.current + 1
+    generationVersionRef.current = currentGenerationVersion
 
     setIsLoading(true)
     setError("")
@@ -31,11 +38,19 @@ export function useMemeGenerator() {
 
       const data = res.data
 
+      if (generationVersionRef.current !== currentGenerationVersion) {
+        return null
+      }
+
 
       setTemplate(data)
       return data as MemeResult
 
     } catch (error) {
+      if (generationVersionRef.current !== currentGenerationVersion) {
+        return null
+      }
+
       const message =
         axios.isAxiosError<MemeApiErrorResponse>(error)
           ? error.response?.data?.error ?? "Something went wrong"
@@ -46,9 +61,10 @@ export function useMemeGenerator() {
       return null
 
     } finally {
-      setIsLoading(false)
+      if (generationVersionRef.current === currentGenerationVersion) {
+        setIsLoading(false)
+      }
     }
-
   }
 
   function clearTemplate() {
@@ -63,6 +79,7 @@ export function useMemeGenerator() {
     isLoading,
     error,
     generate,
-    clearTemplate
+    clearTemplate,
+    cancelGeneration,
   }
 }
