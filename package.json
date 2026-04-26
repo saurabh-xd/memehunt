@@ -7,7 +7,8 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
-    "generate-memes": "tsx scripts/generate-indian-memes.ts"
+    "add-memes": "tsx scripts/add-memes.ts",
+    "migrate-memes-cloudinary": "tsx scripts/migrate-memes-to-cloudinary.ts"
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.43",
@@ -19,6 +20,7 @@
     "axios": "^1.13.6",
     "better-auth": "^1.5.5",
     "class-variance-authority": "^0.7.1",
+    "cloudinary": "^2.10.0",
     "clsx": "^2.1.1",
     "dotenv": "^17.3.1",
     "konva": "^10.2.0",
