@@ -15,6 +15,12 @@ export const memes: MemeResult[] = [
     description: "Best for overconfident reactions, swagger, or acting completely unbothered."
   },
 
+  {
+    id: "alakh-sir-naughty-smile",
+    name: "Alakh Sir Naughty Smile",
+    image: "https://res.cloudinary.com/dopxwsycj/image/upload/v1777139753/memehunt/memes/alakh-sir-naughty-smile.jpg",
+    description: "Best for smug confidence, playful mischief, or reacting like you know something others do not."
+  },
 
   {
     id: "always-has-been",
@@ -24,8 +30,19 @@ export const memes: MemeResult[] = [
     selectionNotes: "Best when someone discovers a supposed surprise is actually the long-running truth. Great for plot twists, cynical observations, and 'it was always this way' jokes."
   },
 
- 
+  {
+    id: "american-chopper",
+    name: "American Chopper Argument",
+    image: "https://res.cloudinary.com/dopxwsycj/image/upload/v1777139745/memehunt/memes/american-chopper.png",
+    description: "A loud escalating argument where everyone is aggressively making their point"
+  },
 
+  {
+    id: "ancient-aliens",
+    name: "Ancient Aliens Guy",
+    image: "https://res.cloudinary.com/dopxwsycj/image/upload/v1777139729/memehunt/memes/ancient-aliens.jpg",
+    description: "Explaining something ridiculous with confidence"
+  },
 
   {
     id: "awkward-seal",
@@ -34,7 +51,13 @@ export const memes: MemeResult[] = [
     description: "Doing something socially awkward"
   },
 
-  
+  {
+    id: "bad-luck-brian",
+    name: "Bad Luck Brian",
+    image: "https://res.cloudinary.com/dopxwsycj/image/upload/v1777139733/memehunt/memes/bad-luck-brian.jpg",
+    description: "Someone experiencing constant bad luck"
+  },
+
   {
     id: "ballon",
     name: "Ballon",
@@ -64,14 +87,6 @@ export const memes: MemeResult[] = [
     description: "Best for mixed emotions, instant regret, or joy turning into pain.",
     selectionNotes: ""
   },
-
-    {
-    id: "alakh-sir-naughty-smile",
-    name: "Alakh Sir Naughty Smile",
-    image: "https://res.cloudinary.com/dopxwsycj/image/upload/v1777139753/memehunt/memes/alakh-sir-naughty-smile.jpg",
-    description: "Best for smug confidence, playful mischief, or reacting like you know something others do not."
-  },
-
 
   {
     id: "black-man-crying",
@@ -140,7 +155,13 @@ export const memes: MemeResult[] = [
     description: "Best for overthinking, pretending to analyze deeply, or fake serious thought."
   },
 
-
+  {
+    id: "desi-parents",
+    name: "Desi Parents",
+    image: "https://res.cloudinary.com/dopxwsycj/image/upload/v1777139747/memehunt/memes/desi-parents.jpg",
+    description: "Classic desi-parent pressure around studies, careers, comparison, and respectability",
+    selectionNotes: "Best for doctor-engineer pressure, shaadi talk, nosy relatives, marks comparison, and the guilt-heavy desi family dynamic."
+  },
 
   {
     id: "didnt-expect",
@@ -154,13 +175,6 @@ export const memes: MemeResult[] = [
     name: "Disaster Girl",
     image: "https://res.cloudinary.com/dopxwsycj/image/upload/v1777139724/memehunt/memes/disaster-girl.jpg",
     description: "Watching chaos or disaster while secretly enjoying it"
-  },
-
-  {
-    id: "dissaponited",
-    name: "Dissaponited",
-    description: "",
-    image: "https://res.cloudinary.com/dopxwsycj/image/upload/v1777403163/memehunt/memes/dissaponited.webp"
   },
 
   {
@@ -321,7 +335,13 @@ export const memes: MemeResult[] = [
     selectionEnabled: false
   },
 
-
+  {
+    id: "indian-parents",
+    name: "Indian Parents",
+    image: "https://res.cloudinary.com/dopxwsycj/image/upload/v1777139747/memehunt/memes/indian-parents.jpg",
+    description: "Strict, exaggerated, or ultra-relatable Indian parent behavior",
+    selectionNotes: "Best for desi family expectations, getting scolded for marks, career pressure, relatives comparing children, and 'log kya kahenge' style jokes."
+  },
 
   {
     id: "indian-parents-pitai",
@@ -397,8 +417,8 @@ export const memes: MemeResult[] = [
   {
     id: "lord-bobby-with-gun-and-cool-glasses",
     name: "Lord Bobby With Gun And Cool Glasses",
-    description: "",
-    image: "https://res.cloudinary.com/dopxwsycj/image/upload/v1777142522/memehunt/memes/lord-bobby-with-gun-and-cool-glasses.webp"
+    image: "https://res.cloudinary.com/dopxwsycj/image/upload/v1777142522/memehunt/memes/lord-bobby-with-gun-and-cool-glasses.webp",
+    description: ""
   },
 
   {
@@ -539,13 +559,6 @@ export const memes: MemeResult[] = [
   },
 
   {
-    id: "ronaldo-with-camera",
-    name: "Ronaldo With Camera",
-    description: "",
-    image: "https://res.cloudinary.com/dopxwsycj/image/upload/v1777403166/memehunt/memes/ronaldo-with-camera.jpg"
-  },
-
-  {
     id: "running-away-balloon",
     name: "Running Away Balloon",
     image: "https://res.cloudinary.com/dopxwsycj/image/upload/v1777139727/memehunt/memes/running-away-balloon.jpg",
@@ -622,13 +635,6 @@ export const memes: MemeResult[] = [
     name: "Smiling On Rip",
     image: "https://res.cloudinary.com/dopxwsycj/image/upload/v1777139802/memehunt/memes/smiling-on-rip.jpg",
     description: "Best for fake happiness during pain, forced positivity, or laughing through suffering."
-  },
-
-  {
-    id: "smilling-while-watching-phone",
-    name: "Smilling While Watching Phone",
-    description: "",
-    image: "https://res.cloudinary.com/dopxwsycj/image/upload/v1777403167/memehunt/memes/smilling-while-watching-phone.webp"
   },
 
   {
@@ -767,13 +773,6 @@ export const memes: MemeResult[] = [
     name: "Two Paths",
     image: "https://res.cloudinary.com/dopxwsycj/image/upload/v1777139812/memehunt/memes/two-paths.jpg",
     description: "Best for crossroads, life decisions, or choosing between a safe path and a risky one."
-  },
-
-  {
-    id: "vegeta-sad",
-    name: "Vegeta Sad",
-    description: "",
-    image: "https://res.cloudinary.com/dopxwsycj/image/upload/v1777403168/memehunt/memes/vegeta-sad.jpg"
   },
 
   {

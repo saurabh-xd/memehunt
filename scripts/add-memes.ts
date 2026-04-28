@@ -160,7 +160,6 @@ async function main() {
     memesById.set(slug, {
       id: existing?.id ?? slug,
       name: existing?.name ?? title,
-      image: result.secure_url,
       description: existing?.description ?? "",
       ...existing,
       image: result.secure_url,
