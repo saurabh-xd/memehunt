@@ -73,3 +73,18 @@ model Verification {
   @@index([identifier])
   @@map("verification")
 }
+
+
+model MemeTemplate {
+  id               String   @id
+  name             String
+  imageUrl         String
+  description      String
+  selectionNotes   String?
+  selectionEnabled Boolean  @default(true)
+  tags             String[] @default([])
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([selectionEnabled])
+}
