@@ -9,3 +9,4 @@ export type MemeApiErrorResponse = {
 };
 
 export type MemeGenerateResponse = MemeResult;
+export type MemeTemplatesResponse = MemeResult[];

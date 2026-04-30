@@ -1,10 +1,6 @@
 import { z } from "zod"
 import { findBestMeme } from "@/services/meme.service"
-import {
-  MemeApiErrorResponse,
-  MemeGenerateRequest,
-  MemeGenerateResponse,
-} from "@/types/api"
+import { MemeApiErrorResponse, MemeGenerateRequest } from "@/types/api"
 
 const memeRequestSchema = z.object({
   situation: z.string().trim().min(1, "Situation required"),

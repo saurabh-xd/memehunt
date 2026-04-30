@@ -1,9 +1,11 @@
 import { memes } from "@/data/meme"
+import { getSelectableMemeTemplates } from "@/lib/meme-template"
+import type { MemeResult } from "@/types/meme"
 import { MEME_SELECTION_PROMPT_VERSION, chooseMeme } from "./ai.services"
 
 const MIN_AI_CONFIDENCE = 0.55
 
-function pickRandomMeme(candidates: typeof memes) {
+function pickRandomMeme(candidates: MemeResult[]) {
   if (candidates.length === 0) return memes[0]
 
   const randomIndex = Math.floor(Math.random() * candidates.length)
@@ -11,7 +13,7 @@ function pickRandomMeme(candidates: typeof memes) {
 }
 
 export async function findBestMeme(situation: string) {
-  const candidates = memes.filter((meme) => meme.selectionEnabled !== false)
+  const candidates = await getSelectableMemeTemplates()
   const fallback = pickRandomMeme(candidates)
 
   if (!situation) {
@@ -20,8 +22,6 @@ export async function findBestMeme(situation: string) {
 
   try {
     const selection = await chooseMeme(situation, candidates)
-    console.log("selection->",selection);
-    
     const selectedMeme = candidates.find((meme) => meme.id === selection.template)
 
     if (!selectedMeme) {

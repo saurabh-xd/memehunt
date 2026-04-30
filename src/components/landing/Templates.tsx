@@ -3,8 +3,9 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 import Image from "next/image"
 import { Search } from "lucide-react"
-import { memes } from "@/data/meme"
 import { useActiveTemplate } from "@/context/ActiveTemplateContext"
+import type { MemeResult } from "@/types/meme"
+import type { MemeApiErrorResponse, MemeTemplatesResponse } from "@/types/api"
 
 const PAGE_SIZE = 20
 
@@ -17,9 +18,59 @@ export default function Templates({
 }: TemplatesProps) {
   const [query, setQuery] = useState("")
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
+  const [memes, setMemes] = useState<MemeResult[]>([])
+  const [isLoadingTemplates, setIsLoadingTemplates] = useState(true)
+  const [templatesError, setTemplatesError] = useState("")
   const [failedImageIds, setFailedImageIds] = useState<string[]>([])
   const { activeTemplateId, selectGalleryTemplate } = useActiveTemplate()
   const loadMoreRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    let isActive = true
+
+    async function loadTemplates() {
+      try {
+        setIsLoadingTemplates(true)
+        setTemplatesError("")
+
+        const response = await fetch("/api/memes", {
+          cache: "no-store",
+        })
+
+        if (!response.ok) {
+          const errorBody = (await response.json()) as MemeApiErrorResponse
+          throw new Error(errorBody.error || "Unable to load meme templates")
+        }
+
+        const data = (await response.json()) as MemeTemplatesResponse
+
+        if (!isActive) {
+          return
+        }
+
+        setMemes(data)
+      } catch (error) {
+        if (!isActive) {
+          return
+        }
+
+        const message =
+          error instanceof Error ? error.message : "Unable to load meme templates"
+
+        setTemplatesError(message)
+      } finally {
+        if (isActive) {
+          setIsLoadingTemplates(false)
+        }
+      }
+    }
+
+    loadTemplates()
+
+    return () => {
+      isActive = false
+    }
+  }, [])
 
   const filteredMemes = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase()
@@ -37,7 +88,7 @@ export default function Templates({
         .toLowerCase()
         .includes(normalizedQuery)
     )
-  }, [failedImageIds, query])
+  }, [failedImageIds, memes, query])
 
   const visibleMemes = filteredMemes.slice(0, visibleCount)
   const hasMoreTemplates = visibleCount < filteredMemes.length
@@ -82,9 +133,15 @@ export default function Templates({
       </div>
       </div>
 
-     
-
-      {visibleMemes.length === 0 ? (
+      {isLoadingTemplates ? (
+        <div className="rounded-3xl border border-border/70 bg-card/50 px-5 py-10 text-center text-sm text-muted-foreground sm:px-6 sm:py-12">
+          Loading templates...
+        </div>
+      ) : templatesError ? (
+        <div className="rounded-3xl border border-destructive/20 bg-destructive/5 px-5 py-10 text-center text-sm text-destructive sm:px-6 sm:py-12">
+          {templatesError}
+        </div>
+      ) : visibleMemes.length === 0 ? (
         <div className="rounded-3xl border border-dashed border-border/70 bg-card/50 px-5 py-10 text-center text-sm text-muted-foreground sm:px-6 sm:py-12">
           No templates matched your search.
         </div>
@@ -123,7 +180,7 @@ export default function Templates({
         </div>
       )}
 
-      {hasMoreTemplates && (
+      {!isLoadingTemplates && !templatesError && hasMoreTemplates && (
         <div ref={loadMoreRef} className="flex justify-center py-4 sm:py-6">
           <div className="rounded-full border border-border/70 bg-card/60 px-4 py-2 text-xs text-muted-foreground sm:text-sm">
             Loading more templates...
