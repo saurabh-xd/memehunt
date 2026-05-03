@@ -31,7 +31,7 @@ export default function MemeEditor({
     handleDownload,
     handleImageDrag,
     handleImageResize,
-    handleReset,
+    handleCopy,
     handleTextDrag,
     image,
     imageLayers,
@@ -109,7 +109,7 @@ export default function MemeEditor({
         removeTextLayer={removeTextLayer}
         removeImageLayer={removeImageLayer}
         downloadMeme={handleDownload}
-        resetMeme={handleReset}
+        copyMeme={handleCopy}
         hasActiveTemplate={hasActiveTemplate}
         clearActiveTemplate={clearActiveTemplate}
         isSignedIn={isSignedIn}

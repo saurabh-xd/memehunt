@@ -5,8 +5,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "./ui/button";
+
 import { useRouter } from "next/navigation";
+import { Button } from "../ui/button";
 
 type props = {
 showSignInDialog: boolean

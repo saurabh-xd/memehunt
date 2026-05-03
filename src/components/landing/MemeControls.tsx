@@ -1,8 +1,8 @@
 "use client"
 
-import { ChangeEvent, useId } from "react"
+import { ChangeEvent, useEffect, useId, useRef, useState } from "react"
 import { MemeImageLayer, MemeTextLayer } from "@/types/meme"
-import { Download, ImagePlus, Plus, RotateCcw, X } from "lucide-react"
+import { Check, Copy, Download, ImagePlus, Plus, X } from "lucide-react"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 
@@ -20,7 +20,7 @@ type Props = {
   removeTextLayer: (id: string) => void
   removeImageLayer: (id: string) => void
   downloadMeme: () => void
-  resetMeme: () => void
+  copyMeme: () => Promise<boolean>
   hasActiveTemplate: boolean
   clearActiveTemplate: () => void
   isSignedIn: boolean
@@ -46,7 +46,7 @@ export default function MemeControls({
   removeTextLayer,
   removeImageLayer,
   downloadMeme,
-  resetMeme,
+  copyMeme,
   hasActiveTemplate,
   clearActiveTemplate,
   isSignedIn,
@@ -58,6 +58,8 @@ export default function MemeControls({
   openWatermarkSignInDialog,
 }: Props) {
   const imageUploadId = useId()
+  const [isCopied, setIsCopied] = useState(false)
+  const copyTimeoutRef = useRef<number | null>(null)
 
   async function handleImageUpload(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0]
@@ -74,6 +76,27 @@ export default function MemeControls({
     }
 
     setShowDefaultWatermark(!showDefaultWatermark)
+  }
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) {
+        window.clearTimeout(copyTimeoutRef.current)
+      }
+    }
+  }, [])
+
+  async function handleCopyClick() {
+    const copied = await copyMeme()
+    if (!copied) return
+
+    setIsCopied(true)
+    if (copyTimeoutRef.current) {
+      window.clearTimeout(copyTimeoutRef.current)
+    }
+    copyTimeoutRef.current = window.setTimeout(() => {
+      setIsCopied(false)
+    }, 2000)
   }
 
   return (
@@ -96,10 +119,10 @@ export default function MemeControls({
               size="sm"
               variant="outline"
               className="h-10 rounded-xl cursor-pointer border-border/70 px-3 text-muted-foreground hover:text-foreground"
-              onClick={resetMeme}
+              onClick={handleCopyClick}
             >
-              <RotateCcw className="size-4" />
-              Reset
+              {isCopied ? <Check className="size-4" /> : <Copy className="size-4" />}
+              {isCopied ? "Copied" : "Copy Image"}
             </Button>
           </div>
       

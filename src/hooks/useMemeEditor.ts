@@ -4,6 +4,7 @@ import { downloadMeme } from "@/lib/memeDownload"
 import { MemeImageLayer, MemeTextLayer, Position } from "@/types/meme"
 import { useEffect, useRef, useState } from "react"
 import useImage from "use-image"
+import { toast } from "sonner"
 
 const TEXT_PADDING = 12
 const DEFAULT_TOP_POSITION: Position = { x: TEXT_PADDING, y: 32 }
@@ -321,20 +322,6 @@ export function useMemeEditor(templateImage: string) {
     )
   }
 
-  function handleReset() {
-    setTextLayers(createInitialLayers(defaultBottomY))
-    setImageLayers((current) => {
-      current.forEach((layer) => URL.revokeObjectURL(layer.src))
-      return []
-    })
-    setShowDefaultWatermark(true)
-    setCustomWatermark("")
-    setSelectedTextLayerId("text-1")
-    setSelectedImageLayerId(null)
-    nextLayerIndexRef.current = 3
-    nextImageLayerIndexRef.current = 1
-  }
-
   const selectedTextLayer =
     visibleTextLayers.find((layer) => layer.id === selectedTextLayerId) ??
     visibleTextLayers[0] ??
@@ -354,14 +341,37 @@ export function useMemeEditor(templateImage: string) {
     })
   }
 
+  async function handleCopy() {
+    if (!stageRef.current || !image) return false
+
+    try {
+      const dataUrl = stageRef.current.toDataURL({ pixelRatio: exportScale })
+      const response = await fetch(dataUrl)
+      const blob = await response.blob()
+
+      if (!navigator.clipboard || !navigator.clipboard.write || typeof ClipboardItem === "undefined") {
+        toast.error("Copy not supported in this browser. Downloading instead.")
+        downloadMeme({ stage: stageRef.current, pixelRatio: exportScale })
+        return false
+      }
+
+      await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })])
+      toast.success("Meme copied to clipboard")
+      return true
+    } catch {
+      toast.error("Copy failed. Try again.")
+      return false
+    }
+  }
+
   return {
     addImageLayer,
     addTextLayer,
     containerRef,
+    handleCopy,
     handleDownload,
     handleImageDrag,
     handleImageResize,
-    handleReset,
     handleTextDrag,
     image,
     imageLayers: visibleImageLayers,
