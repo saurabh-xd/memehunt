@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { GithubIcon } from '../githubIcon';
+import { GithubIcon } from '../common/githubIcon';
 import { Linkedin, Twitter } from 'lucide-react';
 
 export default function Footer() {
