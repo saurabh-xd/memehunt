@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma"
+import type { Prisma } from "@prisma/client"
 
  
 
@@ -10,12 +11,12 @@ import prisma from "@/lib/prisma"
 
 
 
-export async function createMemeTemplate(data) {
+export async function createMemeTemplate(data: Prisma.MemeTemplateCreateInput) {
 
     return prisma.memeTemplate.create({data})
 }
 
-export async function updateMemeTemplate( id: string, data){
+export async function updateMemeTemplate(id: string, data: Prisma.MemeTemplateUpdateInput) {
  
 return prisma.memeTemplate.update({
     where: {id},
