@@ -13,6 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { requireAdmin } from "@/lib/auth-helpers"
 
 type AdminMemesPageProps = {
   searchParams?: Promise<{
@@ -28,6 +29,12 @@ export default async function AdminMemesPage({ searchParams }: AdminMemesPagePro
   if (!session?.user) {
     redirect("/sign-in")
   }
+
+    try {
+        await requireAdmin()
+     } catch (error) {
+      redirect("/")
+     }
 
   const resolvedSearchParams = searchParams ? await searchParams : {}
   const query = resolvedSearchParams.q?.trim() ?? ""

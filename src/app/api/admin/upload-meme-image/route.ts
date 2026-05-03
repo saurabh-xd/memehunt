@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import cloudinary, { hasCloudinaryEnv } from "@/lib/cloudinary"
+import { requireAdmin } from "@/lib/auth-helpers"
 
 function slugify(value: string) {
   return value
@@ -49,6 +50,8 @@ export async function POST(request: Request) {
     if (!session?.user) {
       return NextResponse.json({ error: "You must be signed in to upload images." }, { status: 401 })
     }
+
+       await requireAdmin()
 
     if (!hasCloudinaryEnv()) {
       return NextResponse.json(

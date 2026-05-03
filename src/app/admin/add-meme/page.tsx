@@ -12,6 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { requireAdmin } from "@/lib/auth-helpers"
 
 export default async function AdminMemesPage() {
   const session = await auth.api.getSession({
@@ -21,6 +22,12 @@ export default async function AdminMemesPage() {
   if (!session?.user) {
     redirect("/sign-in")
   }
+
+   try {
+      await requireAdmin()
+   } catch (error) {
+    redirect("/")
+   }
 
   const [totalCount, enabledCount] = await Promise.all([
     prisma.memeTemplate.count(),

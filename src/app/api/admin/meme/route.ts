@@ -1,9 +1,12 @@
+import { requireAdmin } from "@/lib/auth-helpers";
 import { createMemeTemplate, deleteMemeTemplate, updateMemeTemplate } from "@/services/admin.service"
 import { NextResponse } from "next/server"
 
 
 export async function POST(req: Request){
     try {
+
+          await requireAdmin()
 
         const body = await req.json()
 console.log(body);
@@ -28,6 +31,8 @@ console.log(body);
 export async function DELETE(req: Request){
     try {
 
+           await requireAdmin()
+
         const {id} = await req.json()        
 
         await deleteMemeTemplate(id)
@@ -47,6 +52,9 @@ export async function DELETE(req: Request){
 
 export async function PATCH(req: Request){
     try {
+
+           await requireAdmin()
+
         const body = await req.json()
 
         const {id, ...data} = body

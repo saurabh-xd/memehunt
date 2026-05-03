@@ -4,12 +4,6 @@ import { useActionState, useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import { RotateCcw } from "lucide-react"
 import { toast } from "sonner"
-import {
-  createMemeTemplateAction,
-  initialMemeAdminActionState,
-} from "@/app/admin/meme-actions"
-import { AdminActionMessage } from "@/components/admin/admin-action-message"
-import { AdminSubmitButton } from "@/components/admin/admin-submit-button"
 import { CloudinaryImageField } from "@/components/admin/cloudinary-image-field"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -30,10 +24,7 @@ export function AdminAddMemeForm() {
   const [errors, setErrors] = useState({})
   
   const previousToastKeyRef = useRef("")
-  const [state, formAction] = useActionState(
-    createMemeTemplateAction,
-    initialMemeAdminActionState
-  )
+
 
 
 
@@ -46,23 +37,7 @@ export function AdminAddMemeForm() {
   const [tags, setTags] = useState("")
   const [selectionEnabled, setSelectionEnabled] = useState(true)
 
-  useEffect(() => {
-    const toastKey = `${state.status}:${state.message}`
-
-    if (state.status === "idle" || !state.message || previousToastKeyRef.current === toastKey) {
-      return
-    }
-
-    previousToastKeyRef.current = toastKey
-
-    if (state.status === "success") {
-      toast.success(state.message)
-      router.refresh()
-      return
-    }
-
-    toast.error(state.message)
-  }, [router, state])
+ 
 
   function handleNameChange(value: string) {
     setName(value)
@@ -122,11 +97,9 @@ export function AdminAddMemeForm() {
                 setId(event.target.value)
               }}
               placeholder="drake-hotline-bling"
-              aria-invalid={state.fieldErrors?.id ? "true" : "false"}
+             
             />
-            {state.fieldErrors?.id ? (
-              <p className="text-sm text-destructive">{state.fieldErrors.id}</p>
-            ) : null}
+           
             <div className="flex items-center justify-between gap-3 text-xs text-muted-foreground">
               <p>We auto-fill this from the name, but you can override it.</p>
               {idTouched ? (
@@ -156,11 +129,9 @@ export function AdminAddMemeForm() {
             onChange={(event) => handleNameChange(event.target.value)}
             placeholder="Drake Hotline Bling"
             required
-            aria-invalid={state.fieldErrors?.name ? "true" : "false"}
+            
           />
-          {state.fieldErrors?.name ? (
-            <p className="text-sm text-destructive">{state.fieldErrors.name}</p>
-          ) : null}
+          
         </div>
       </div>
 
@@ -170,7 +141,7 @@ export function AdminAddMemeForm() {
         onChange={setImageUrl}
         fileBaseName={id || name}
         required
-        error={state.fieldErrors?.imageUrl}
+      
       />
 
       <div className="space-y-2">
@@ -183,12 +154,10 @@ export function AdminAddMemeForm() {
           required
           rows={4}
           placeholder="What this meme visually expresses and when it fits."
-          aria-invalid={state.fieldErrors?.description ? "true" : "false"}
+         
           className="w-full rounded-3xl border border-input bg-input/30 px-4 py-3 text-sm outline-none transition focus-visible:border-ring focus-visible:ring-[1px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/20"
         />
-        {state.fieldErrors?.description ? (
-          <p className="text-sm text-destructive">{state.fieldErrors.description}</p>
-        ) : null}
+      
       </div>
 
       <div className="space-y-2">
@@ -226,15 +195,15 @@ export function AdminAddMemeForm() {
         <span className="text-foreground">Allow AI selection for this meme</span>
       </label>
 
-      <AdminActionMessage state={state} />
+  
 
       <div className="flex flex-col gap-3 border-t border-border/60 pt-5 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">
           After saving, the homepage and template API are revalidated automatically.
         </p>
-        <AdminSubmitButton type="submit" className="sm:min-w-36" pendingLabel="Adding...">
+        <Button type="submit" >
           Add template
-        </AdminSubmitButton>
+        </Button>
       </div>
     </form>
   )
