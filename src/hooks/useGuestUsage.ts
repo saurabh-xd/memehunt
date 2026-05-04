@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const FREE_GENERATION_LIMIT = 5;
+const FREE_GENERATION_LIMIT = 2;
 const STORAGE_KEY = "memehunt-free-generations-used";
 
 export const useGuestUsage = ()=>{
