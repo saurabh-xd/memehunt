@@ -1,8 +1,9 @@
 "use client"
 
-import { useActionState, useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { useRouter } from "next/navigation"
-import { RotateCcw } from "lucide-react"
+import Image from "next/image"
+import { RotateCcw, Upload, X } from "lucide-react"
 import { toast } from "sonner"
 import { CloudinaryImageField } from "@/components/admin/cloudinary-image-field"
 import { Button } from "@/components/ui/button"
@@ -23,7 +24,7 @@ export function AdminAddMemeForm() {
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({})
   
-  const previousToastKeyRef = useRef("")
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
 
 
 
@@ -36,6 +37,10 @@ export function AdminAddMemeForm() {
   const [selectionNotes, setSelectionNotes] = useState("")
   const [tags, setTags] = useState("")
   const [selectionEnabled, setSelectionEnabled] = useState(true)
+  const [bulkItems, setBulkItems] = useState<
+    Array<{ id: string; name: string; imageUrl: string }>
+  >([])
+  const [isBulkUploading, setIsBulkUploading] = useState(false)
 
  
 
@@ -47,12 +52,115 @@ export function AdminAddMemeForm() {
     }
   }
 
+  function formatName(value: string) {
+    const cleaned = value.replace(/[-_]+/g, " ").replace(/\s+/g, " ").trim()
+    if (!cleaned) return "Meme"
+    return cleaned.replace(/\b\w/g, (char) => char.toUpperCase())
+  }
+
+  function getUniqueId(baseId: string, existing: Set<string>) {
+    const safeBase = baseId || "meme"
+    if (!existing.has(safeBase)) return safeBase
+
+    let counter = 2
+    while (existing.has(`${safeBase}-${counter}`)) {
+      counter += 1
+    }
+    return `${safeBase}-${counter}`
+  }
+
+  async function uploadFiles(files: File[]) {
+    if (!files.length) return
+
+    setIsBulkUploading(true)
+    const existingIds = new Set(bulkItems.map((item) => item.id))
+    const nextItems: Array<{ id: string; name: string; imageUrl: string }> = []
+
+    for (const file of files) {
+      try {
+        const baseName = file.name.replace(/\.[^.]+$/, "")
+        const formattedName = formatName(baseName)
+        const baseId = slugify(baseName || formattedName)
+        const uniqueId = getUniqueId(baseId, existingIds)
+
+        const formData = new FormData()
+        formData.set("file", file)
+        formData.set("name", uniqueId)
+
+        const response = await fetch("/api/admin/upload-meme-image", {
+          method: "POST",
+          body: formData,
+        })
+
+        const data = (await response.json()) as { url?: string; error?: string }
+
+        if (!response.ok || !data.url) {
+          throw new Error(data.error || "Upload failed. Try again.")
+        }
+
+        nextItems.push({
+          id: uniqueId,
+          name: formattedName,
+          imageUrl: data.url,
+        })
+        existingIds.add(uniqueId)
+      } catch (uploadError) {
+        const message =
+          uploadError instanceof Error ? uploadError.message : "Upload failed. Try again."
+        toast.error(message)
+      }
+    }
+
+    if (nextItems.length) {
+      setBulkItems((prev) => [...prev, ...nextItems])
+      toast.success(`Uploaded ${nextItems.length} image${nextItems.length === 1 ? "" : "s"}.`)
+    }
+
+    setIsBulkUploading(false)
+  }
+
  const handleSubmit = async (e: React.SubmitEvent)=>{
   e.preventDefault()
   setLoading(true)
   setErrors({})
 
   try {
+    const payloadTags = tags
+      .split(",")
+      .map((tag) => tag.trim().toLowerCase())
+      .filter(Boolean)
+
+    if (bulkItems.length > 0) {
+      const res = await fetch("/api/admin/meme", {
+        method: "POST",
+        body: JSON.stringify({
+          items: bulkItems.map((item) => ({
+            id: item.id,
+            name: item.name,
+            imageUrl: item.imageUrl,
+            description,
+            selectionNotes,
+            tags: payloadTags,
+            selectionEnabled,
+          })),
+        }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        setErrors(data.fieldErrors || {})
+        toast.error(data.error || "Failed")
+        return
+      }
+
+      toast.success(`Added ${data.count ?? bulkItems.length} meme template${
+        data.count === 1 ? "" : "s"
+      }`)
+      router.refresh()
+      return
+    }
+
     const res = await fetch("/api/admin/meme",{
       method: "POST",
       body: JSON.stringify({
@@ -61,7 +169,7 @@ export function AdminAddMemeForm() {
         imageUrl,
         description,
         selectionNotes,
-        tags: tags.split(",").map(t => t.trim().toLowerCase()),
+        tags: payloadTags,
         selectionEnabled,
       })
     })
@@ -78,8 +186,9 @@ export function AdminAddMemeForm() {
     router.refresh()
   } catch (error) {
       toast.error("Something went wrong")
-  }
+  } finally {
     setLoading(false)
+  }
  }
 
   return (
@@ -128,11 +237,117 @@ export function AdminAddMemeForm() {
             value={name}
             onChange={(event) => handleNameChange(event.target.value)}
             placeholder="Drake Hotline Bling"
-            required
+            required={bulkItems.length === 0}
             
           />
           
         </div>
+      </div>
+
+      <div className="space-y-3 rounded-3xl border border-dashed border-border/70 bg-muted/20 px-4 py-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="space-y-1">
+            <p className="text-sm font-medium text-foreground">Bulk upload images</p>
+            <p className="text-xs text-muted-foreground">
+              Drag and drop multiple images to create multiple meme templates at once.
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={(event) => {
+                const files = Array.from(event.target.files || [])
+                uploadFiles(files)
+                event.target.value = ""
+              }}
+              className="hidden"
+            />
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isBulkUploading}
+            >
+              <Upload className="size-4" />
+              {isBulkUploading ? "Uploading..." : "Select images"}
+            </Button>
+          </div>
+        </div>
+        <div
+          className="flex min-h-[120px] items-center justify-center rounded-2xl border border-dashed border-border/70 bg-background/40 px-4 py-6 text-center text-xs text-muted-foreground"
+          onDragOver={(event) => {
+            event.preventDefault()
+          }}
+          onDrop={(event) => {
+            event.preventDefault()
+            const files = Array.from(event.dataTransfer.files || [])
+            uploadFiles(files)
+          }}
+        >
+          Drop images here or use the select button.
+        </div>
+
+        {bulkItems.length > 0 ? (
+          <div className="space-y-3">
+            {bulkItems.map((item) => (
+              <div
+                key={item.id}
+                className="flex flex-col gap-3 rounded-2xl border border-border/60 bg-background/60 p-3 sm:flex-row sm:items-center"
+              >
+                <div className="relative h-16 w-16 overflow-hidden rounded-xl border border-border/60 bg-muted/40">
+                  <Image
+                    src={item.imageUrl}
+                    alt={item.name}
+                    fill
+                    sizes="64px"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="grid flex-1 gap-2 sm:grid-cols-2">
+                  <Input
+                    value={item.name}
+                    onChange={(event) => {
+                      const value = event.target.value
+                      setBulkItems((prev) =>
+                        prev.map((entry) =>
+                          entry.id === item.id ? { ...entry, name: value } : entry
+                        )
+                      )
+                    }}
+                    placeholder="Name"
+                  />
+                  <Input
+                    value={item.id}
+                    onChange={(event) => {
+                      const value = slugify(event.target.value)
+                      setBulkItems((prev) =>
+                        prev.map((entry) =>
+                          entry.id === item.id ? { ...entry, id: value } : entry
+                        )
+                      )
+                    }}
+                    placeholder="Id"
+                  />
+                </div>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  onClick={() =>
+                    setBulkItems((prev) => prev.filter((entry) => entry.id !== item.id))
+                  }
+                  aria-label={`Remove ${item.name}`}
+                >
+                  <X className="size-4" />
+                </Button>
+              </div>
+            ))}
+          </div>
+        ) : null}
       </div>
 
       <CloudinaryImageField
@@ -140,8 +355,7 @@ export function AdminAddMemeForm() {
         value={imageUrl}
         onChange={setImageUrl}
         fileBaseName={id || name}
-        required
-      
+        required={bulkItems.length === 0}
       />
 
       <div className="space-y-2">

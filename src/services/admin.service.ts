@@ -16,6 +16,10 @@ export async function createMemeTemplate(data: Prisma.MemeTemplateCreateInput) {
     return prisma.memeTemplate.create({data})
 }
 
+export async function createMemeTemplates(data: Prisma.MemeTemplateCreateManyInput[]) {
+    return prisma.memeTemplate.createMany({ data, skipDuplicates: true })
+}
+
 export async function updateMemeTemplate(id: string, data: Prisma.MemeTemplateUpdateInput) {
  
 return prisma.memeTemplate.update({

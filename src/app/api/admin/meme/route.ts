@@ -1,5 +1,10 @@
-import { requireAdmin } from "@/lib/auth-helpers";
-import { createMemeTemplate, deleteMemeTemplate, updateMemeTemplate } from "@/services/admin.service"
+import { requireAdmin } from "@/lib/auth-helpers"
+import {
+    createMemeTemplate,
+    createMemeTemplates,
+    deleteMemeTemplate,
+    updateMemeTemplate,
+} from "@/services/admin.service"
 import { NextResponse } from "next/server"
 
 
@@ -9,7 +14,11 @@ export async function POST(req: Request){
           await requireAdmin()
 
         const body = await req.json()
-console.log(body);
+
+        if (Array.isArray(body?.items)) {
+            const result = await createMemeTemplates(body.items)
+            return NextResponse.json({ success: true, count: result.count })
+        }
 
         const meme =  await createMemeTemplate(body)
 
