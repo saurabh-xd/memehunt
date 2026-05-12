@@ -68,19 +68,28 @@ export default function HomeClient() {
     scrollToEditor();
   }
 
+  function openGenerationSignInDialog() {
+    setSignInDialogCopy({
+      title: GENERATION_DIALOG_COPY.title,
+      description: `You have used all ${limit} free AI generations. Sign in with Google to continue creating memes.`,
+    })
+    setShowSignInDialog(true);
+  }
+
   async function handleGenerate(e?: React.FormEvent) {
     if (!session?.user && isLimitReached) {
       if (e) e.preventDefault();
-      setSignInDialogCopy({
-        title: GENERATION_DIALOG_COPY.title,
-        description: `You have used all ${limit} free AI generations. Sign in with Google to continue creating memes.`,
-      })
-      setShowSignInDialog(true);
+      openGenerationSignInDialog();
       return;
     }
 
     clearActiveTemplate();
     const generatedTemplate = await generate(e);
+
+    if (generatedTemplate === "guest-limit-reached") {
+      openGenerationSignInDialog();
+      return;
+    }
 
     if (!generatedTemplate) {
       return;

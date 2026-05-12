@@ -7,6 +7,8 @@ import {
   MemeGenerateResponse,
 } from "@/types/api"
 
+export type MemeGenerateResult = MemeResult | "guest-limit-reached" | null
+
 export function useMemeGenerator() {
   const [situation, setSituation] = useState("")
   const [template, setTemplate] = useState<MemeResult | null>(null)
@@ -19,7 +21,7 @@ export function useMemeGenerator() {
     setIsLoading(false)
   }
 
-  async function generate(e?: React.FormEvent) {
+  async function generate(e?: React.FormEvent): Promise<MemeGenerateResult> {
     if (e) e.preventDefault()
     if (!situation.trim()) return null
 
@@ -51,10 +53,14 @@ export function useMemeGenerator() {
         return null
       }
 
-      const message =
-        axios.isAxiosError<MemeApiErrorResponse>(error)
-          ? error.response?.data?.error ?? "Something went wrong"
-          : "Something went wrong"
+      if (axios.isAxiosError<MemeApiErrorResponse>(error) && error.response?.status === 403) {
+        setError("")
+        return "guest-limit-reached"
+      }
+
+      const message = axios.isAxiosError<MemeApiErrorResponse>(error)
+        ? error.response?.data?.error ?? "Something went wrong"
+        : "Something went wrong"
 
       console.error(error)
       setError(message)
