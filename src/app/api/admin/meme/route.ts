@@ -25,7 +25,7 @@ export async function POST(req: Request){
         return NextResponse.json({success: true, meme})
         
     } catch (error) {
-        console.log(error);
+        console.error("Failed to create meme", error)
         
         return NextResponse.json(
       { error: "Failed to create meme" },
@@ -51,7 +51,7 @@ export async function DELETE(req: Request){
 
         return NextResponse.json({ success: true })
 
-    } catch (error) {
+    } catch {
          return NextResponse.json(
       { error: "Failed to delete meme" },
       { status: 500 }
@@ -78,7 +78,7 @@ return NextResponse.json({success: true, updated})
 
 
     } catch (error) {
-        console.log(error);
+        console.error("Failed to update meme", error)
         
         return NextResponse.json({error: "update failed"}, {status: 500})
     }

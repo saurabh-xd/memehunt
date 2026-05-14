@@ -32,7 +32,7 @@ export default async function AdminMemesPage({ searchParams }: AdminMemesPagePro
 
     try {
         await requireAdmin()
-     } catch (error) {
+     } catch {
       redirect("/")
      }
 

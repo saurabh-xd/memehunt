@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import {  useEffect, useRef, useState } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Trash2 } from "lucide-react"
 import { toast } from "sonner"
@@ -40,11 +40,15 @@ const [loading, setLoading] = useState(false)
   try {
     setLoading(true)
 
-    await fetch("/api/admin/meme", {
+    const response = await fetch("/api/admin/meme", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: meme.id }),
     })
+
+    if (!response.ok) {
+      throw new Error("Delete failed")
+    }
 
     toast.success("Deleted")
     router.refresh()
@@ -57,7 +61,7 @@ const [loading, setLoading] = useState(false)
 
 const handleToggle = async () => {
   try {
-    await fetch("/api/admin/meme/toggle", {
+    const response = await fetch("/api/admin/meme/toggle", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -66,6 +70,11 @@ const handleToggle = async () => {
       }),
     })
 
+    if (!response.ok) {
+      throw new Error("Toggle failed")
+    }
+
+    toast.success(meme.selectionEnabled ? "Disabled" : "Enabled")
     router.refresh()
   } catch {
     toast.error("Toggle failed")
@@ -80,6 +89,7 @@ const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
   const data = {
     id: meme.id,
     name: formData.get("name"),
+    imageUrl: formData.get("imageUrl"),
     description: formData.get("description"),
     selectionNotes: formData.get("selectionNotes"),
     tags: String(formData.get("tags") || "")
@@ -89,11 +99,15 @@ const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
   }
 
   try {
-    await fetch("/api/admin/meme", {
+    const response = await fetch("/api/admin/meme", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
+
+    if (!response.ok) {
+      throw new Error("Update failed")
+    }
 
     toast.success("Updated")
     router.refresh()
@@ -133,28 +147,14 @@ const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
                 {meme.selectionEnabled ? "Enabled" : "Disabled"}
               </span>
 
-              <form onSubmit={handleToggle}>
-                <input type="hidden" name="id" value={meme.id} />
-                <input
-                  type="hidden"
-                  name="nextSelectionEnabled"
-                  value={String(!meme.selectionEnabled)}
-                />
-                <Button onClick={handleToggle}>
+                <Button type="button" onClick={handleToggle}>
                   {meme.selectionEnabled ? "Disable quickly" : "Enable quickly"}
                 </Button>
-              </form>
 
-              <form
-                
-                onSubmit={handleDelete}
-              >
-                <input type="hidden" name="id" value={meme.id} />
-                <Button onClick={handleDelete} disabled={loading} variant="outline"> 
+                <Button type="button" onClick={handleDelete} disabled={loading} variant="outline"> 
   <Trash2 />
   Delete
 </Button>
-              </form>
             </div>
           </div>
 

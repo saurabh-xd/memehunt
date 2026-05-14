@@ -21,9 +21,6 @@ export function AdminAddMemeForm() {
 
   const router = useRouter()
 
-  const [loading, setLoading] = useState(false)
-  const [errors, setErrors] = useState({})
-  
   const fileInputRef = useRef<HTMLInputElement | null>(null)
 
 
@@ -121,8 +118,6 @@ export function AdminAddMemeForm() {
 
  const handleSubmit = async (e: React.SubmitEvent)=>{
   e.preventDefault()
-  setLoading(true)
-  setErrors({})
 
   try {
     const payloadTags = tags
@@ -149,7 +144,6 @@ export function AdminAddMemeForm() {
       const data = await res.json()
 
       if (!res.ok) {
-        setErrors(data.fieldErrors || {})
         toast.error(data.error || "Failed")
         return
       }
@@ -177,17 +171,14 @@ export function AdminAddMemeForm() {
     const data = await res.json()
 
     if (!res.ok) {
-      setErrors(data.fieldErrors || {})
       toast.error(data.error || "Failed")
       return
     }
 
     toast.success("Meme added")
     router.refresh()
-  } catch (error) {
+  } catch {
       toast.error("Something went wrong")
-  } finally {
-    setLoading(false)
   }
  }
 
