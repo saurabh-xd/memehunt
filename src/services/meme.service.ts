@@ -1,4 +1,3 @@
-import { memes } from "@/data/meme"
 import { getSelectableMemeTemplates } from "@/lib/meme-template"
 import type { MemeResult } from "@/types/meme"
 import { MEME_SELECTION_PROMPT_VERSION, chooseMeme } from "./ai.services"
@@ -6,7 +5,9 @@ import { MEME_SELECTION_PROMPT_VERSION, chooseMeme } from "./ai.services"
 const MIN_AI_CONFIDENCE = 0.55
 
 function pickRandomMeme(candidates: MemeResult[]) {
-  if (candidates.length === 0) return memes[0]
+  if (candidates.length === 0) {
+    throw new Error("No meme templates are available.")
+  }
 
   const randomIndex = Math.floor(Math.random() * candidates.length)
   return candidates[randomIndex]

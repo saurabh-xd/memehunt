@@ -8,7 +8,6 @@
     "start": "next start",
     "lint": "eslint",
     "add-memes": "tsx scripts/add-memes.ts",
-    "import-memes-db": "tsx scripts/import-memes-to-db.ts",
     "migrate-memes-cloudinary": "tsx scripts/migrate-memes-to-cloudinary.ts"
   },
   "dependencies": {

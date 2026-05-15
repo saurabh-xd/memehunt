@@ -2,7 +2,7 @@
 
 An AI meme finder and editor built with Next.js. MemeHunt helps users find the right meme for a situation, customize it in a canvas editor, and download the final image.
 
-![MemeHunt Screenshot](./public/homepage.png)
+![MemeHunt Screenshot](./public/og.png)
 
 
 ## Features
