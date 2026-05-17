@@ -6,6 +6,8 @@ import { Check, Copy, Download, ImagePlus, Plus, X } from "lucide-react"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 
+const MIN_TEXT_FONT_SIZE = 8
+
 type Props = {
   textLayers: MemeTextLayer[]
   imageLayers: MemeImageLayer[]
@@ -234,7 +236,7 @@ export default function MemeControls({
           </div>
           <input
             type="range"
-            min="24"
+            min={MIN_TEXT_FONT_SIZE}
             max="84"
             value={selectedTextLayer?.fontSize ?? 33}
             onChange={(e) => {

@@ -10,6 +10,7 @@ const TEXT_PADDING = 12
 const DEFAULT_TOP_POSITION: Position = { x: TEXT_PADDING, y: 32 }
 const DEFAULT_BOTTOM_POSITION: Position = { x: TEXT_PADDING, y: 556 }
 const DEFAULT_FONT_SIZE = 33
+const MIN_TEXT_FONT_SIZE = 8
 const MIN_IMAGE_SIZE = 48
 const MAX_STAGE_HEIGHT = 400
 const MAX_STAGE_WIDTH = 448
@@ -174,14 +175,16 @@ export function useMemeEditor(templateImage: string) {
   }
 
   function updateTextLayerSize(id: string, fontSize: number) {
+    const nextFontSize = Math.max(MIN_TEXT_FONT_SIZE, fontSize)
+
     setSelectedTextLayerId(id)
     setTextLayers((current) =>
       current.map((layer) =>
         layer.id === id
           ? {
               ...layer,
-              fontSize,
-              position: clampTextPosition(layer.position, layer.text, fontSize),
+              fontSize: nextFontSize,
+              position: clampTextPosition(layer.position, layer.text, nextFontSize),
             }
           : layer
       )
