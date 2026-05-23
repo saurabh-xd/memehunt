@@ -9,4 +9,8 @@ export type MemeApiErrorResponse = {
 };
 
 export type MemeGenerateResponse = MemeResult;
-export type MemeTemplatesResponse = MemeResult[];
+export type MemeTemplatesResponse = {
+  items: MemeResult[];
+  nextOffset: number | null;
+  total: number;
+};

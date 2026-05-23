@@ -1,11 +1,31 @@
-import { getAllMemeTemplates } from "@/lib/meme-template"
+import { getMemeTemplatesPage } from "@/lib/meme-template"
 import type { MemeTemplatesResponse } from "@/types/api"
 
-export async function GET() {
-  try {
-    const memes = await getAllMemeTemplates()
+const DEFAULT_LIMIT = 10
+const MAX_LIMIT = 40
 
-    return Response.json(memes satisfies MemeTemplatesResponse)
+function parsePositiveInteger(value: string | null, fallback: number) {
+  const parsedValue = Number(value)
+
+  return Number.isFinite(parsedValue) && parsedValue >= 0
+    ? Math.floor(parsedValue)
+    : fallback
+}
+
+export async function GET(request: Request) {
+  try {
+    const url = new URL(request.url)
+    const query = url.searchParams.get("q") ?? ""
+    const offset = parsePositiveInteger(url.searchParams.get("offset"), 0)
+    const requestedLimit = parsePositiveInteger(url.searchParams.get("limit"), DEFAULT_LIMIT)
+    const limit = Math.min(Math.max(requestedLimit, 1), MAX_LIMIT)
+    const memes = await getMemeTemplatesPage({ query, offset, limit })
+
+    return Response.json(memes satisfies MemeTemplatesResponse, {
+      headers: {
+        "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600",
+      },
+    })
   } catch (error) {
     console.error("Failed to load meme templates", error)
     const isDatabaseConnectionError =
