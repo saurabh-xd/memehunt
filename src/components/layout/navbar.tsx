@@ -8,7 +8,6 @@ import {  CircleUser, Loader2 } from "lucide-react"
 import { GithubIcon } from "../common/githubIcon"
 import Link from "next/link"
 import { toast } from "sonner"
-import Image from "next/image"
 
 export default function Navbar() {
   const { data: session, isPending } = useSession()
@@ -72,17 +71,19 @@ export default function Navbar() {
   return (
     <div className="flex w-full items-center justify-between gap-3 p-3 py-2 sm:p-4">
       <Link
-       href="/"
-        className="font-brand min-w-0 flex items-center justify-center cursor-pointer text-sm font-extrabold tracking-[-0.04em] sm:text-base md:text-lg"
+        href="/"
+        className="font-brand min-w-0 flex items-center justify-center gap-1.5 cursor-pointer text-sm font-extrabold tracking-[-0.04em] sm:text-base md:text-lg"
       >
-      <Image
-        src="/logo.png"
-        alt="MemeHunt logo"
-        width={32}
-        height={32}
-        className="md:size-9 size-7 shrink-0 "
-      />
-      <span className="block truncate">MemeHunt AI</span>
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="inline-block size-8 sm:size-9 -translate-y-0.5 rotate-6 shrink-0 object-contain align-middle"
+        >
+          <source src="/laugh-transparent.webm" type="video/webm" />
+        </video>
+        <span className="block truncate">MemeHunt AI</span>
       </Link>
 
       <div className="flex shrink-0 items-center gap-2 sm:gap-3">
