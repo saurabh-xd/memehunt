@@ -83,6 +83,11 @@ model MemeTemplate {
   selectionNotes   String?
   selectionEnabled Boolean  @default(true)
   tags             String[] @default([])
+
+  embedding        Unsupported("vector(768)")?
+  embeddingVersion String?
+  embeddedAt       DateTime?
+
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
