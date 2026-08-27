@@ -29,7 +29,7 @@ export async function createEmbedding(
         taskType,
       },
     },
-  })
+  }) 
 
   assertEmbeddingDimensions(embedding)
   return embedding

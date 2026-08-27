@@ -1,6 +1,7 @@
 import { getSelectableMemeTemplates } from "@/lib/meme-template"
 import type { MemeResult } from "@/types/meme"
 import { MEME_SELECTION_PROMPT_VERSION, chooseMeme } from "./ai.services"
+import { findRelevantMemeTemplates } from "./meme-retrieval.service"
 
 const MIN_AI_CONFIDENCE = 0.55
 
@@ -14,11 +15,22 @@ function pickRandomMeme(candidates: MemeResult[]) {
 }
 
 export async function findBestMeme(situation: string) {
-  const candidates = await getSelectableMemeTemplates()
-  const fallback = pickRandomMeme(candidates)
+  const allCandidates = await getSelectableMemeTemplates()
+  const fallback = pickRandomMeme(allCandidates)
 
   if (!situation) {
     return fallback
+  }
+
+  let candidates = allCandidates
+
+  try {
+    const retrievedCandidates = await findRelevantMemeTemplates(situation)
+    if (retrievedCandidates.length > 0) {
+      candidates = retrievedCandidates
+    }
+  } catch (error) {
+    console.error("Failed to retrieve relevant meme templates", error)
   }
 
   try {
