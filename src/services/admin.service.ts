@@ -4,7 +4,7 @@ import {
   createEmbedding,
   EMBEDDING_MODEL_VERSION,
   getTemplateEmbeddingText,
-} from "./meme-embedding";
+} from "./rag/meme-embedding";
 
 async function refreshMemeTemplateEmbedding(id: string) {
   try {

@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma"
 import type { MemeResult } from "@/types/meme"
-import { createQueryEmbedding } from "./meme-embedding"
+import { createQueryEmbedding } from "./rag/meme-embedding"
 
 const DEFAULT_CANDIDATE_LIMIT = 12
 

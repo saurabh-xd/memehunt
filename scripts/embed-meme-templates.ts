@@ -4,7 +4,7 @@ import {
   createDocumentEmbeddings,
   EMBEDDING_MODEL_VERSION,
   getTemplateEmbeddingText,
-} from "../src/services/meme-embedding"
+} from "../src/services/rag/meme-embedding"
 
 const BATCH_SIZE = 20
 

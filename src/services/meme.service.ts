@@ -1,7 +1,8 @@
 import { getSelectableMemeTemplates } from "@/lib/meme-template"
 import type { MemeResult } from "@/types/meme"
 import { MEME_SELECTION_PROMPT_VERSION, chooseMeme } from "./ai.services"
-import { findRelevantMemeTemplates } from "./meme-retrieval.service"
+import { findRelevantMemeTemplates } from "./rag/meme-retrieval.service"
+
 
 const MIN_AI_CONFIDENCE = 0.55
 
