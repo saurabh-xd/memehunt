@@ -7,6 +7,7 @@ import Providers from "@/components/providers/providers";
 import { Toaster } from "sonner";
 import Footer from "@/components/layout/footer";
 import { Analytics } from "@vercel/analytics/next";
+import GoogleAnalytics from "@/components/common/GoogleAnalytics";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
 const sora = Sora({
@@ -93,6 +94,7 @@ export default function RootLayout({
           <Toaster richColors />
         </Providers>
         <Analytics />
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
       </body>
     </html>
   );
