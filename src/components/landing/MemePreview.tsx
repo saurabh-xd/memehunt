@@ -6,6 +6,7 @@ import type { RefObject } from "react"
 import { motion } from "motion/react"
 import { Image as KonvaImage, Layer, Stage, Text, Transformer } from "react-konva"
 import useImage from "use-image"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 import { MemeImageLayer, MemeTextLayer } from "@/types/meme"
 
 type Props = {
@@ -25,6 +26,11 @@ type Props = {
   onImageResize: (id: string, size: { width: number; height: number; x: number; y: number }) => void
   onSelectImage: (id: string | null) => void
   onSelectText: (id: string | null) => void
+  hasMultipleTemplates?: boolean
+  currentIndex?: number
+  totalTemplates?: number
+  onPrevTemplate?: () => void
+  onNextTemplate?: () => void
 }
 
 function EditableImageLayer({
@@ -123,6 +129,11 @@ export default function MemePreview({
   onImageResize,
   onSelectImage,
   onSelectText,
+  hasMultipleTemplates = false,
+  currentIndex = 0,
+  totalTemplates = 1,
+  onPrevTemplate,
+  onNextTemplate,
 }: Props) {
   function setStageCursor(cursor: string) {
     const stage = stageRef.current
@@ -131,13 +142,11 @@ export default function MemePreview({
   }
 
   const isMobileViewport =
-  typeof window !== "undefined" && window.innerWidth < 640
-  
+    typeof window !== "undefined" && window.innerWidth < 640
 
-const memeFontFamily = isMobileViewport
-  ? "Anton, Impact, Arial Black, sans-serif"
-  : "Impact, Arial Black, sans-serif"
-
+  const memeFontFamily = isMobileViewport
+    ? "Anton, Impact, Arial Black, sans-serif"
+    : "Impact, Arial Black, sans-serif"
 
   const sharedTextProps = {
     fontFamily: memeFontFamily,
@@ -169,22 +178,81 @@ const memeFontFamily = isMobileViewport
     stageHeight - watermarkPadding - Math.round(watermarkFontSize * 1.15)
   )
 
+  const touchStartXRef = useRef<number | null>(null)
+  const touchStartYRef = useRef<number | null>(null)
+
+  function handleTouchStart(e: React.TouchEvent) {
+    if (e.touches.length === 1) {
+      touchStartXRef.current = e.touches[0].clientX
+      touchStartYRef.current = e.touches[0].clientY
+    }
+  }
+
+  function handleTouchEnd(e: React.TouchEvent) {
+    if (touchStartXRef.current === null || touchStartYRef.current === null) return
+    const touchEndX = e.changedTouches[0].clientX
+    const touchEndY = e.changedTouches[0].clientY
+    const deltaX = touchEndX - touchStartXRef.current
+    const deltaY = touchEndY - touchStartYRef.current
+
+    // Horizontal swipe threshold: at least 40px and predominantly horizontal
+    if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.3) {
+      if (deltaX > 0) {
+        onPrevTemplate?.()
+      } else {
+        onNextTemplate?.()
+      }
+    }
+
+    touchStartXRef.current = null
+    touchStartYRef.current = null
+  }
+
+  useEffect(() => {
+    if (!hasMultipleTemplates) return
+
+    function handleKeyDown(e: KeyboardEvent) {
+      const target = e.target as HTMLElement | null
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      ) {
+        return
+      }
+
+      if (e.key === "ArrowLeft") {
+        e.preventDefault()
+        onPrevTemplate?.()
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault()
+        onNextTemplate?.()
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [hasMultipleTemplates, onPrevTemplate, onNextTemplate])
+
   return (
     <div
-      className="mx-auto flex w-full max-w-full flex-col gap-2"
+      className="relative mx-auto flex flex-col items-center gap-3 select-none w-full max-w-full"
       style={{ width: stageWidth }}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       <motion.div
         className="overflow-hidden rounded-[1.25rem] border border-black/10 bg-black/5 bg-card sm:rounded-[1.5rem]"
         style={{ width: stageWidth, height: stageHeight, lineHeight: 0 }}
-         initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
-          whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-          transition={{
-            duration: 0.3,
-            delay:   0.1,
-            ease: "easeInOut",
-          }}
-          viewport={{ once: true }}
+        initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
+        whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+        transition={{
+          duration: 0.3,
+          delay: 0.1,
+          ease: "easeInOut",
+        }}
+        viewport={{ once: true }}
       >
         <Stage
           ref={stageRef}
@@ -276,6 +344,40 @@ const memeFontFamily = isMobileViewport
           </Layer>
         </Stage>
       </motion.div>
+
+      {hasMultipleTemplates && (
+        <div className="flex items-center justify-center gap-2 pt-0.5">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation()
+              onPrevTemplate?.()
+            }}
+            aria-label="Previous meme option"
+            title="Previous meme"
+            className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-xs hover:bg-muted hover:scale-105 active:scale-95 transition-all duration-150 cursor-pointer"
+          >
+            <ChevronLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+          </button>
+
+          <span className="min-w-[44px] text-center text-xs font-medium text-muted-foreground select-none">
+            {currentIndex + 1} / {totalTemplates}
+          </span>
+
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation()
+              onNextTemplate?.()
+            }}
+            aria-label="Next meme option"
+            title="Next meme"
+            className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-xs hover:bg-muted hover:scale-105 active:scale-95 transition-all duration-150 cursor-pointer"
+          >
+            <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+          </button>
+        </div>
+      )}
     </div>
   )
 }

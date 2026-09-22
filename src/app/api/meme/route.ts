@@ -1,8 +1,8 @@
 import { z } from "zod"
 import { NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
-import { findBestMeme } from "@/services/meme.service"
-import { MemeApiErrorResponse, MemeGenerateRequest } from "@/types/api"
+import { findBestMemes } from "@/services/meme.service"
+import { MemeApiErrorResponse, MemeGenerateRequest, MemeGenerateResponse } from "@/types/api"
 
 const FREE_GENERATION_LIMIT = 2
 const GUEST_USAGE_COOKIE = "memehunt-free-generations-used"
@@ -53,9 +53,13 @@ export async function POST(req: Request) {
     }
 
     const situation = parsed.data.situation
-    const meme = await findBestMeme(situation)
+    const memes = await findBestMemes(situation)
+    const primaryMeme = memes[0]
 
-    const response = NextResponse.json(meme)
+    const response = NextResponse.json({
+      ...primaryMeme,
+      templates: memes,
+    } satisfies MemeGenerateResponse)
 
     if (!session?.user) {
       response.cookies.set(GUEST_USAGE_COOKIE, String(guestUsageCount + 1), {

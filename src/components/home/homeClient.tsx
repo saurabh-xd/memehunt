@@ -16,6 +16,7 @@ import {
 } from "@/constants/dialog-copy";
 import { DialogCopy } from "@/types/ui";
 import SignInDialog from "../common/signInDialog";
+import { trackEvent } from "@/lib/gtag";
 
 export default function HomeClient() {
 
@@ -36,6 +37,7 @@ export default function HomeClient() {
     hasActiveTemplate,
     selectCustomTemplate,
     selectGeneratedTemplate,
+    selectGeneratedTemplates,
     clearActiveTemplate,
   } = useActiveTemplate();
 
@@ -49,6 +51,11 @@ export default function HomeClient() {
     cancelGeneration();
     clearTemplate();
     selectCustomTemplate(imageUrl, file.name);
+    trackEvent({
+      action: "upload_custom_template",
+      category: "Meme",
+      label: file.name,
+    });
   }
 
   function openWatermarkSignInDialog() {
@@ -74,6 +81,11 @@ export default function HomeClient() {
       description: `You have used all ${limit} free AI generations. Sign in with Google to continue creating memes.`,
     })
     setShowSignInDialog(true);
+    trackEvent({
+      action: "guest_limit_reached",
+      category: "Auth",
+      label: "Guest Generation Limit Exceeded",
+    });
   }
 
   async function handleGenerate(e?: React.FormEvent) {
@@ -84,18 +96,26 @@ export default function HomeClient() {
     }
 
     clearActiveTemplate();
-    const generatedTemplate = await generate(e);
+    const generated = await generate(e);
 
-    if (generatedTemplate === "guest-limit-reached") {
+    if (generated === "guest-limit-reached") {
       openGenerationSignInDialog();
       return;
     }
 
-    if (!generatedTemplate) {
+    if (!generated) {
       return;
     }
 
-    selectGeneratedTemplate(generatedTemplate);
+    selectGeneratedTemplates(generated.templates, 0);
+
+    trackEvent({
+      action: "generate_meme_success",
+      category: "Meme",
+      label: generated.template.name,
+      prompt: situation,
+      options_count: generated.templates.length,
+    });
 
     if (!session?.user) {
       incrementUsage();

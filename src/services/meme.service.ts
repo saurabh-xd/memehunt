@@ -1,32 +1,36 @@
 import { getSelectableMemeTemplates } from "@/lib/meme-template"
 import type { MemeResult } from "@/types/meme"
-import { MEME_SELECTION_PROMPT_VERSION, chooseMeme } from "./ai.services"
+import { MEME_SELECTION_PROMPT_VERSION, chooseMemes } from "./ai.services"
 import { findRelevantMemeTemplates } from "./rag/meme-retrieval.service"
 
-
 const MIN_AI_CONFIDENCE = 0.55
+const DEFAULT_TARGET_MEMES_COUNT = 3
 
-function pickRandomMeme(candidates: MemeResult[]) {
+function pickDistinctRandomMemes(candidates: MemeResult[], count: number): MemeResult[] {
   if (candidates.length === 0) {
     throw new Error("No meme templates are available.")
   }
 
-  const randomIndex = Math.floor(Math.random() * candidates.length)
-  return candidates[randomIndex]
+  const shuffled = [...candidates].sort(() => Math.random() - 0.5)
+  return shuffled.slice(0, Math.min(count, candidates.length))
 }
 
-export async function findBestMeme(situation: string) {
+export async function findBestMemes(
+  situation: string,
+  targetCount = DEFAULT_TARGET_MEMES_COUNT
+): Promise<MemeResult[]> {
   const allCandidates = await getSelectableMemeTemplates()
-  const fallback = pickRandomMeme(allCandidates)
+  const fallbackMemes = pickDistinctRandomMemes(allCandidates, targetCount)
 
-  if (!situation) {
-    return fallback
+  if (!situation.trim()) {
+    return fallbackMemes
   }
 
   let candidates = allCandidates
+  let retrievedCandidates: MemeResult[] = []
 
   try {
-    const retrievedCandidates = await findRelevantMemeTemplates(situation)
+    retrievedCandidates = await findRelevantMemeTemplates(situation)
     if (retrievedCandidates.length > 0) {
       candidates = retrievedCandidates
     }
@@ -34,38 +38,60 @@ export async function findBestMeme(situation: string) {
     console.error("Failed to retrieve relevant meme templates", error)
   }
 
-  try {
-    const selection = await chooseMeme(situation, candidates)
-    const selectedMeme = candidates.find((meme) => meme.id === selection.template)
+  const selectedMemes: MemeResult[] = []
+  const seenIds = new Set<string>()
 
-    if (!selectedMeme) {
-      console.info("Meme selection fell back: AI returned unknown template", {
-        situation: situation,
-        template: selection.template,
-        promptVersion: MEME_SELECTION_PROMPT_VERSION,
-      })
-
-      return fallback
+  function addMeme(meme: MemeResult | undefined) {
+    if (meme && !seenIds.has(meme.id)) {
+      seenIds.add(meme.id)
+      selectedMemes.push(meme)
     }
+  }
 
-  
-    
+  try {
+    const selection = await chooseMemes(situation, candidates)
 
     if (selection.confidence < MIN_AI_CONFIDENCE) {
-      console.info("Meme selection fell back: low AI confidence", {
-        situation: situation,
-        template: selection.template,
+      console.info("Meme selection had lower AI confidence, combining with RAG similarity", {
+        situation,
+        templates: selection.templates,
         confidence: selection.confidence,
         promptVersion: MEME_SELECTION_PROMPT_VERSION,
       })
-
-      return fallback
+      // If AI confidence is low, prioritize the top pgvector semantic similarity template
+      if (retrievedCandidates.length > 0) {
+        addMeme(retrievedCandidates[0])
+      }
     }
 
-    return selectedMeme
+    // Add templates selected by AI in order of ranking
+    for (const templateId of selection.templates) {
+      const matched =
+        candidates.find((m) => m.id === templateId) ??
+        allCandidates.find((m) => m.id === templateId)
+      addMeme(matched)
+    }
   } catch (error) {
-    console.error("Failed to choose meme with AI", error)
-
-    return fallback
+    console.error("Failed to choose memes with AI", error)
   }
+
+  // Backfill from RAG candidates (ordered by cosine similarity)
+  for (const candidate of retrievedCandidates) {
+    if (selectedMemes.length >= targetCount) break
+    addMeme(candidate)
+  }
+
+  // Backfill from all available candidates if still needed
+  for (const candidate of allCandidates) {
+    if (selectedMemes.length >= targetCount) break
+    addMeme(candidate)
+  }
+
+  return selectedMemes.length > 0 ? selectedMemes : fallbackMemes
 }
+
+export async function findBestMeme(situation: string): Promise<MemeResult> {
+  const memes = await findBestMemes(situation, 1)
+  return memes[0]
+}
+

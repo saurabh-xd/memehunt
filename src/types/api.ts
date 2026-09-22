@@ -8,7 +8,9 @@ export type MemeApiErrorResponse = {
   error: string;
 };
 
-export type MemeGenerateResponse = MemeResult;
+export type MemeGenerateResponse = MemeResult & {
+  templates: MemeResult[];
+};
 export type MemeTemplatesResponse = {
   items: MemeResult[];
   nextOffset: number | null;

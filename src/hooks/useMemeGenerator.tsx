@@ -7,11 +7,17 @@ import {
   MemeGenerateResponse,
 } from "@/types/api"
 
-export type MemeGenerateResult = MemeResult | "guest-limit-reached" | null
+export type MemeGenerateSuccess = {
+  template: MemeResult
+  templates: MemeResult[]
+}
+
+export type MemeGenerateResult = MemeGenerateSuccess | "guest-limit-reached" | null
 
 export function useMemeGenerator() {
   const [situation, setSituation] = useState("")
   const [template, setTemplate] = useState<MemeResult | null>(null)
+  const [templates, setTemplates] = useState<MemeResult[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
   const generationVersionRef = useRef(0)
@@ -31,9 +37,9 @@ export function useMemeGenerator() {
     setIsLoading(true)
     setError("")
     setTemplate(null)
+    setTemplates([])
 
     try {
-
       const res = await axios.post<MemeGenerateResponse>("api/meme", {
         situation,
       } satisfies MemeGenerateRequest)
@@ -44,10 +50,18 @@ export function useMemeGenerator() {
         return null
       }
 
+      const memeList =
+        Array.isArray(data.templates) && data.templates.length > 0
+          ? data.templates
+          : [data]
 
-      setTemplate(data)
-      return data as MemeResult
+      setTemplate(memeList[0])
+      setTemplates(memeList)
 
+      return {
+        template: memeList[0],
+        templates: memeList,
+      }
     } catch (error) {
       if (generationVersionRef.current !== currentGenerationVersion) {
         return null
@@ -65,7 +79,6 @@ export function useMemeGenerator() {
       console.error(error)
       setError(message)
       return null
-
     } finally {
       if (generationVersionRef.current === currentGenerationVersion) {
         setIsLoading(false)
@@ -75,6 +88,7 @@ export function useMemeGenerator() {
 
   function clearTemplate() {
     setTemplate(null)
+    setTemplates([])
     setError("")
   }
 
@@ -82,6 +96,7 @@ export function useMemeGenerator() {
     situation,
     setSituation,
     template,
+    templates,
     isLoading,
     error,
     generate,

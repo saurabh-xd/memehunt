@@ -5,6 +5,7 @@ import { MemeImageLayer, MemeTextLayer, Position } from "@/types/meme"
 import { useEffect, useRef, useState } from "react"
 import useImage from "use-image"
 import { toast } from "sonner"
+import { trackEvent } from "@/lib/gtag"
 
 const TEXT_PADDING = 12
 const DEFAULT_TOP_POSITION: Position = { x: TEXT_PADDING, y: 32 }
@@ -342,6 +343,12 @@ export function useMemeEditor(templateImage: string) {
       stage: stageRef.current,
       pixelRatio: exportScale,
     })
+
+    trackEvent({
+      action: "download_meme",
+      category: "Meme",
+      export_scale: exportScale,
+    })
   }
 
   async function handleCopy() {
@@ -355,11 +362,19 @@ export function useMemeEditor(templateImage: string) {
       if (!navigator.clipboard || !navigator.clipboard.write || typeof ClipboardItem === "undefined") {
         toast.error("Copy not supported in this browser. Downloading instead.")
         downloadMeme({ stage: stageRef.current, pixelRatio: exportScale })
+        trackEvent({
+          action: "copy_fallback_download",
+          category: "Meme",
+        })
         return false
       }
 
       await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })])
       toast.success("Meme copied to clipboard")
+      trackEvent({
+        action: "copy_meme_clipboard",
+        category: "Meme",
+      })
       return true
     } catch {
       toast.error("Copy failed. Try again.")
